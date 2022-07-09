@@ -1,2 +1,1 @@
-# profile
- My personal website
+# My profile 🗿
