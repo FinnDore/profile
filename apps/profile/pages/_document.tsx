@@ -8,6 +8,7 @@ export default function document() {
                     href="https://fonts.googleapis.com/css2?family=Inter&display=optional"
                     rel="stylesheet"
                 />
+                <link rel="shortcut icon" href="/favicon.ico" />
             </Head>
             <body>
                 <Main />
