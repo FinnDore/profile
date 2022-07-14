@@ -5,12 +5,13 @@ import { useRef } from 'react';
 import styles from './index.module.scss';
 
 function Star({
-    props: { x, y, z, color }
+    props: { x, y, scale, z, color, blur }
 }: {
     props: {
         x: number;
         y: number;
         z: number;
+        scale: number;
         blur: number;
         color?: string;
     };
@@ -21,7 +22,8 @@ function Star({
             src="/star.svg"
             alt="shiny shiny"
             style={{
-                transform: `translate(${x}vw, ${y}vh) scale(${z})`,
+                transform: `translate(${x}vw, ${y}vh) scale(${scale})`,
+                zIndex: z,
                 filter: `blur(${blur}px)`
             }}
         />
@@ -30,15 +32,17 @@ function Star({
 
 function StarsField() {
     const stars = [];
-    for (let i = 0; i < random(50, 75); i++) {
+    const maxY = 200;
+    for (let i = 0; i < random(75, 100); i++) {
         stars.push(
             <ParallaxLayer offset={0} speed={random(1, 5)}>
                 <Star
                     key={i}
                     props={{
                         x: random(0, 100),
-                        y: random(0, 100),
-                        z: random(0.75, 1.5),
+                        y: random(0, maxY),
+                        z: random(0, 100),
+                        scale: random(0.75, 1.5),
                         blur: random(1, 5)
                     }}
                 />
