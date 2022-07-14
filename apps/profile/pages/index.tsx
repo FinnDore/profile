@@ -11,6 +11,7 @@ function Star({
         x: number;
         y: number;
         z: number;
+        blur: number;
         color?: string;
     };
 }) {
@@ -20,7 +21,8 @@ function Star({
             src="/star.svg"
             alt="shiny shiny"
             style={{
-                transform: `translate(${x}vw, ${y}vh) scale(${z})`
+                transform: `translate(${x}vw, ${y}vh) scale(${z})`,
+                filter: `blur(${blur}px)`
             }}
         />
     );
@@ -28,15 +30,16 @@ function Star({
 
 function StarsField() {
     const stars = [];
-    for (let i = 0; i < random(30, 50); i++) {
+    for (let i = 0; i < random(50, 75); i++) {
         stars.push(
             <ParallaxLayer offset={0} speed={random(1, 5)}>
                 <Star
                     key={i}
                     props={{
-                        x: random(-100, 100),
-                        y: random(-100, 100),
-                        z: random(0.75, 1.5)
+                        x: random(0, 100),
+                        y: random(0, 100),
+                        z: random(0.75, 1.5),
+                        blur: random(1, 5)
                     }}
                 />
             </ParallaxLayer>
