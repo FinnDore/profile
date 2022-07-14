@@ -81,7 +81,7 @@ function Page() {
                 </div>
             </ParallaxLayer>
 
-            <ParallaxLayer offset={1} speed={1}>
+            {/* <ParallaxLayer offset={1} speed={1}>
                 <div className=" text-white">
                     <h1 className="bold">Some header</h1>
                     <p>
@@ -96,7 +96,7 @@ function Page() {
                         anim id est laborum.
                     </p>
                 </div>
-            </ParallaxLayer>
+            </ParallaxLayer> */}
         </Parallax>
     );
 }
