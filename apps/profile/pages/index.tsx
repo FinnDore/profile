@@ -1,10 +1,48 @@
 /* eslint-disable @next/next/no-img-element */
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
+import { random } from 'lodash';
 import { useRef } from 'react';
 import styles from './index.module.scss';
 
-function Star() {
-    return <div className={`${styles.star} r-50 absolute bg-amber-200`}></div>;
+function Star({
+    props: { x, y, z, color }
+}: {
+    props: {
+        x: number;
+        y: number;
+        z: number;
+        color?: string;
+    };
+}) {
+    return (
+        <img
+            className={`${styles.star} absolute`}
+            src="/star.svg"
+            alt="shiny shiny"
+            style={{
+                transform: `translate(${x}vw, ${y}vh) scale(${z})`
+            }}
+        />
+    );
+}
+
+function StarsField() {
+    const stars = [];
+    for (let i = 0; i < random(30, 50); i++) {
+        stars.push(
+            <ParallaxLayer offset={0} speed={random(1, 5)}>
+                <Star
+                    key={i}
+                    props={{
+                        x: random(-100, 100),
+                        y: random(-100, 100),
+                        z: random(0.75, 1.5)
+                    }}
+                />
+            </ParallaxLayer>
+        );
+    }
+    return <>{stars}</>;
 }
 
 function Page() {
@@ -12,7 +50,7 @@ function Page() {
     return (
         <Parallax pages={2} ref={parallaxRef}>
             <ParallaxLayer offset={0} speed={0.5}>
-                <Star />
+                <StarsField />
             </ParallaxLayer>
             <ParallaxLayer offset={0} speed={3.5}>
                 <img
@@ -36,8 +74,8 @@ function Page() {
                 </div>
             </ParallaxLayer>
 
-            <ParallaxLayer offset={1} speed={5.2}>
-                <div className="text-white">
+            <ParallaxLayer offset={1} speed={1}>
+                <div className=" text-white">
                     <h1 className="bold">Some header</h1>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -58,8 +96,7 @@ function Page() {
 
 export default function index() {
     return (
-        <div className="relative h-[100vh] bg-black">
-            <Star />
+        <div className=" relative h-[100vh] bg-black">
             <Page />
         </div>
     );
