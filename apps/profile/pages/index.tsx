@@ -14,7 +14,7 @@ function Page() {
             </ParallaxLayer>
             <ParallaxLayer offset={0} speed={3.5}>
                 <img
-                    className={`${styles.moon} absolute`}
+                    className={`${styles.moon} absolute z-[75] w-[150%]`}
                     src="/moon.svg"
                     alt="big grey ball in the sky"
                 />
@@ -22,11 +22,7 @@ function Page() {
             <ParallaxLayer
                 offset={0}
                 speed={2.75}
-                className="flex "
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}
+                className="flex justify-center"
             >
                 <div className="grid place-items-center">
                     <h1 className="left-50 top-90 absolute bg-gradient-to-br from-stone-900 to-zinc-50 bg-clip-text text-5xl font-extrabold text-transparent sm:text-6xl md:text-8xl">
@@ -35,7 +31,7 @@ function Page() {
                 </div>
             </ParallaxLayer>
 
-            <ParallaxLayer offset={0.99} speed={2.75}>
+            <ParallaxLayer offset={0.99} speed={2.75} className="z-[100]">
                 <AboutMe />
             </ParallaxLayer>
             <ParallaxLayer factor={20}></ParallaxLayer>
