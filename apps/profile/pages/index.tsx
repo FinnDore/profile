@@ -27,7 +27,7 @@ function Page() {
                 className="flex justify-center"
             >
                 <div className="mb-[10rem] grid place-items-center">
-                    <h1 className="left-50 top-90 absolute bg-gradient-to-br from-stone-900 to-zinc-50 bg-clip-text text-5xl font-extrabold text-transparent sm:text-6xl md:text-8xl">
+                    <h1 className="bg-gradient-to-br from-stone-900 to-zinc-50 bg-clip-text text-5xl font-extrabold text-transparent sm:text-6xl md:text-8xl">
                         FINN DORE
                     </h1>
                 </div>
@@ -39,10 +39,67 @@ function Page() {
                 </div>
             </ParallaxLayer>
             <ParallaxLayer factor={20}></ParallaxLayer>
+            <Footer />
         </Parallax>
     );
 }
 
+function Footer() {
+    return (
+        <div className="absolute bottom-0 flex h-56 w-full justify-center border-t border-zinc-900 px-20 py-10 lg:px-48">
+            <div className="mx-26 my-auto mt-auto flex h-full flex-col ">
+                <FooterTitle name={'Contact Me'}></FooterTitle>
+                <FooterItem
+                    name={'finn@finndore.dev'}
+                    href={'mailto:finn@finndore.dev'}
+                />
+                <FooterItem
+                    name={'Git Hub'}
+                    href={'https://github.com/FinnDore'}
+                />
+            </div>
+            <div className="mx-28 my-auto flex h-full flex-col">
+                <FooterTitle name={'Projects'}></FooterTitle>
+                <FooterItem
+                    name={'Topic Inspector'}
+                    href={'https://topic-inspector.finndore.dev'}
+                />
+                <FooterItem
+                    name={'Kafka Tools'}
+                    href={'https://github.com/FinnDore/kafka-tools'}
+                />
+                <FooterItem
+                    name={'Something'}
+                    href={'https://something.finndore.dev'}
+                />
+            </div>
+            <div className="mx-26 my-auto mt-auto flex h-full flex-col ">
+                <FooterTitle name={'Credits'}></FooterTitle>
+                <FooterItem
+                    name={'The Moon'}
+                    href={'https://www.figma.com/@liammews'}
+                />
+            </div>
+        </div>
+    );
+}
+
+function FooterTitle({ name }: { name: string }) {
+    return <div className="pb-1 text-xs text-white">{name}</div>;
+}
+
+function FooterItem({ name, href }: { name: string; href: string }) {
+    return (
+        <a
+            className="pt-1 font-light text-zinc-600 transition-colors hover:text-zinc-100"
+            href={href}
+            rel="noreferrer"
+            target="_blank"
+        >
+            {name}
+        </a>
+    );
+}
 export default function index() {
     return (
         <div className=" relative h-[100vh] bg-black">
