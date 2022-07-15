@@ -2,6 +2,7 @@
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import { useRef } from 'react';
 import { StarField } from '../ui/star-field';
+import AboutMe from './about-me';
 import styles from './index.module.scss';
 
 function Page() {
@@ -33,6 +34,11 @@ function Page() {
                     </h1>
                 </div>
             </ParallaxLayer>
+
+            <ParallaxLayer offset={0.99} speed={2.75}>
+                <AboutMe />
+            </ParallaxLayer>
+            <ParallaxLayer factor={20}></ParallaxLayer>
         </Parallax>
     );
 }
