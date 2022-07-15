@@ -46,8 +46,8 @@ function Page() {
 
 function Footer() {
     return (
-        <div className="absolute bottom-0 flex h-56 w-full justify-center border-t border-zinc-900 px-20 py-10 lg:px-48">
-            <div className="mx-26 my-auto mt-auto flex h-full flex-col ">
+        <div className="absolute bottom-0 flex h-56 w-full justify-center border-t border-zinc-900 px-1 py-10 md:px-20 lg:px-48">
+            <FooterSection>
                 <FooterTitle name={'Contact Me'}></FooterTitle>
                 <FooterItem
                     name={'finn@finndore.dev'}
@@ -57,8 +57,8 @@ function Footer() {
                     name={'Git Hub'}
                     href={'https://github.com/FinnDore'}
                 />
-            </div>
-            <div className="mx-28 my-auto flex h-full flex-col">
+            </FooterSection>
+            <FooterSection>
                 <FooterTitle name={'Projects'}></FooterTitle>
                 <FooterItem
                     name={'Topic Inspector'}
@@ -72,26 +72,36 @@ function Footer() {
                     name={'Something'}
                     href={'https://something.finndore.dev'}
                 />
-            </div>
-            <div className="mx-26 my-auto mt-auto flex h-full flex-col ">
+            </FooterSection>
+            <FooterSection>
                 <FooterTitle name={'Credits'}></FooterTitle>
                 <FooterItem
                     name={'The Moon'}
                     href={'https://www.figma.com/@liammews'}
                 />
-            </div>
+            </FooterSection>
+        </div>
+    );
+}
+
+function FooterSection({ children }: { children: React.ReactNode }) {
+    return (
+        <div className="mx-5 my-auto mt-auto flex h-full flex-col md:mx-14">
+            {children}
         </div>
     );
 }
 
 function FooterTitle({ name }: { name: string }) {
-    return <div className="pb-1 text-xs text-white">{name}</div>;
+    return (
+        <div className="pb-1 text-[.5rem] text-white md:text-xs">{name}</div>
+    );
 }
 
 function FooterItem({ name, href }: { name: string; href: string }) {
     return (
         <a
-            className="pt-1 font-light text-zinc-600 transition-colors hover:text-zinc-100"
+            className="pt-1 text-xs font-light text-zinc-600 transition-colors hover:text-zinc-100 md:text-base"
             href={href}
             rel="noreferrer"
             target="_blank"
@@ -102,7 +112,7 @@ function FooterItem({ name, href }: { name: string; href: string }) {
 }
 export default function index() {
     return (
-        <div className=" relative h-[100vh] bg-black">
+        <div className="relative h-[100vh] bg-black">
             <Page />
         </div>
     );
