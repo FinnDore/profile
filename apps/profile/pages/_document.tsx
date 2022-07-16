@@ -13,7 +13,7 @@ export default function document() {
             <meta property="og:title" content="Finn Dore" />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="finndore.dev" />
-            <meta property="og:image" content="finndore.dev/moon.png" />
+            <meta property="og:image" content="https://finndore.dev/moon.png" />
             <meta
                 property="og:description"
                 content="Its probably raining where i live"
