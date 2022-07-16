@@ -10,6 +10,17 @@ export default function document() {
                 />
                 <link rel="shortcut icon" href="/favicon.ico" />
             </Head>
+            <meta property="og:title" content="Finn Dore" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={window.location.href} />
+            <meta
+                property="og:image"
+                content={`${window.location.href}/moon.svg`}
+            />
+            <meta property="og:description" content="Site description" />
+            <meta name="theme-color" content="#a1a1aa" />
+
+            <meta name="twitter:card" content="summary_large_image"></meta>
             <body>
                 <Main />
                 <NextScript />
