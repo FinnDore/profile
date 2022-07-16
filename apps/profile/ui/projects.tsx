@@ -24,7 +24,7 @@ export default function Projects() {
         <div>
             <Project
                 props={{
-                    name: 'Kafka tools',
+                    name: 'Kafka Tools',
                     description:
                         'A light-weight kafka client built with rust and react with support for mac, linux and windows.',
                     href: 'https://github.com/FinnDore/kafka-tools'
@@ -42,7 +42,7 @@ export default function Projects() {
                 props={{
                     name: 'Something',
                     description:
-                        'An easy to deploy payment backend build around stripe complimented by a headless component library for both  react and angular.',
+                        'An easy to deploy payment backend written in rust and build around stripe, complimented by a headless component library for both react and angular.',
                     href: 'https://github.com/FinnDore/something'
                 }}
             />

@@ -1,17 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AboutMe from '../ui/about-me';
 import Projects from '../ui/projects';
-import StarField from '../ui/star-field';
+import Star from '../ui/star';
 import styles from './index.module.scss';
 
 function Page() {
     const parallaxRef = useRef();
+    const [starCount, setStarCount] = useState(100);
+
+    useEffect(() => {
+        if (window.innerWidth < 500) {
+            setStarCount(50);
+        }
+        return () => {
+            setStarCount(100);
+        };
+    }, []);
+
     return (
         <Parallax pages={1.3} ref={parallaxRef}>
             <ParallaxLayer offset={0} speed={0.5}>
-                <StarField />
+                {Array(starCount)
+                    .fill(0)
+                    .map((_, i) => (
+                        <Star key={i} />
+                    ))}
             </ParallaxLayer>
             <ParallaxLayer offset={0} speed={3.5}>
                 <div className="grid place-items-center">
