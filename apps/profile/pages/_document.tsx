@@ -12,11 +12,8 @@ export default function document() {
             </Head>
             <meta property="og:title" content="Finn Dore" />
             <meta property="og:type" content="website" />
-            <meta property="og:url" content={window.location.href} />
-            <meta
-                property="og:image"
-                content={`${window.location.href}/moon.svg`}
-            />
+            <meta property="og:url" content="finndore.dev" />
+            <meta property="og:image" content={`finndore.dev/moon.svg`} />
             <meta property="og:description" content="Site description" />
             <meta name="theme-color" content="#a1a1aa" />
 
