@@ -57,9 +57,9 @@ function Page() {
                 <div className="absolute top-[10vh] z-[9999] px-10 text-zinc-300 md:top-[25vh]  lg:top-[40vh] lg:px-28">
                     <AboutMe />
                     <Projects />
-                    <div className="flex text-[.75rem] text-zinc-400 hover:text-zinc-200 md:text-sm">
+                    <div className="flex text-[.75rem] text-zinc-400 md:text-sm">
                         <a
-                            className="px-2 pl-0  underline "
+                            className="px-2 pl-0 underline hover:text-zinc-200"
                             href="mailto:finn@finndore.dev"
                             rel="noreferrer"
                             target="_blank"
@@ -70,7 +70,7 @@ function Page() {
                             href="https://github.com/FinnDore"
                             rel="noreferrer"
                             target="_blank"
-                            className="px-2 underline"
+                            className="px-2 underline hover:text-zinc-200"
                         >
                             GitHub
                         </a>
