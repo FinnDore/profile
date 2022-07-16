@@ -35,7 +35,7 @@ export default function Projects() {
                     name: 'Topic Inspector',
                     description:
                         'A quick and easy way to visualize the size of your kafka topics across multiple brokers.',
-                    href: 'topic-inspector.finndore.dev'
+                    href: 'https://topic-inspector.finndore.dev'
                 }}
             />
             <Project
