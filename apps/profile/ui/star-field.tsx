@@ -35,7 +35,7 @@ function Star({
 export default function StarField() {
     const stars = [];
     const maxY = 200;
-    for (let i = 0; i < random(75, 100); i++) {
+    for (let i = 0; i < random(75, 120); i++) {
         stars.push(
             <ParallaxLayer offset={0} speed={random(1, 5)} key={i}>
                 <Star

@@ -2,15 +2,14 @@
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import { useRef } from 'react';
 import AboutMe from '../ui/about-me';
-import Footer from '../ui/footer';
-import { Project } from '../ui/projects';
+import Projects from '../ui/projects';
 import StarField from '../ui/star-field';
 import styles from './index.module.scss';
 
 function Page() {
     const parallaxRef = useRef();
     return (
-        <Parallax pages={1.5} ref={parallaxRef}>
+        <Parallax pages={1.3} ref={parallaxRef}>
             <ParallaxLayer offset={0} speed={0.5}>
                 <StarField />
             </ParallaxLayer>
@@ -42,17 +41,27 @@ function Page() {
             >
                 <div className="absolute top-[15vh] z-[9999] px-10 text-zinc-300 md:top-[25vh]  lg:top-[40vh] lg:px-28">
                     <AboutMe />
-                    <Project
-                        props={{
-                            name: 'Kafka Tools',
-                            href: 'https://github.com/FinnDore/kafka-tools'
-                        }}
-                    />
+                    <Projects />
+                    <div className="flex">
+                        <a
+                            className="px-2 pl-0 text-sm text-zinc-400 underline hover:text-zinc-200"
+                            href="mailto:finn@finndore.dev"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            finn@finndore.dev
+                        </a>
+                        <a
+                            href="https://github.com/FinnDore"
+                            rel="noreferrer"
+                            target="_blank"
+                            className="px-2 text-sm text-zinc-400 underline hover:text-zinc-200"
+                        >
+                            GitHub
+                        </a>
+                    </div>
                 </div>
             </ParallaxLayer>
-            <div className="absolute bottom-0">
-                <Footer />
-            </div>
         </Parallax>
     );
 }
