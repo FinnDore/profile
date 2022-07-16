@@ -41,8 +41,6 @@ function Page() {
             </ParallaxLayer>
 
             <Footer />
-
-            <Footer />
         </Parallax>
     );
 }
