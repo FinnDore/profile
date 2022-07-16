@@ -2,6 +2,7 @@
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import { useRef } from 'react';
 import AboutMe from '../ui/about-me';
+import Footer from '../ui/footer';
 import { StarField } from '../ui/star-field';
 import styles from './index.module.scss';
 
@@ -38,81 +39,17 @@ function Page() {
                     <AboutMe />
                 </div>
             </ParallaxLayer>
-            <ParallaxLayer factor={20}></ParallaxLayer>
+
+            <Footer />
+
             <Footer />
         </Parallax>
     );
 }
 
-function Footer() {
-    return (
-        <div className="absolute bottom-0 flex h-56 w-full justify-center border-t border-zinc-900 px-1 py-10 md:px-20 lg:px-48">
-            <FooterSection>
-                <FooterTitle name={'Contact Me'}></FooterTitle>
-                <FooterItem
-                    name={'finn@finndore.dev'}
-                    href={'mailto:finn@finndore.dev'}
-                />
-                <FooterItem
-                    name={'Git Hub'}
-                    href={'https://github.com/FinnDore'}
-                />
-            </FooterSection>
-            <FooterSection>
-                <FooterTitle name={'Projects'}></FooterTitle>
-                <FooterItem
-                    name={'Topic Inspector'}
-                    href={'https://topic-inspector.finndore.dev'}
-                />
-                <FooterItem
-                    name={'Kafka Tools'}
-                    href={'https://github.com/FinnDore/kafka-tools'}
-                />
-                <FooterItem
-                    name={'Something'}
-                    href={'https://something.finndore.dev'}
-                />
-            </FooterSection>
-            <FooterSection>
-                <FooterTitle name={'Credits'}></FooterTitle>
-                <FooterItem
-                    name={'The Moon'}
-                    href={'https://www.figma.com/@liammews'}
-                />
-            </FooterSection>
-        </div>
-    );
-}
-
-function FooterSection({ children }: { children: React.ReactNode }) {
-    return (
-        <div className="mx-5 my-auto mt-auto flex h-full flex-col md:mx-14">
-            {children}
-        </div>
-    );
-}
-
-function FooterTitle({ name }: { name: string }) {
-    return (
-        <div className="pb-1 text-[.5rem] text-white md:text-xs">{name}</div>
-    );
-}
-
-function FooterItem({ name, href }: { name: string; href: string }) {
-    return (
-        <a
-            className="pt-1 text-xs font-light text-zinc-600 transition-colors hover:text-zinc-100 md:text-base"
-            href={href}
-            rel="noreferrer"
-            target="_blank"
-        >
-            {name}
-        </a>
-    );
-}
 export default function index() {
     return (
-        <div className="relative h-[100vh] bg-black">
+        <div className="relative h-[100vh] max-h-[100vh] overflow-hidden bg-black">
             <Page />
         </div>
     );

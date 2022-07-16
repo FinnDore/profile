@@ -13,7 +13,7 @@ export default function AboutMe() {
             </p>
             <div className="flex">
                 <a
-                    className="px-2 pl-0 text-sm text-zinc-400 hover:text-zinc-200"
+                    className="px-2 pl-0 text-sm text-zinc-400 underline hover:text-zinc-200"
                     href="mailto:finn@finndore.dev"
                     rel="noreferrer"
                     target="_blank"
@@ -24,7 +24,7 @@ export default function AboutMe() {
                     href="https://github.com/FinnDore"
                     rel="noreferrer"
                     target="_blank"
-                    className="px-2 text-sm text-zinc-400 hover:text-zinc-200"
+                    className="px-2 text-sm text-zinc-400 underline hover:text-zinc-200"
                 >
                     My GitHub
                 </a>
