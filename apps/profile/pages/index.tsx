@@ -1,16 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AboutMe from '../ui/about-me';
-import { StarField } from '../ui/star-field';
+import Projects from '../ui/projects';
+import Star from '../ui/star';
 import styles from './index.module.scss';
 
 function Page() {
     const parallaxRef = useRef();
+    const [starCount, setStarCount] = useState(100);
+
+    useEffect(() => {
+        if (window.innerWidth < 500) {
+            setStarCount(50);
+        }
+        return () => {
+            setStarCount(100);
+        };
+    }, []);
+
     return (
-        <Parallax pages={2} ref={parallaxRef}>
+        <Parallax pages={1.3} ref={parallaxRef}>
             <ParallaxLayer offset={0} speed={0.5}>
-                <StarField />
+                {Array(starCount)
+                    .fill(0)
+                    .map((_, i) => (
+                        <Star key={i} />
+                    ))}
             </ParallaxLayer>
             <ParallaxLayer offset={0} speed={3.5}>
                 <div className="grid place-items-center">
@@ -33,86 +49,45 @@ function Page() {
                 </div>
             </ParallaxLayer>
 
-            <ParallaxLayer offset={0.99} speed={2.75} className="z-[100]">
-                <div className="grid place-items-center">
+            <ParallaxLayer
+                offset={0.99}
+                speed={2.75}
+                className="z-[100] grid place-items-center"
+            >
+                <div className="absolute top-[10vh] z-[9999] px-10 text-zinc-300 md:top-[25vh]  lg:top-[40vh] lg:px-28">
                     <AboutMe />
+                    <Projects />
+                    <div className="flex text-[.75rem] text-zinc-400 hover:text-zinc-200 md:text-sm">
+                        <a
+                            className="px-2 pl-0  underline "
+                            href="mailto:finn@finndore.dev"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            finn@finndore.dev
+                        </a>
+                        <a
+                            href="https://github.com/FinnDore"
+                            rel="noreferrer"
+                            target="_blank"
+                            className="px-2 underline"
+                        >
+                            GitHub
+                        </a>
+
+                        <div className="ml-auto uppercase text-rose-900">
+                            Projects are a WIP
+                        </div>
+                    </div>
                 </div>
             </ParallaxLayer>
-            <ParallaxLayer factor={20}></ParallaxLayer>
-            <Footer />
         </Parallax>
     );
 }
 
-function Footer() {
-    return (
-        <div className="absolute bottom-0 flex h-56 w-full justify-center border-t border-zinc-900 px-1 py-10 md:px-20 lg:px-48">
-            <FooterSection>
-                <FooterTitle name={'Contact Me'}></FooterTitle>
-                <FooterItem
-                    name={'finn@finndore.dev'}
-                    href={'mailto:finn@finndore.dev'}
-                />
-                <FooterItem
-                    name={'Git Hub'}
-                    href={'https://github.com/FinnDore'}
-                />
-            </FooterSection>
-            <FooterSection>
-                <FooterTitle name={'Projects'}></FooterTitle>
-                <FooterItem
-                    name={'Topic Inspector'}
-                    href={'https://topic-inspector.finndore.dev'}
-                />
-                <FooterItem
-                    name={'Kafka Tools'}
-                    href={'https://github.com/FinnDore/kafka-tools'}
-                />
-                <FooterItem
-                    name={'Something'}
-                    href={'https://something.finndore.dev'}
-                />
-            </FooterSection>
-            <FooterSection>
-                <FooterTitle name={'Credits'}></FooterTitle>
-                <FooterItem
-                    name={'The Moon'}
-                    href={'https://www.figma.com/@liammews'}
-                />
-            </FooterSection>
-        </div>
-    );
-}
-
-function FooterSection({ children }: { children: React.ReactNode }) {
-    return (
-        <div className="mx-5 my-auto mt-auto flex h-full flex-col md:mx-14">
-            {children}
-        </div>
-    );
-}
-
-function FooterTitle({ name }: { name: string }) {
-    return (
-        <div className="pb-1 text-[.5rem] text-white md:text-xs">{name}</div>
-    );
-}
-
-function FooterItem({ name, href }: { name: string; href: string }) {
-    return (
-        <a
-            className="pt-1 text-xs font-light text-zinc-600 transition-colors hover:text-zinc-100 md:text-base"
-            href={href}
-            rel="noreferrer"
-            target="_blank"
-        >
-            {name}
-        </a>
-    );
-}
 export default function index() {
     return (
-        <div className="relative h-[100vh] bg-black">
+        <div className="relative h-[100vh] max-h-[100vh] overflow-hidden bg-black">
             <Page />
         </div>
     );
