@@ -13,8 +13,11 @@ export default function document() {
             <meta property="og:title" content="Finn Dore" />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="finndore.dev" />
-            <meta property="og:image" content={`finndore.dev/moon.svg`} />
-            <meta property="og:description" content="Site description" />
+            <meta property="og:image" content="finndore.dev/moon.png" />
+            <meta
+                property="og:description"
+                content="Its probably raining where i live"
+            />
             <meta name="theme-color" content="#a1a1aa" />
 
             <meta name="twitter:card" content="summary_large_image"></meta>
