@@ -3,13 +3,14 @@ import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import { useRef } from 'react';
 import AboutMe from '../ui/about-me';
 import Footer from '../ui/footer';
-import { StarField } from '../ui/star-field';
+import { Project } from '../ui/projects';
+import StarField from '../ui/star-field';
 import styles from './index.module.scss';
 
 function Page() {
     const parallaxRef = useRef();
     return (
-        <Parallax pages={2} ref={parallaxRef}>
+        <Parallax pages={1.5} ref={parallaxRef}>
             <ParallaxLayer offset={0} speed={0.5}>
                 <StarField />
             </ParallaxLayer>
@@ -34,13 +35,24 @@ function Page() {
                 </div>
             </ParallaxLayer>
 
-            <ParallaxLayer offset={0.99} speed={2.75} className="z-[100]">
-                <div className="grid place-items-center">
+            <ParallaxLayer
+                offset={0.99}
+                speed={2.75}
+                className="z-[100] grid place-items-center"
+            >
+                <div className="absolute top-[15vh] z-[9999] px-10 text-zinc-300 md:top-[25vh]  lg:top-[40vh] lg:px-28">
                     <AboutMe />
+                    <Project
+                        props={{
+                            name: 'Kafka Tools',
+                            href: 'https://github.com/FinnDore/kafka-tools'
+                        }}
+                    />
                 </div>
             </ParallaxLayer>
-
-            <Footer />
+            <div className="absolute bottom-0">
+                <Footer />
+            </div>
         </Parallax>
     );
 }

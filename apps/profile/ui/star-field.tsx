@@ -32,7 +32,7 @@ function Star({
     );
 }
 
-export function StarField() {
+export default function StarField() {
     const stars = [];
     const maxY = 200;
     for (let i = 0; i < random(75, 100); i++) {

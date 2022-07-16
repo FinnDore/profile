@@ -27,7 +27,7 @@ function FooterItem({ name, href }: { name: string; href: string }) {
 
 export default function Footer() {
     return (
-        <div className="absolute bottom-0 flex h-56 w-full justify-center border-t border-zinc-900 bg-black px-1 py-10 md:px-20 lg:px-48">
+        <div className="flex h-56 w-full justify-center border-t border-zinc-900 bg-black px-1 py-10 md:px-20 lg:px-48">
             <FooterSection>
                 <FooterTitle name={'Contact Me'}></FooterTitle>
                 <FooterItem
@@ -35,7 +35,7 @@ export default function Footer() {
                     href={'mailto:finn@finndore.dev'}
                 />
                 <FooterItem
-                    name={'Git Hub'}
+                    name={'GitHub'}
                     href={'https://github.com/FinnDore'}
                 />
             </FooterSection>
