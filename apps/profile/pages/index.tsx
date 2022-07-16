@@ -54,10 +54,10 @@ function Page() {
                 speed={2.75}
                 className="z-[100] grid place-items-center"
             >
-                <div className="absolute top-[15vh] z-[9999] px-10 text-zinc-300 md:top-[25vh]  lg:top-[40vh] lg:px-28">
+                <div className="absolute top-[10vh] z-[9999] px-10 text-zinc-300 md:top-[25vh]  lg:top-[40vh] lg:px-28">
                     <AboutMe />
                     <Projects />
-                    <div className="flex text-sm text-zinc-400 hover:text-zinc-200">
+                    <div className="flex text-[.75rem] text-zinc-400 hover:text-zinc-200 md:text-sm">
                         <a
                             className="px-2 pl-0  underline "
                             href="mailto:finn@finndore.dev"
