@@ -26,7 +26,7 @@ export default function Projects() {
                 props={{
                     name: 'Time',
                     description:
-                        'A simple site that can displays the current time in multiple timezones.',
+                        'A simple site that displays the current time in multiple timezones.',
                     href: 'https://time.finndore.dev'
                 }}
             />
