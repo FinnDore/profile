@@ -24,10 +24,10 @@ export default function Projects() {
         <div>
             <Project
                 props={{
-                    name: 'Kafka Tools',
+                    name: 'Time',
                     description:
-                        'A light-weight kafka client built with rust and react with support for mac, linux and windows.',
-                    href: 'https://github.com/FinnDore/kafka-tools'
+                        'A simple site that can displays the current time in multiple timezones.',
+                    href: 'https://time.finndore.dev'
                 }}
             />
             <Project
