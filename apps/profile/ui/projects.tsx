@@ -32,18 +32,17 @@ export default function Projects() {
             />
             <Project
                 props={{
-                    name: 'Topic Inspector',
-                    description:
-                        'A quick and easy way to visualize the size of your kafka topics across multiple brokers.',
-                    href: 'https://topic-inspector.finndore.dev'
+                    name: 'Thoogle',
+                    description: 'A search engine that also answers questions.',
+                    href: 'https://thoogle.finndore.dev'
                 }}
             />
             <Project
                 props={{
-                    name: 'Something',
+                    name: '1436',
                     description:
-                        'An easy to deploy payment backend written in rust and build around stripe, complimented by a headless component library for both react and angular.',
-                    href: 'https://github.com/FinnDore/something'
+                        'A website that provides instructions high quality dyi projects, with step by step instructions complemented by embed 3D models.',
+                    href: 'https://1436.design'
                 }}
             />
         </div>
