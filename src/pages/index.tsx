@@ -48,11 +48,17 @@ function ShaderPlane() {
 const Home: NextPage = () => {
     return (
         <>
-            <main className="h-screen bg-black">
-                <Canvas className="h-screen w-screen">
-                    {' '}
+            <main className=" top-0 h-screen w-screen ">
+                <Canvas className="absolute top-0 h-screen w-screen">
                     <ShaderPlane />
                 </Canvas>
+                <div className="absolute top-0 z-10 h-full w-full text-white bg-blend-color-dodge">
+                    <div className="flex h-full w-full">
+                        <h1 className="mt-24 ml-10 text-9xl font-bold">
+                            {/* Finn Dore */}
+                        </h1>
+                    </div>
+                </div>
             </main>
         </>
     );
