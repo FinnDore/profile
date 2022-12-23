@@ -3,8 +3,8 @@ import { type NextPage } from 'next';
 import { useEffect, useRef } from 'react';
 import { Vector2 } from 'three';
 //import source from 'raw-loader!glslify-loader!./public/shaders/blob/vertex.glsl'
-import './background-material';
-import type { BackgroundMaterialProps } from './background-material';
+import '../components/background-material';
+import type { BackgroundMaterialProps } from '../components/background-material';
 
 function ShaderPlane() {
     const ref = useRef<(THREE.ShaderMaterial & BackgroundMaterialProps) | null>(
