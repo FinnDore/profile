@@ -61,7 +61,7 @@ const BackgroundMaterial = shaderMaterial(
               col /= 2.0; // attenuate high frequencies
           }
           
-          col = pow( col, vec3(0.995,0.727,0.942) );    // contrast and color shape
+          col = pow( col, vec3(0.995,0.927,0.942) );    // contrast and color shape
           
           gl_FragColor = vec4( col, 1.0 );
       }

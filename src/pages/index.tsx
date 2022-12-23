@@ -49,7 +49,7 @@ const Home: NextPage = () => {
     return (
         <>
             <main className="h-screen bg-black">
-                <Canvas className="h-screen w-screen grayscale">
+                <Canvas className="h-screen w-screen">
                     {' '}
                     <ShaderPlane />
                 </Canvas>
