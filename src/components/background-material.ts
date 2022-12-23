@@ -43,7 +43,7 @@ const BackgroundMaterial = shaderMaterial(
 
 
       void main() {
-           vec2 pos = zoom * gl_FragCoord.xy / resolution.x;
+           vec2 pos = zoom * gl_FragCoord.xy / resolution.x / 4.0;
 
           vec3 col = vec3(0.0);
           for( int i=0; i<10; i++ ) 
