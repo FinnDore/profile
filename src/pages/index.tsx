@@ -82,7 +82,7 @@ const Home: NextPage = () => {
             </Canvas>
             <div className="absolute top-0 z-10 h-screen w-full text-white bg-blend-color-dodge">
                 <div className="flex h-screen w-full">
-                    <h1 className="m-auto mb-auto  text-9xl font-bold italic">
+                    <h1 className="name-shadow m-auto mb-auto text-9xl font-bold italic">
                         FINN DORE
                     </h1>
                 </div>
