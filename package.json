@@ -11,6 +11,7 @@
     "dependencies": {
         "@react-three/drei": "^9.48.1",
         "@react-three/fiber": "^8.9.1",
+        "@react-three/postprocessing": "^2.7.0",
         "@types/three": "^0.146.0",
         "babel-plugin-glsl": "^1.0.0",
         "glslify-loader": "^2.0.0",
