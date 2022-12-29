@@ -179,12 +179,12 @@ const MosaicMaterial = shaderMaterial(
 
         float r = -(x * x + y * y);
         //float r = -sqrt(x*x + y*y);
-        float ouuterZz = 0.1 + 0.5 * sin((r + time * speed) / 0.117);
+        float outerZz = 0.1 + 0.5 * sin((r + time * speed) / 0.117);
         float innerZ = 1.0 + 0.5 * sin((r + time * speed) / 0.053);
-        bool isOuterTrigangle = color.r == 0.069;
-        if (isOuterTrigangle && ouuterZz > 0.1) {
-            color.rgb = vec3(0.4) * ouuterZz;
-        } else if (isOuterTrigangle) {
+        bool isOuterTriangle = color.r == 0.069;
+        if (isOuterTriangle && outerZz > 0.1) {
+            color.rgb = vec3(0.4) * outerZz;
+        } else if (isOuterTriangle) {
             color.rgb = vec3(0.0);
         } else {
             color *= innerZ;
