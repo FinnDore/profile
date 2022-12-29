@@ -64,18 +64,6 @@ const MosaicMaterial = shaderMaterial(
       return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity));
     }
 
-    float blendColorBurn(float base, float blend) {
-        return (blend==0.0)?blend:max((1.0-((1.0-base)/blend)),0.0);
-    }
-    
-    vec3 blendColorBurn(vec3 base, vec3 blend) {
-        return vec3(blendColorBurn(base.r,blend.r),blendColorBurn(base.g,blend.g),blendColorBurn(base.b,blend.b));
-    }
-    
-    vec3 blendColorBurn(vec3 base, vec3 blend, float opacity) {
-        return (blendColorBurn(base, blend) * opacity + base * (1.0 - opacity));
-    }
-
     vec3 rgb(int r, int g, int b) {
         return vec3(r, g, b) / 255.0;
     }
@@ -184,7 +172,7 @@ const MosaicMaterial = shaderMaterial(
         color += Tiles(uv);
 
         vec3 col = vec3(uv, sin(time));
-        float speed = 0.0405;
+        float speed = 0.005;
         vec2 center = vec2(1.5, 0.5);
         float x = center.x - st.x;
         float y = (center.y - st.y) * resolution.x / resolution.y;
@@ -202,7 +190,7 @@ const MosaicMaterial = shaderMaterial(
             color *= innerZ;
         }
 
-        if (color.r == 0.) {
+        if (color.r == 0. || color.r == 1.) {
             gl_FragColor = vec4(color, 1.);
             return;
         }
@@ -211,7 +199,7 @@ const MosaicMaterial = shaderMaterial(
 
         gl_FragColor = vec4(bgColor / 4., 1.); 
         // gl_FragColor = vec4(color, 1.);
-        gl_FragColor = vec4(blendColorBurn(color /1.2, bgColor / 3.), 1.0); 
+        gl_FragColor = vec4(blendColorDodge(color / 1.5, bgColor * 10., 3.), 1.0); 
         // gl_FragColor = vec4(vec3(ouuterZz), 1.0);
     }
   `
