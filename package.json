@@ -9,6 +9,7 @@
         "start": "next start"
     },
     "dependencies": {
+        "@fontsource/roboto-serif": "^4.5.10",
         "@react-three/drei": "^9.48.1",
         "@react-three/fiber": "^8.9.1",
         "@types/three": "^0.146.0",
