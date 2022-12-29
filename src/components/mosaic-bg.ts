@@ -199,7 +199,7 @@ const MosaicMaterial = shaderMaterial(
 
         gl_FragColor = vec4(bgColor / 4., 1.); 
         // gl_FragColor = vec4(color, 1.);
-        gl_FragColor = vec4(blendColorDodge(color / 1.5, bgColor * 10., 3.), 1.0); 
+        gl_FragColor = vec4(blendColorDodge(color / 2.5, bgColor * 10., 3.), 1.0); 
         // gl_FragColor = vec4(vec3(ouuterZz), 1.0);
     }
   `
