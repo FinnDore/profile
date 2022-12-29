@@ -2,7 +2,7 @@ import { shaderMaterial } from '@react-three/drei';
 import type { ReactThreeFiber } from '@react-three/fiber';
 import { extend } from '@react-three/fiber';
 import type * as THREE from 'three';
-import { Vector2, Vector3 } from 'three';
+import { Texture, Vector2, Vector3 } from 'three';
 
 export type MosaicProps = {
     resolution: Vector2;
@@ -17,6 +17,7 @@ const MosaicMaterial = shaderMaterial(
         time: 0,
         resolution: new Vector2(1, 1),
         zoom: 1,
+        uTexture: new Texture(),
         xy: new Vector3(1, 1, 1)
     },
     `
@@ -63,6 +64,18 @@ const MosaicMaterial = shaderMaterial(
       return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity));
     }
 
+    float blendColorBurn(float base, float blend) {
+        return (blend==0.0)?blend:max((1.0-((1.0-base)/blend)),0.0);
+    }
+    
+    vec3 blendColorBurn(vec3 base, vec3 blend) {
+        return vec3(blendColorBurn(base.r,blend.r),blendColorBurn(base.g,blend.g),blendColorBurn(base.b,blend.b));
+    }
+    
+    vec3 blendColorBurn(vec3 base, vec3 blend, float opacity) {
+        return (blendColorBurn(base, blend) * opacity + base * (1.0 - opacity));
+    }
+
     vec3 rgb(int r, int g, int b) {
         return vec3(r, g, b) / 255.0;
     }
@@ -104,11 +117,7 @@ const MosaicMaterial = shaderMaterial(
         vec3 result = vec3(0.0);
         float zoom =  16.;
         vec2 gv = fract(uv * zoom);
-
-        // Get a unique identifier for each tile
         vec2 id = floor(uv * zoom);
-
-    
         for (float y = -1.0; y <= 1.0; y++) {
             for (float x = -1.0; x <= 1.0; x++) {
                 vec2 tileOffset = vec2(x, y);
@@ -157,7 +166,6 @@ const MosaicMaterial = shaderMaterial(
                 ) {
                     result += vec3(0.8, 0.8, 0.8);
                 }
-
             }
         }
 
@@ -194,12 +202,16 @@ const MosaicMaterial = shaderMaterial(
             color *= innerZ;
         }
 
+        if (color.r == 0.) {
+            gl_FragColor = vec4(color, 1.);
+            return;
+        }
 
         vec3 bgColor = texture2D(uTexture, vUv).rgb;
 
-        gl_FragColor = vec4(bgColor, 1.); 
+        gl_FragColor = vec4(bgColor / 4., 1.); 
         // gl_FragColor = vec4(color, 1.);
-        // gl_FragColor = vec4(blendColorDodge(color, bgColor, 0.5), 1.0)); 
+        gl_FragColor = vec4(blendColorBurn(color /1.2, bgColor / 3.), 1.0); 
         // gl_FragColor = vec4(vec3(ouuterZz), 1.0);
     }
   `

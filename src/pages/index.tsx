@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { type NextPage } from 'next';
-import { useEffect, useRef } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import THREE, { TextureLoader, Vector2, Vector3 } from 'three';
 import '../components/background-material';
 import '../components/mosaic-bg';
@@ -41,22 +41,26 @@ function ShaderPlane() {
 
     const res = new Vector2(width, width);
 
-    const [image] = useLoader(TextureLoader, [
-        'https://images.unsplash.com/photo-1604011092346-0b4346ed714e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1534&q=80'
-    ]);
-
+    const [image] = useLoader(TextureLoader, ['/lines.png']);
+    console.log(image);
     useFrame((state, delta) => {
         if (ref.current && zoomValue.current) {
             ref.current.time += delta;
             ref.current.resolution = res;
             ref.current.zoom = zoomValue.current;
             ref.current.xy = xyValue.current;
+            if (image) {
+                ref.current.uTexture = image;
+            }
             // if (ref.current.uniforms.canvasTexture?.value) {
             //     ref.current.uniforms.canvasTexture.value.needsUpdate = true;
             // }
         }
     });
 
+    if (!image) {
+        return;
+    }
     return (
         <mesh scale={[width, height, 1]}>
             <planeGeometry />
@@ -68,12 +72,13 @@ function ShaderPlane() {
 const Home: NextPage = () => {
     return (
         <main className=" top-0 h-screen w-screen ">
-            <div className="line absolute top-32 right-32 h-10 w-20 mix-blend-color-dodge"></div>
             <Canvas
                 dpr={[1, 2]}
                 className="e top-0  aspect-square min-h-max min-w-max"
             >
-                <ShaderPlane />
+                <Suspense fallback={null}>
+                    <ShaderPlane />
+                </Suspense>
                 <Stats showPanel={0} className="stats" />
             </Canvas>
             <div className="absolute top-0 z-10 h-screen w-full text-white bg-blend-color-dodge">
