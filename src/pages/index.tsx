@@ -5,7 +5,6 @@ import THREE, { TextureLoader, Vector2, Vector3 } from 'three';
 import '../components/background-material';
 import '../components/mosaic-bg';
 
-import { Stats } from '@react-three/drei';
 import { MosaicProps } from '../components/mosaic-bg';
 const dumbby = new Vector3(1, 1, 1);
 
@@ -59,7 +58,7 @@ function ShaderPlane() {
     });
 
     if (!image) {
-        return;
+        return null;
     }
     return (
         <mesh scale={[width, height, 1]}>
@@ -79,7 +78,7 @@ const Home: NextPage = () => {
                 <Suspense fallback={null}>
                     <ShaderPlane />
                 </Suspense>
-                <Stats showPanel={0} className="stats" />
+                {/* <Stats showPanel={0} className="stats" /> */}
             </Canvas>
             <div className="absolute top-0 z-10 h-screen w-full text-white bg-blend-color-dodge">
                 <div className="flex h-screen w-full">
