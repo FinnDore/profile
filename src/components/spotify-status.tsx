@@ -21,7 +21,7 @@ export const SpotifyStatus = () => {
             <picture className="my-auto mr-4 w-20">
                 <img
                     className="w-full"
-                    src={sortedAlbumArt?.[0]?.url}
+                    src={sortedAlbumArt?.[1]?.url}
                     alt={`Album art for ${item.album.name}`}
                 ></img>
             </picture>
