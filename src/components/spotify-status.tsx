@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { memo, useEffect, useState } from 'react';
 
 export const SpotifyStatus = () => {
@@ -10,8 +10,9 @@ export const SpotifyStatus = () => {
             ),
             timestamp: new Date().getTime()
         }),
-        refetchInterval: 5000
+        refetchInterval: 10000
     });
+
     if (!data?.currentSong) return null;
     const item = data.currentSong.item;
     const sortedAlbumArt = item.album.images.sort((a, b) => a.width - b.width);
@@ -90,34 +91,43 @@ const ProgressBar = memo(function ProgressBar({
     duration: number;
 }) {
     const [currentProgress, setCurrentProgress] = useState(progress);
+    const queryClient = useQueryClient();
+
     useEffect(() => {
         if (paused) return;
-
+        let hasInvalidated = false;
         const interval = setInterval(() => {
             const currentTime = new Date().getTime();
             const timeSinceSnapshot = currentTime - snapshotTime;
 
             const newProgress = progress + timeSinceSnapshot;
             setCurrentProgress(newProgress);
+
+            if ((newProgress / duration) * 100 >= 100 && !hasInvalidated) {
+                hasInvalidated = true;
+                queryClient.invalidateQueries(['spot']);
+            }
         }, 150);
 
         return () => {
             interval && clearInterval(interval);
         };
-    }, [progress, snapshotTime, paused]);
+    }, [progress, snapshotTime, paused, duration, queryClient]);
 
     const progressPercent = (currentProgress / duration) * 100;
-    // const progressDate = new Date(currentProgress
-    //{/* <div className="text-xs">{`${progressDate.getMinutes()}:${progressDate.getSeconds()}`}</div> */}
+
     return (
         <div className="h-[.2rem] w-full rounded-full ">
             <div
                 className="m-w-full h-full rounded-full bg-[#ff5119] transition-all"
-                style={{ width: `${progressPercent}%` }}
+                style={{
+                    width: `${progressPercent > 100 ? 100 : progressPercent}%`
+                }}
             ></div>
         </div>
     );
 });
+
 interface CurrentSong {
     progress_ms: number;
     timestamp: number;
