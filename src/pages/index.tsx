@@ -9,12 +9,9 @@ const ShaderPlane = lazy(() => import('../components/shader-plane'));
 
 const Home: NextPage = () => {
     return (
-        <main className=" top-0 h-screen w-screen ">
+        <main className="h-screen w-screen ">
             <Suspense>
-                <Canvas
-                    dpr={[1, 2]}
-                    className="e top-0  aspect-square min-h-max min-w-max"
-                >
+                <Canvas dpr={[1, 2]} className="h-screen min-h-max min-w-max">
                     <Suspense fallback={null}>
                         <ShaderPlane />
                     </Suspense>
@@ -23,7 +20,7 @@ const Home: NextPage = () => {
             </Suspense>
             <div className="absolute top-0 z-10 h-screen w-full text-white bg-blend-color-dodge">
                 <div className="flex h-screen w-full">
-                    <h1 className="name m-auto mb-auto text-9xl font-bold italic">
+                    <h1 className="name m-auto mb-auto text-4xl font-bold italic sm:text-6xl md:text-7xl lg:text-9xl">
                         FINN DORE
                     </h1>
                 </div>

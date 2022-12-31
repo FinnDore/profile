@@ -18,7 +18,6 @@ const ShaderPlane = () => {
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             u_mouse.current = u_mouse.current.set(e.clientX, e.clientY);
-            console.log(e.clientX, e.clientY);
         };
         window.addEventListener('mousemove', handleMouseMove);
         return () => {
