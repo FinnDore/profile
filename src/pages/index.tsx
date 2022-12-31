@@ -11,7 +11,7 @@ const Home: NextPage = () => {
     return (
         <main className="h-screen w-screen ">
             <Suspense>
-                <div className="h-screen min-h-[100vh] min-w-[1512px]">
+                <div className="h-screen min-h-[100vh] min-w-[1512px] overflow-hidden">
                     <Canvas dpr={[1, 2]}>
                         <Suspense fallback={null}>
                             <ShaderPlane />

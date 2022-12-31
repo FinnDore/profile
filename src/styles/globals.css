@@ -5,7 +5,12 @@
 body {
     font-family: 'Roboto';
 }
-
+.__next,
+body,
+html {
+    width: 100vh;
+    height: 100vh;
+}
 .name {
     text-shadow: 0px 4px #848484;
     font-family: 'Roboto Serif', monospace;
