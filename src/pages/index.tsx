@@ -11,16 +11,18 @@ const Home: NextPage = () => {
     return (
         <main className="h-screen w-screen ">
             <Suspense>
-                <Canvas dpr={[1, 2]} className="h-screen min-h-max min-w-max">
-                    <Suspense fallback={null}>
-                        <ShaderPlane />
-                    </Suspense>
-                    {/* <Stats showPanel={0} className="stats" /> */}
-                </Canvas>
+                <div className="h-screen min-h-[100vh] min-w-[1512px]">
+                    <Canvas dpr={[1, 2]}>
+                        <Suspense fallback={null}>
+                            <ShaderPlane />
+                        </Suspense>
+                        {/* <Stats showPanel={0} className="stats" /> */}
+                    </Canvas>
+                </div>
             </Suspense>
             <div className="absolute top-0 z-10 h-screen w-full text-white bg-blend-color-dodge">
                 <div className="flex h-screen w-full">
-                    <h1 className="name m-auto mb-auto text-4xl font-bold italic sm:text-6xl md:text-7xl lg:text-9xl">
+                    <h1 className="name m-auto mb-auto text-6xl font-bold italic md:text-7xl lg:text-9xl">
                         FINN DORE
                     </h1>
                 </div>
