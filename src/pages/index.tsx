@@ -1,10 +1,11 @@
 import { Canvas } from '@react-three/fiber';
 import { type NextPage } from 'next';
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import '../components/background-material';
 import '../components/mosaic-bg';
-import { ShaderPlane } from '../components/shader-plane';
 import { SpotifyStatus } from '../components/spotify-status';
+
+const ShaderPlane = lazy(() => import('../components/shader-plane.tsx'));
 
 const Home: NextPage = () => {
     return (
@@ -18,6 +19,7 @@ const Home: NextPage = () => {
                 </Suspense>
                 {/* <Stats showPanel={0} className="stats" /> */}
             </Canvas>
+
             <div className="absolute top-0 z-10 h-screen w-full text-white bg-blend-color-dodge">
                 <div className="flex h-screen w-full">
                     <h1 className="name m-auto mb-auto text-9xl font-bold italic">

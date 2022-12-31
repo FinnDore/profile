@@ -7,7 +7,7 @@ import '../components/mosaic-bg';
 
 import type { MosaicProps } from '../components/mosaic-bg';
 
-export function ShaderPlane() {
+const ShaderPlane = () => {
     const ref = useRef<(THREE.ShaderMaterial & MosaicProps) | null>(null);
 
     const { width, height } = useThree(state => state.viewport);
@@ -16,7 +16,7 @@ export function ShaderPlane() {
     const xyValue = useRef(new Vector3(1, 1, 1));
 
     useEffect(() => {
-        const handleMouseMove = () => {
+        const handleMouseMove = (e: MouseEvent) => {
             if (xyValue.current) {
             }
         };
@@ -55,4 +55,6 @@ export function ShaderPlane() {
             <mosaicMaterial ref={ref} toneMapped={true} uTexture={image} />
         </mesh>
     );
-}
+};
+
+export default ShaderPlane;
