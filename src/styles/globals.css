@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Roboto Serif', monospace;
+    font-family: 'Roboto';
 }
 
-.name-shadow {
+.name {
     text-shadow: 0px 4px #848484;
+    font-family: 'Roboto Serif', monospace;
 }
