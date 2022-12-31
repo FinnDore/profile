@@ -53,6 +53,7 @@ export const SpotifyStatus = () => {
             <div className="absolute bottom-0 left-0 w-full">
                 <ProgressBar
                     snapshotTime={data.timestamp}
+                    paused={!data.currentSong.is_playing}
                     progress={data.currentSong.progress_ms}
                     duration={data.currentSong.item.duration_ms}
                 />
@@ -62,16 +63,20 @@ export const SpotifyStatus = () => {
 };
 
 const ProgressBar = memo(function ProgressBar({
+    paused,
     snapshotTime,
     progress,
     duration
 }: {
+    paused: boolean;
     snapshotTime: number;
     progress: number;
     duration: number;
 }) {
     const [currentProgress, setCurrentProgress] = useState(progress);
     useEffect(() => {
+        if (paused) return;
+
         const interval = setInterval(() => {
             const currentTime = new Date().getTime();
             const timeSinceSnapshot = currentTime - snapshotTime;
@@ -81,9 +86,9 @@ const ProgressBar = memo(function ProgressBar({
         }, 150);
 
         return () => {
-            clearInterval(interval);
+            interval && clearInterval(interval);
         };
-    }, [progress, snapshotTime]);
+    }, [progress, snapshotTime, paused]);
 
     const progressPercent = (currentProgress / duration) * 100;
     // const progressDate = new Date(currentProgress
