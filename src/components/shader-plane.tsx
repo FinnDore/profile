@@ -1,7 +1,7 @@
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import type THREE from 'three';
-import { TextureLoader, Vector2, Vector3 } from 'three';
+import { TextureLoader, Vector2 } from 'three';
 import '../components/background-material';
 import '../components/mosaic-bg';
 
@@ -13,12 +13,12 @@ const ShaderPlane = () => {
     const { width, height } = useThree(state => state.viewport);
     const zoomValue = useRef(1);
 
-    const xyValue = useRef(new Vector3(1, 1, 1));
+    const u_mouse = useRef(new Vector2(1, 1));
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            if (xyValue.current) {
-            }
+            u_mouse.current = u_mouse.current.set(e.clientX, e.clientY);
+            console.log(e.clientX, e.clientY);
         };
         window.addEventListener('mousemove', handleMouseMove);
         return () => {
@@ -29,13 +29,12 @@ const ShaderPlane = () => {
     const res = new Vector2(width, width);
 
     const [image] = useLoader(TextureLoader, ['/lines.png']);
-    console.log(image);
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if (ref.current && zoomValue.current) {
             ref.current.time += delta;
             ref.current.resolution = res;
             ref.current.zoom = zoomValue.current;
-            ref.current.xy = xyValue.current;
+            ref.current.u_mouse = u_mouse.current;
             if (image) {
                 ref.current.uTexture = image;
             }

@@ -2,12 +2,12 @@ import { shaderMaterial } from '@react-three/drei';
 import type { ReactThreeFiber } from '@react-three/fiber';
 import { extend } from '@react-three/fiber';
 import type * as THREE from 'three';
-import { Texture, Vector2, Vector3 } from 'three';
+import { Texture, Vector2 } from 'three';
 
 export type MosaicProps = {
     resolution: Vector2;
     zoom: number;
-    xy: Vector3;
+    u_mouse: Vector2;
     time: number;
     uTexture: THREE.Texture;
 };
@@ -18,28 +18,26 @@ const MosaicMaterial = shaderMaterial(
         resolution: new Vector2(1, 1),
         zoom: 1,
         uTexture: new Texture(),
-        xy: new Vector3(1, 1, 1)
+        xy: new Vector2(1, 1)
     },
     `
 
     #ifdef GL_ES
-    precision mediump float;
+        precision mediump float;
     #endif
-    
 
     varying vec3 Position;
     varying vec2 vUv;   
-
 
     void main() {
         vUv = uv;
         gl_Position =  projectionMatrix * modelViewMatrix * vec4(position, 1.0);  
     }
-    `,
+`,
     `
 
     #ifdef GL_ES
-    precision mediump float;
+        precision mediump float;
     #endif
 
     uniform vec2 resolution;
@@ -53,15 +51,21 @@ const MosaicMaterial = shaderMaterial(
     varying vec2 vUv;
 
     float blendColorDodge(float base, float blend) {
-        return (blend==1.0)?blend:min(base/(1.0-blend),1.0);
+        return blend == 1.0
+            ? blend
+            : min(base / (1.0 - blend), 1.0);
     }
 
     vec3 blendColorDodge(vec3 base, vec3 blend) {
-        return vec3(blendColorDodge(base.r,blend.r),blendColorDodge(base.g,blend.g),blendColorDodge(base.b,blend.b));
+        return vec3(
+            blendColorDodge(base.r, blend.r),
+            blendColorDodge(base.g, blend.g),
+            blendColorDodge(base.b, blend.b)
+        );
     }
 
     vec3 blendColorDodge(vec3 base, vec3 blend, float opacity) {
-      return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity));
+        return blendColorDodge(base, blend) * opacity + base * (1.0 - opacity);
     }
 
     vec3 rgb(int r, int g, int b) {
@@ -82,7 +86,6 @@ const MosaicMaterial = shaderMaterial(
         float d = cos(floor(0.5 + a / r) * r - a) * length(pos);
 
         float color = smoothstep(size + blur, size - 0.0, d);
-
         return color;
     }
 
@@ -93,19 +96,12 @@ const MosaicMaterial = shaderMaterial(
         Shape(uv, position, size - 0.02, sides, blur);
     }
 
-    float ring(vec2 p, float radius, float width) {
-        return abs(length(p) - radius * 0.5) - width;
-    }
-
-    float smoothedge(float v) {
-        return smoothstep(0.0, 1.0 / resolution.x, v);
-    }
-
     vec3 Tiles(vec2 uv) {
         vec3 result = vec3(0.0);
-        float zoom =  16.;
+        float zoom = 16.0;
         vec2 gv = fract(uv * zoom);
         vec2 id = floor(uv * zoom);
+
         for (float y = -1.0; y <= 1.0; y++) {
             for (float x = -1.0; x <= 1.0; x++) {
                 vec2 tileOffset = vec2(x, y);
@@ -124,11 +120,7 @@ const MosaicMaterial = shaderMaterial(
                     result += vec3(0.51, 0.51, 0.51);
                 }
 
-                // Create a new set of UVs named  and rotate them around their center
                 vec2 st = (gv - 0.5) * Rotate(PI) + 0.5;
-
-                // Offset the new UVs by half of the width plus
-                // an arbitrary value for the Y axis.
                 st -= vec2(0.5, 0.37);
 
                 if (
@@ -162,47 +154,46 @@ const MosaicMaterial = shaderMaterial(
 
     void main() {
         vec3 color = vec3(0.0);
-        vec2 st =  gl_FragCoord.xy / resolution.x / 150.0;
+        float speed = 0.005;
+        vec2 center = vec2(1.5, 0.5);
+        vec2 st = gl_FragCoord.xy / resolution.x / 150.0;
+
         st -= vec2(0.5);
-        st = Rotate( 2.25 * PI) * st;
+        st = Rotate(2.25 * PI) * st;
         st += vec2(0.5);
+
         vec2 uv = st * 2.0 - 1.0;
         uv.x *= resolution.x / resolution.y;
 
         color += Tiles(uv);
 
         vec3 col = vec3(uv, sin(time));
-        float speed = 0.005;
-        vec2 center = vec2(1.5, 0.5);
         float x = center.x - st.x;
         float y = (center.y - st.y) * resolution.x / resolution.y;
-
         float r = -(x * x + y * y);
-        //float r = -sqrt(x*x + y*y);
-        float outerZz = 0.1 + 0.5 * sin((r + time * speed) / 0.117);
+
+        float outerZ = 0.1 + 0.5 * sin((r + time * speed) / 0.117);
         float innerZ = 1.0 + 0.5 * sin((r + time * speed) / 0.053);
         bool isOuterTriangle = color.r == 0.069;
-        if (isOuterTriangle && outerZz > 0.1) {
-            color.rgb = vec3(0.4) * outerZz;
+
+        if (isOuterTriangle && outerZ > 0.1) {
+            color.rgb = vec3(0.4) * outerZ;
         } else if (isOuterTriangle) {
             color.rgb = vec3(0.0);
         } else {
             color *= innerZ;
         }
 
-        if (color.r == 0. || color.r == 1.) {
-            gl_FragColor = vec4(color, 1.);
+        if (color.r == 0.0 || color.r == 1.0) {
+            gl_FragColor = vec4(color, 1.0);
             return;
         }
 
-        vec3 bgColor = texture2D(uTexture, vUv).rgb;
+        vec3 bolor = texture2D(uTexture, vUv).rgb;
 
-        gl_FragColor = vec4(bgColor / 4., 1.); 
-        // gl_FragColor = vec4(color, 1.);
-        gl_FragColor = vec4(blendColorDodge(color / 2.5, bgColor * 10., 3.), 1.0); 
-        // gl_FragColor = vec4(vec3(ouuterZz), 1.0);
+        gl_FragColor = vec4(blendColorDodge(color / 2.5, bgColor * 10.0, 3.0), 1.0);
     }
-  `
+`
 );
 
 extend({ MosaicMaterial });
