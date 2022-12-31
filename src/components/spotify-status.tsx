@@ -17,7 +17,7 @@ export const SpotifyStatus = () => {
     const sortedAlbumArt = item.album.images.sort((a, b) => a.width - b.width);
 
     return (
-        <div className="my-4 flex w-[300px] rounded-md border border-[#C9C9C9]/30 bg-black p-4 text-white">
+        <div className="flex w-[100vw] rounded-md p-4 text-white">
             <picture className="my-auto mr-4 w-20">
                 <img
                     className="w-full"

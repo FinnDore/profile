@@ -25,7 +25,7 @@ const Home: NextPage = () => {
                     </h1>
                 </div>
             </div>
-            <div className="absolute top-0 left-[35%]">
+            <div className="absolute bottom-0">
                 <SpotifyStatus />
             </div>
         </main>
