@@ -18,13 +18,29 @@ export const SpotifyStatus = () => {
 
     return (
         <div className="flex w-[100vw] rounded-md p-4 text-white">
-            <picture className="my-auto mr-4 w-20">
-                <img
-                    className="w-full rounded-md"
-                    src={sortedAlbumArt?.[1]?.url}
-                    alt={`Album art for ${item.album.name}`}
-                ></img>
-            </picture>
+            <a
+                rel="noreferrer"
+                target="_blank"
+                href={item.external_urls.spotify}
+                className="relative my-auto mr-4 w-20"
+            >
+                <picture>
+                    <img
+                        className="w-full rounded-md"
+                        src={
+                            sortedAlbumArt?.[2]?.url ??
+                            sortedAlbumArt?.[1]?.url ??
+                            sortedAlbumArt?.[0]?.url
+                        }
+                        alt={`Album art for ${item.album.name}`}
+                    ></img>
+                    <img
+                        className="absolute top-0 z-[-1] w-full rounded-md blur-md"
+                        src={sortedAlbumArt?.[0]?.url}
+                        alt={`Album art for ${item.album.name}`}
+                    ></img>
+                </picture>
+            </a>
             <div className="my-auto w-full">
                 <a
                     rel="noreferrer"
