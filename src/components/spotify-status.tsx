@@ -20,19 +20,26 @@ export const SpotifyStatus = () => {
         <div className="flex w-[100vw] rounded-md p-4 text-white">
             <picture className="my-auto mr-4 w-20">
                 <img
-                    className="w-full"
+                    className="w-full rounded-md"
                     src={sortedAlbumArt?.[1]?.url}
                     alt={`Album art for ${item.album.name}`}
                 ></img>
             </picture>
             <div className="my-auto w-full">
-                <div className="text-[.85rem] font-bold  hover:underline hover:opacity-100">
+                <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href={item.external_urls.spotify}
+                    className="text-[.85rem] font-bold hover:underline hover:opacity-100"
+                >
                     {item.name}
-                </div>
+                </a>
                 <div className="text-xs">
                     {item.artists.map((artist, i) => (
                         <span key={artist.name}>
                             <a
+                                rel="noreferrer"
+                                target="_blank"
                                 className="text-white opacity-75 transition-colors hover:underline hover:opacity-100"
                                 href={artist.external_urls.spotify}
                             >
@@ -68,7 +75,6 @@ const ProgressBar = memo(function ProgressBar({
         const interval = setInterval(() => {
             const currentTime = new Date().getTime();
             const timeSinceSnapshot = currentTime - snapshotTime;
-            console.log(timeSinceSnapshot);
 
             const newProgress = progress + timeSinceSnapshot;
             setCurrentProgress(newProgress);
@@ -95,6 +101,7 @@ interface CurrentSong {
     progress_ms: number;
     timestamp: number;
     item: Item;
+    is_playing: boolean;
 }
 
 interface Item {
@@ -103,6 +110,7 @@ interface Item {
     preview_url: string;
     album: Album;
     artists: Artist[];
+    external_urls: ExternalUrls;
 }
 
 interface Album {
