@@ -2,16 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import { memo, useEffect, useState } from 'react';
 
 export const SpotifyStatus = () => {
-    const { data: currentSong } = useQuery({
+    const { data } = useQuery({
         queryKey: ['spot'],
-        queryFn: () =>
-            fetch('/api/spot').then(
+        queryFn: async () => ({
+            currentSong: await fetch('/api/spot').then(
                 res => res.json() as unknown as CurrentSong
             ),
+            timestamp: new Date().getTime()
+        }),
         refetchInterval: 5000
     });
-    if (!currentSong) return null;
-    const item = currentSong.item;
+    if (!data?.currentSong) return null;
+    const item = data.currentSong.item;
     const sortedAlbumArt = item.album.images.sort((a, b) => a.width - b.width);
 
     return (
@@ -38,9 +40,9 @@ export const SpotifyStatus = () => {
                         </span>
                     ))}
                     <ProgressBar
-                        snapshotTime={currentSong.timestamp}
-                        progress={currentSong.progress_ms}
-                        duration={currentSong.item.duration_ms}
+                        snapshotTime={data.timestamp}
+                        progress={data.currentSong.progress_ms}
+                        duration={data.currentSong.item.duration_ms}
                     />
                 </div>
             </div>
