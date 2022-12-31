@@ -25,13 +25,15 @@ export const SpotifyStatus = () => {
                     alt={`Album art for ${item.album.name}`}
                 ></img>
             </picture>
-            <div className="w-full font-[.85rem]">
-                <div>{item.name}</div>
-                <div>
+            <div className="my-auto w-full">
+                <div className="text-[.85rem] font-bold  hover:underline hover:opacity-100">
+                    {item.name}
+                </div>
+                <div className="text-xs">
                     {item.artists.map((artist, i) => (
                         <span key={artist.name}>
                             <a
-                                className="text-white underline hover:text-gray-400"
+                                className="text-white opacity-75 transition-colors hover:underline hover:opacity-100"
                                 href={artist.external_urls.spotify}
                             >
                                 {artist.name}
@@ -39,12 +41,14 @@ export const SpotifyStatus = () => {
                             {i !== item.artists.length - 1 ? ', ' : ''}
                         </span>
                     ))}
-                    <ProgressBar
-                        snapshotTime={data.timestamp}
-                        progress={data.currentSong.progress_ms}
-                        duration={data.currentSong.item.duration_ms}
-                    />
                 </div>
+            </div>
+            <div className="absolute bottom-0 left-0 w-full">
+                <ProgressBar
+                    snapshotTime={data.timestamp}
+                    progress={data.currentSong.progress_ms}
+                    duration={data.currentSong.item.duration_ms}
+                />
             </div>
         </div>
     );
@@ -68,7 +72,7 @@ const ProgressBar = memo(function ProgressBar({
 
             const newProgress = progress + timeSinceSnapshot;
             setCurrentProgress(newProgress);
-        }, 1000);
+        }, 150);
 
         return () => {
             clearInterval(interval);
@@ -76,16 +80,14 @@ const ProgressBar = memo(function ProgressBar({
     }, [progress, snapshotTime]);
 
     const progressPercent = (currentProgress / duration) * 100;
-    const progressDate = new Date(currentProgress);
+    // const progressDate = new Date(currentProgress
+    //{/* <div className="text-xs">{`${progressDate.getMinutes()}:${progressDate.getSeconds()}`}</div> */}
     return (
-        <div>
-            <div className="h-1 w-full rounded-full bg-gray-300 pr-4">
-                <div
-                    className="m-w-full h-full rounded-full bg-[#ff5119]"
-                    style={{ width: `${progressPercent}%` }}
-                ></div>
-            </div>
-            <div className="text-xs">{`${progressDate.getMinutes()}:${progressDate.getSeconds()}`}</div>
+        <div className="h-[.2rem] w-full rounded-full ">
+            <div
+                className="m-w-full h-full rounded-full bg-[#ff5119] transition-all"
+                style={{ width: `${progressPercent}%` }}
+            ></div>
         </div>
     );
 });
