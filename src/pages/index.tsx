@@ -1,6 +1,5 @@
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
-import type { GetStaticProps } from 'next';
-import { type NextPage } from 'next';
+import { GetStaticProps, InferGetStaticPropsType, type NextPage } from 'next';
 import Head from 'next/head';
 import { lazy, Suspense } from 'react';
 import { SpotifyStatus } from '../components/spotify-status';
@@ -8,7 +7,15 @@ import { env } from '../env/server.mjs';
 
 const ShaderPlane = lazy(() => import('../components/shader-plane'));
 
-const Home: NextPage<Props> = pageProps => (
+export const getStaticProps = (async () => {
+    return {
+        props: { isProd: env.NODE_ENV === 'production' }
+    };
+}) satisfies GetStaticProps;
+
+const Home: NextPage<
+    InferGetStaticPropsType<typeof getStaticProps>
+> = pageProps => (
     <>
         <Head>
             {pageProps.isProd && (
@@ -48,13 +55,3 @@ const Home: NextPage<Props> = pageProps => (
 );
 
 export default Home;
-
-type Props = {
-    isProd: boolean;
-};
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-    return {
-        props: { isProd: env.NODE_ENV === 'production' }
-    };
-};
