@@ -1,8 +1,6 @@
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { type NextPage } from 'next';
 import { lazy, Suspense } from 'react';
-import '../components/background-material';
-import '../components/mosaic-bg';
 import { SpotifyStatus } from '../components/spotify-status';
 
 const ShaderPlane = lazy(() => import('../components/shader-plane'));

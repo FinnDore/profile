@@ -95,6 +95,7 @@ const ProgressBar = memo(function ProgressBar({
 
     useEffect(() => {
         if (paused) return;
+
         let hasInvalidated = false;
         const interval = setInterval(() => {
             const currentTime = new Date().getTime();

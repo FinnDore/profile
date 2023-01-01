@@ -6,8 +6,6 @@ import { Texture, Vector2 } from 'three';
 
 export type MosaicProps = {
     resolution: Vector2;
-    zoom: number;
-    u_mouse: Vector2;
     time: number;
     uTexture: THREE.Texture;
 };
@@ -16,9 +14,7 @@ const MosaicMaterial = shaderMaterial(
     {
         time: 0,
         resolution: new Vector2(1, 1),
-        zoom: 1,
-        uTexture: new Texture(),
-        xy: new Vector2(1, 1)
+        uTexture: new Texture()
     },
     `
 
@@ -190,7 +186,6 @@ const MosaicMaterial = shaderMaterial(
         }
 
         vec3 bgColor = texture2D(uTexture, vUv).rgb;
-
         gl_FragColor = vec4(blendColorDodge(color / 2.5, bgColor * 10.0, 3.0), 1.0);
     }
 `
