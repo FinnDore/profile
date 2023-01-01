@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
 body {
     font-family: 'Roboto';
 }
+
 #__next {
     position: relative;
     width: 100vw;
