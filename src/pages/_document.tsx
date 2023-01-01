@@ -1,5 +1,6 @@
 import type { GetStaticProps } from 'next';
 import { Head, Html, Main, NextScript } from 'next/document';
+import { env } from '../env/server.mjs';
 
 export default function document({ isProd }: Props) {
     // const isProd = process.env.NODE_ENV === 'production';
@@ -41,6 +42,6 @@ type Props = {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
     return {
-        props: { isProd: process.env.NODE_ENV === 'production' }
+        props: { isProd: env.NODE_ENV === 'production' }
     };
 };
