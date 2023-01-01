@@ -7,6 +7,9 @@ import bundleAnalyser from '@next/bundle-analyzer';
  */
 !process.env.SKIP_ENV_VALIDATION && (await import('./src/env/server.mjs'));
 
+/**
+ * @param {import("next").NextConfig | undefined} config
+ */
 function defineNextConfig(config) {
     const withBundleAnalyzer = bundleAnalyser({
         enabled: process.env.ANALYZE === 'true'
