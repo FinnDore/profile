@@ -45,7 +45,7 @@ const Home: NextPage<
                     rel="noreferrer"
                     target="_blank"
                     href="https://github.com/finndore"
-                    className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4"
+                    className="absolute right-2 bottom-3 sm:bottom-4 sm:right-4"
                 >
                     <GitHubLogoIcon color="white" width={25} height={25} />
                 </a>
