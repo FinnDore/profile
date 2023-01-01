@@ -1,3 +1,4 @@
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { type NextPage } from 'next';
 import { lazy, Suspense } from 'react';
 import '../components/background-material';
@@ -21,6 +22,14 @@ const Home: NextPage = () => {
             </div>
             <div className="absolute bottom-0 z-20">
                 <SpotifyStatus />
+                <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://github.com/finndore"
+                    className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4"
+                >
+                    <GitHubLogoIcon color="white" width={25} height={25} />
+                </a>
             </div>
         </main>
     );

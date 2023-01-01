@@ -18,7 +18,7 @@ export const SpotifyStatus = () => {
     const sortedAlbumArt = item.album.images.sort((a, b) => a.width - b.width);
 
     return (
-        <div className="spotify-status flex w-[100vw] rounded-md p-4 text-white">
+        <div className="spotify-status flex w-[100vw] rounded-md p-2 text-white sm:p-4">
             <a
                 rel="noreferrer"
                 target="_blank"

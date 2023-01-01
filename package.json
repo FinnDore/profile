@@ -11,6 +11,8 @@
     "dependencies": {
         "@fontsource/roboto": "^4.5.8",
         "@fontsource/roboto-serif": "^4.5.10",
+        "@next/bundle-analyzer": "^13.1.1",
+        "@radix-ui/react-icons": "^1.1.1",
         "@react-three/drei": "^9.48.1",
         "@react-three/fiber": "^8.9.1",
         "@tanstack/react-query": "^4.20.4",
