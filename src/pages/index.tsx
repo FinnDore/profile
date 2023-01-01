@@ -10,16 +10,16 @@ const ShaderPlane = lazy(() => import('../components/shader-plane'));
 const Home: NextPage = () => {
     return (
         <main className="h-screen w-screen ">
+            {/* <div className="relative h-full w-full overflow-hidden"> */}
             <Suspense>
-                <div className="h-screen min-h-[100vh] min-w-[1512px] overflow-hidden">
-                    <Canvas dpr={[1, 2]}>
-                        <Suspense fallback={null}>
-                            <ShaderPlane />
-                        </Suspense>
+                <div className="absolute left-0 top-0 z-0 h-[100vh] w-[100vh] min-w-[1512px]">
+                    <Canvas>
+                        <ShaderPlane />
                         {/* <Stats showPanel={0} className="stats" /> */}
                     </Canvas>
                 </div>
             </Suspense>
+            {/* </div> */}
             <div className="absolute top-0 z-10 h-screen w-full text-white bg-blend-color-dodge">
                 <div className="flex h-screen w-full">
                     <h1 className="name m-auto mb-auto text-6xl font-bold italic md:text-7xl lg:text-9xl">
