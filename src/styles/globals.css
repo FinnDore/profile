@@ -5,11 +5,11 @@
 body {
     font-family: 'Roboto';
 }
-.__next,
-body,
-html {
-    width: 100vh;
+#__next {
+    position: relative;
+    width: 100vw;
     height: 100vh;
+    overflow: hidden;
 }
 .name {
     text-shadow: 0px 4px #848484;
