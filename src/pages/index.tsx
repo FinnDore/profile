@@ -1,4 +1,3 @@
-import { Canvas } from '@react-three/fiber';
 import { type NextPage } from 'next';
 import { lazy, Suspense } from 'react';
 import '../components/background-material';
@@ -12,12 +11,8 @@ const Home: NextPage = () => {
         <main className="h-screen w-screen ">
             {/* <div className="relative h-full w-full overflow-hidden"> */}
             <Suspense>
-                <div className="absolute left-0 top-0 z-0 h-[100vh] w-[100vh] min-w-[1512px]">
-                    <Canvas>
-                        <ShaderPlane />
-                        {/* <Stats showPanel={0} className="stats" /> */}
-                    </Canvas>
-                </div>
+                <ShaderPlane />
+                {/* <Stats showPanel={0} className="stats" /> */}
             </Suspense>
             {/* </div> */}
             <div className="absolute top-0 z-10 h-screen w-full text-white bg-blend-color-dodge">

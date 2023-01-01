@@ -1,4 +1,4 @@
-import { useFrame, useLoader, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import type THREE from 'three';
 import { TextureLoader, Vector2 } from 'three';
@@ -8,6 +8,9 @@ import '../components/mosaic-bg';
 import type { MosaicProps } from '../components/mosaic-bg';
 
 const ShaderPlane = () => {
+    const lastUpdatedHeight = useRef(0);
+    const viewport = useThree(state => state.viewport);
+
     const ref = useRef<(THREE.ShaderMaterial & MosaicProps) | null>(null);
 
     const { width, height } = useThree(state => state.viewport);
@@ -28,18 +31,15 @@ const ShaderPlane = () => {
     const res = new Vector2(width, width);
 
     const [image] = useLoader(TextureLoader, ['/lines.png']);
+    const passedImage = useRef(false);
     useFrame((_state, delta) => {
         if (ref.current && zoomValue.current) {
             ref.current.time += delta;
             ref.current.resolution = res;
-            ref.current.zoom = zoomValue.current;
-            ref.current.u_mouse = u_mouse.current;
-            if (image) {
+            if (image && !passedImage.current) {
+                passedImage.current = true;
                 ref.current.uTexture = image;
             }
-            // if (ref.current.uniforms.canvasTexture?.value) {
-            //     ref.current.uniforms.canvasTexture.value.needsUpdate = true;
-            // }
         }
     });
 
@@ -48,11 +48,19 @@ const ShaderPlane = () => {
     }
 
     return (
-        <mesh scale={[width, height, 1]}>
+        <mesh scale={[width, height, 0]}>
             <planeGeometry />
             <mosaicMaterial ref={ref} toneMapped={true} uTexture={image} />
         </mesh>
     );
 };
-
-export default ShaderPlane;
+const BackgroundCanvas = () => {
+    return (
+        <div className="absolute left-0 top-0 z-0 h-[100vh] w-[100vh] min-w-[1512px]">
+            <Canvas>
+                <ShaderPlane></ShaderPlane>
+            </Canvas>
+        </div>
+    );
+};
+export default BackgroundCanvas;
