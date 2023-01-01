@@ -1,12 +1,26 @@
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import type { GetStaticProps } from 'next';
 import { type NextPage } from 'next';
+import Head from 'next/head';
 import { lazy, Suspense } from 'react';
 import { SpotifyStatus } from '../components/spotify-status';
+import { env } from '../env/server.mjs';
 
 const ShaderPlane = lazy(() => import('../components/shader-plane'));
 
-const Home: NextPage = () => {
-    return (
+const Home: NextPage<Props> = pageProps => (
+    <>
+        <Head>
+            {pageProps.isProd && (
+                <script
+                    async
+                    defer
+                    data-website-id="cb9fc9bb-db7c-4a30-a675-7a9b3052bedf"
+                    src="https://umami.finndore.dev/umami.js"
+                ></script>
+            )}
+        </Head>
+
         <main className="h-full w-full">
             <Suspense>
                 <ShaderPlane />
@@ -30,7 +44,17 @@ const Home: NextPage = () => {
                 </a>
             </div>
         </main>
-    );
-};
+    </>
+);
 
 export default Home;
+
+type Props = {
+    isProd: boolean;
+};
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+    return {
+        props: { isProd: env.NODE_ENV === 'production' }
+    };
+};

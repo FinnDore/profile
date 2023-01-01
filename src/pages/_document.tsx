@@ -1,9 +1,6 @@
-import type { GetStaticProps } from 'next';
 import { Head, Html, Main, NextScript } from 'next/document';
-import { env } from '../env/server.mjs';
 
-export default function document({ isProd }: Props) {
-    // const isProd = process.env.NODE_ENV === 'production';
+export default function document() {
     return (
         <Html
             style={{
@@ -12,15 +9,6 @@ export default function document({ isProd }: Props) {
         >
             <title>Finn</title>
             <Head>
-                {isProd && (
-                    <script
-                        async
-                        defer
-                        data-website-id="cb9fc9bb-db7c-4a30-a675-7a9b3052bedf"
-                        src="https://umami.finndore.dev/umami.js"
-                    ></script>
-                )}
-
                 <link rel="icon" href="/favicon.ico" />
                 {/* <meta
                     property="og:image"
@@ -35,13 +23,3 @@ export default function document({ isProd }: Props) {
         </Html>
     );
 }
-
-type Props = {
-    isProd: boolean;
-};
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-    return {
-        props: { isProd: env.NODE_ENV === 'production' }
-    };
-};
