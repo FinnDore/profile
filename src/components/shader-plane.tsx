@@ -56,7 +56,7 @@ const ShaderPlane = () => {
 };
 const BackgroundCanvas = () => {
     return (
-        <div className="absolute left-0 top-0 z-0 h-[100vh] w-[100vh] min-w-[1512px]">
+        <div className="absolute left-0 top-0 z-0  min-w-[1512px]">
             <Canvas>
                 <ShaderPlane></ShaderPlane>
             </Canvas>
