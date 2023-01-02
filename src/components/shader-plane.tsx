@@ -1,3 +1,4 @@
+import { Stats } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useRef } from 'react';
 import type THREE from 'three';
@@ -14,7 +15,12 @@ const ShaderPlane = () => {
     const [image] = useLoader(TextureLoader, ['/lines.png']);
     const passedImage = useRef(false);
 
-    useFrame((_state, delta) => {
+    useFrame((state, delta) => {
+        const timeUntilNextFrame = 150 - delta;
+
+        setTimeout(() => {
+            state.invalidate();
+        }, Math.max(0, timeUntilNextFrame));
         if (ref.current && zoomValue.current) {
             ref.current.time += delta;
             ref.current.resolution = res;
@@ -40,7 +46,8 @@ const ShaderPlane = () => {
 const BackgroundCanvas = () => {
     return (
         <div className="left-0 top-0 z-0 h-full min-h-screen min-w-[1512px]">
-            <Canvas>
+            <Canvas frameloop="demand">
+                <Stats />
                 <ShaderPlane></ShaderPlane>
             </Canvas>
         </div>
