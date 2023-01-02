@@ -16,7 +16,7 @@ const ShaderPlane = () => {
     const passedImage = useRef(false);
     const isMobile = useMobile();
     useFrame((state, delta) => {
-        const timeUntilNextFrame = !isMobile ? 1000 : 100 - clock.getDelta();
+        const timeUntilNextFrame = isMobile ? 1000 : 100 - clock.getDelta();
 
         setTimeout(() => {
             state.invalidate();
