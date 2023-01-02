@@ -5,6 +5,7 @@ import type THREE from 'three';
 import { Clock, TextureLoader, Vector2 } from 'three';
 import '../components/mosaic-bg';
 import type { MosaicProps } from '../components/mosaic-bg';
+import { useMobile } from '../hooks/is-mobile';
 
 const ShaderPlane = () => {
     const ref = useRef<(THREE.ShaderMaterial & MosaicProps) | null>(null);
@@ -13,9 +14,9 @@ const ShaderPlane = () => {
     const [clock] = useState(new Clock());
     const [image] = useLoader(TextureLoader, ['/lines.png']);
     const passedImage = useRef(false);
-
+    const isMobile = useMobile();
     useFrame((state, delta) => {
-        const timeUntilNextFrame = 500 - clock.getDelta();
+        const timeUntilNextFrame = !isMobile ? 1000 : 100 - clock.getDelta();
 
         setTimeout(() => {
             state.invalidate();

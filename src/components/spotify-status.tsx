@@ -93,11 +93,11 @@ const ProgressBar = memo(function ProgressBar({
 }) {
     const [currentProgress, setCurrentProgress] = useState(progress);
     const queryClient = useQueryClient();
-
     const isMobile = useMobile();
+
     useEffect(() => {
         if (paused) return;
-
+        console.log(1);
         let hasInvalidated = false;
         const interval = setInterval(
             () => {
@@ -112,7 +112,7 @@ const ProgressBar = memo(function ProgressBar({
                     queryClient.invalidateQueries(['spot']);
                 }
             },
-            isMobile ? 500 : 150
+            isMobile ? 1000 : 150
         );
 
         return () => {
