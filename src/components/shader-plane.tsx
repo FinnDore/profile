@@ -1,4 +1,3 @@
-import { Stats } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useRef, useState } from 'react';
 import type THREE from 'three';
@@ -15,12 +14,11 @@ const ShaderPlane = () => {
     const [image] = useLoader(TextureLoader, ['/lines.png']);
     const passedImage = useRef(false);
     const isMobile = useMobile();
+
     useFrame((state, delta) => {
         const timeUntilNextFrame = isMobile ? 1000 : 100 - clock.getDelta();
 
-        setTimeout(() => {
-            state.invalidate();
-        }, Math.max(0, timeUntilNextFrame));
+        setTimeout(() => state.invalidate(), Math.max(0, timeUntilNextFrame));
 
         if (ref.current) {
             ref.current.time += delta;
@@ -48,10 +46,10 @@ const BackgroundCanvas = () => {
     return (
         <div className="left-0 top-0 z-0 h-full min-h-screen min-w-[1512px]">
             <Canvas frameloop="demand">
-                <Stats />
-                <ShaderPlane></ShaderPlane>
+                <ShaderPlane />
             </Canvas>
         </div>
     );
 };
+
 export default BackgroundCanvas;

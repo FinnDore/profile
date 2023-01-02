@@ -112,7 +112,7 @@ const ProgressBar = memo(function ProgressBar({
                     queryClient.invalidateQueries(['spot']);
                 }
             },
-            isMobile ? 1000 : 150
+            isMobile ? 1000 : 200
         );
 
         return () => {
