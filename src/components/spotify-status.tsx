@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { memo, useEffect, useState } from 'react';
+import { useMobile } from '../hooks/is-mobile';
 
 export const SpotifyStatus = () => {
     const { data } = useQuery({
@@ -93,27 +94,31 @@ const ProgressBar = memo(function ProgressBar({
     const [currentProgress, setCurrentProgress] = useState(progress);
     const queryClient = useQueryClient();
 
+    const isMobile = useMobile();
     useEffect(() => {
         if (paused) return;
 
         let hasInvalidated = false;
-        const interval = setInterval(() => {
-            const currentTime = new Date().getTime();
-            const timeSinceSnapshot = currentTime - snapshotTime;
+        const interval = setInterval(
+            () => {
+                const currentTime = new Date().getTime();
+                const timeSinceSnapshot = currentTime - snapshotTime;
 
-            const newProgress = progress + timeSinceSnapshot;
-            setCurrentProgress(newProgress);
+                const newProgress = progress + timeSinceSnapshot;
+                setCurrentProgress(newProgress);
 
-            if ((newProgress / duration) * 100 >= 100 && !hasInvalidated) {
-                hasInvalidated = true;
-                queryClient.invalidateQueries(['spot']);
-            }
-        }, 150);
+                if ((newProgress / duration) * 100 >= 100 && !hasInvalidated) {
+                    hasInvalidated = true;
+                    queryClient.invalidateQueries(['spot']);
+                }
+            },
+            isMobile ? 500 : 150
+        );
 
         return () => {
             interval && clearInterval(interval);
         };
-    }, [progress, snapshotTime, paused, duration, queryClient]);
+    }, [progress, snapshotTime, paused, duration, queryClient, isMobile]);
 
     const progressPercent = (currentProgress / duration) * 100;
 
