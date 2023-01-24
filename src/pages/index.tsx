@@ -41,13 +41,16 @@ const Home: NextPage<
                     <h2 className="mb-auto italic opacity-80">
                         Ugh, i write code or something -{' '}
                         <a
-                            className="underline"
+                            className="underline transition-all hover:text-primary"
                             href="https://github.com/finndore"
                         >
                             Github
                         </a>{' '}
                         -{' '}
-                        <Link className="underline" href="/reading-list">
+                        <Link
+                            className="underline transition-all hover:text-primary"
+                            href="/reading-list"
+                        >
                             Reading list
                         </Link>
                     </h2>
