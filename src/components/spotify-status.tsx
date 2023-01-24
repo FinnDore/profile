@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { memo, useEffect, useState } from 'react';
 import { useMobile } from '../hooks/is-mobile';
+import type { CurrentSong } from '../_types/spotify';
 
 export const SpotifyStatus = () => {
     const { data } = useQuery({
@@ -133,45 +134,3 @@ const ProgressBar = memo(function ProgressBar({
         </div>
     );
 });
-
-interface CurrentSong {
-    progress_ms: number;
-    timestamp: number;
-    item: Item;
-    is_playing: boolean;
-}
-
-interface Item {
-    name: string;
-    duration_ms: number;
-    preview_url: string;
-    album: Album;
-    artists: Artist[];
-    external_urls: ExternalUrls;
-}
-
-interface Album {
-    album_type: string;
-    artists: Artist[];
-    external_urls: ExternalUrls;
-    images: Image[];
-    name: string;
-    uri: string;
-}
-
-interface Artist {
-    external_urls: ExternalUrls;
-    href: string;
-    name: string;
-    uri: string;
-}
-
-interface ExternalUrls {
-    spotify: string;
-}
-
-interface Image {
-    height: number;
-    url: string;
-    width: number;
-}

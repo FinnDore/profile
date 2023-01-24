@@ -1,8 +1,9 @@
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
-import { GetStaticProps, InferGetStaticPropsType, type NextPage } from 'next';
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { type NextPage } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 import { lazy, Suspense } from 'react';
-import { SpotifyStatus } from '../components/spotify-status';
 import { env } from '../env/server.mjs';
 
 const ShaderPlane = lazy(() => import('../components/shader-plane'));
@@ -33,14 +34,26 @@ const Home: NextPage<
                 <ShaderPlane />
             </Suspense>
             <div className="absolute top-0 z-10 h-screen w-full text-white">
-                <div className="flex h-full w-full">
-                    <h1 className="name m-auto mb-auto text-6xl font-bold italic md:text-7xl lg:text-9xl">
+                <div className="flex h-full w-full flex-col items-center">
+                    <h1 className="name mt-auto text-6xl font-bold italic md:text-7xl lg:text-9xl">
                         FINN DORE
                     </h1>
+                    <h2 className="mb-auto italic opacity-80">
+                        Ugh, i write code or something -{' '}
+                        <a
+                            className="underline"
+                            href="https://github.com/finndore"
+                        >
+                            Github
+                        </a>{' '}
+                        -{' '}
+                        <Link className="underline" href="/reading-list">
+                            Reading list
+                        </Link>
+                    </h2>
                 </div>
             </div>
             <div className="absolute bottom-0 z-20">
-                <SpotifyStatus />
                 <a
                     rel="noreferrer"
                     target="_blank"
