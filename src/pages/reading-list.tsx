@@ -54,6 +54,12 @@ const readingList = [
         authorUrl: 'https://twitter.com/fasterthanlime'
     },
     {
+        url: 'https://kentcdodds.com/blog/colocation',
+        text: 'Colocation',
+        author: 'Kent C. Dodds',
+        authorUrl: 'https://twitter.com/kentcdodds'
+    },
+    {
         url: 'https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/',
         text: 'How we built Pingora, the proxy that connects Cloudflare to the Internet'
     },
