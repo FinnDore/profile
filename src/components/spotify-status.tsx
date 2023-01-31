@@ -98,7 +98,7 @@ const ProgressBar = memo(function ProgressBar({
 
     useEffect(() => {
         if (paused) return;
-        console.log(1);
+
         let hasInvalidated = false;
         const interval = setInterval(
             () => {
