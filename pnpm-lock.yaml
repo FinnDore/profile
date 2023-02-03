@@ -5,6 +5,7 @@ specifiers:
   '@fontsource/roboto-serif': ^4.5.10
   '@next/bundle-analyzer': ^13.1.1
   '@radix-ui/react-icons': ^1.1.1
+  '@react-spring/web': ^9.6.1
   '@react-three/drei': ^9.48.1
   '@react-three/fiber': ^8.9.1
   '@tanstack/react-query': ^4.20.4
@@ -17,6 +18,7 @@ specifiers:
   '@vercel/og': ^0.0.27
   autoprefixer: ^10.4.7
   babel-plugin-glsl: ^1.0.0
+  clsx: ^1.2.1
   eslint: ^8.26.0
   eslint-config-next: 13.0.2
   glslify-loader: ^2.0.0
@@ -36,12 +38,14 @@ dependencies:
   '@fontsource/roboto-serif': 4.5.12
   '@next/bundle-analyzer': 13.1.6
   '@radix-ui/react-icons': 1.1.1_react@18.2.0
+  '@react-spring/web': 9.6.1_biqbaboplfbrettd7655fr4n2y
   '@react-three/drei': 9.56.12_7dnntvboiiatsamp6l3u3c7obu
   '@react-three/fiber': 8.10.1_4tzez3c2xpzuefjrvhpyy55bva
   '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
   '@types/three': 0.146.0
   '@vercel/og': 0.0.27
   babel-plugin-glsl: 1.0.0
+  clsx: 1.2.1
   glslify-loader: 2.0.0
   next: 13.0.2_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -391,6 +395,20 @@ packages:
 
   /@react-spring/types/9.6.1:
     resolution: {integrity: sha512-POu8Mk0hIU3lRXB3bGIGe4VHIwwDsQyoD1F394OK7STTiX9w4dG3cTLljjYswkQN+hDSHRrj4O36kuVa7KPU8Q==}
+    dev: false
+
+  /@react-spring/web/9.6.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-X2zR6q2Z+FjsWfGAmAXlQaoUHbPmfuCaXpuM6TcwXPpLE1ZD4A1eys/wpXboFQmDkjnrlTmKvpVna1MjWpZ5Hw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@react-spring/animated': 9.6.1_react@18.2.0
+      '@react-spring/core': 9.6.1_react@18.2.0
+      '@react-spring/shared': 9.6.1_react@18.2.0
+      '@react-spring/types': 9.6.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@react-three/drei/9.56.12_7dnntvboiiatsamp6l3u3c7obu:
@@ -1047,6 +1065,11 @@ packages:
 
   /client-only/0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
+    dev: false
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
     dev: false
 
   /color-convert/1.9.3:

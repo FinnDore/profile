@@ -1,8 +1,9 @@
+import { animated, useSpring } from '@react-spring/web';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
 import { useMobile } from '../hooks/is-mobile';
-import type { CurrentSong } from '../_types/spotify';
-
+import type { CurrentSong, Item } from '../_types/spotify';
 export const SpotifyStatus = () => {
     const { data } = useQuery({
         queryKey: ['spot'],
@@ -14,62 +15,28 @@ export const SpotifyStatus = () => {
         }),
         refetchInterval: 10000
     });
+    const [isHovering, setIsHovering] = useState(false);
 
     if (!data?.currentSong) return null;
-    const item = data.currentSong.item;
-    const sortedAlbumArt = item.album.images.sort((a, b) => a.width - b.width);
 
     return (
-        <div className="spotify-status flex w-[100vw] rounded-md p-2 py-3 text-white sm:p-4">
-            <a
-                rel="noreferrer"
-                target="_blank"
-                href={item.external_urls.spotify}
-                className="relative my-auto mr-4 w-20"
+        <div className="spotify-status flex w-[100vw] rounded-md p-2 py-3 text-white">
+            {/* <TopSongs isHovering={isHovering} /> */}
+
+            <div
+                className={clsx(
+                    'transition-colors border border-transparent rounded-lg ',
+                    {
+                        'bg-black/50 backdrop-blur-sm  w-min !border-[#C9C9C9]/30 ':
+                            isHovering
+                    }
+                )}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
             >
-                <picture>
-                    <img
-                        className="w-full rounded-md"
-                        src={
-                            sortedAlbumArt?.[2]?.url ??
-                            sortedAlbumArt?.[1]?.url ??
-                            sortedAlbumArt?.[0]?.url
-                        }
-                        alt={`Album art for ${item.album.name}`}
-                    ></img>
-                    <img
-                        className="absolute top-0 z-[-1] w-full rounded-md blur-md"
-                        src={sortedAlbumArt?.[0]?.url}
-                        alt={`Album art for ${item.album.name}`}
-                    ></img>
-                </picture>
-            </a>
-            <div className="my-auto w-full">
-                <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href={item.external_urls.spotify}
-                    className="text-[.85rem] font-bold hover:underline hover:opacity-100"
-                >
-                    {item.name}
-                </a>
-                <div className="text-xs">
-                    {item.artists.map((artist, i) => (
-                        <span key={artist.name}>
-                            <a
-                                rel="noreferrer"
-                                target="_blank"
-                                className="text-white opacity-75 transition-colors hover:underline hover:opacity-100"
-                                href={artist.external_urls.spotify}
-                            >
-                                {artist.name}
-                            </a>
-                            {i !== item.artists.length - 1 ? ', ' : ''}
-                        </span>
-                    ))}
-                </div>
+                <Song song={data.currentSong.item} />
             </div>
-            <div className="absolute bottom-0 left-0 w-full">
+            <div className="absolute bottom-0 left-0 w-full ">
                 <ProgressBar
                     snapshotTime={data.timestamp}
                     paused={!data.currentSong.is_playing}
@@ -80,6 +47,35 @@ export const SpotifyStatus = () => {
         </div>
     );
 };
+
+const TopSongs = memo(function TopSongs({
+    isHovering
+}: {
+    isHovering: boolean;
+}) {
+    const { data } = useQuery({
+        queryKey: ['top-songs'],
+        queryFn: async () =>
+            await fetch('/api/top-songs').then(
+                res => res.json() as unknown as Item[]
+            )
+    });
+
+    const spring = useSpring({
+        to: isHovering
+            ? { opacity: 1, transform: 'translateY(-100%)' }
+            : { opacity: 0, transform: 'translateY(0%)' }
+    });
+
+    if (!data) return null;
+    return (
+        <animated.div style={spring} className="absolute flex-col">
+            {data.map(song => (
+                <Song key={song.name} song={song} />
+            ))}
+        </animated.div>
+    );
+});
 
 const ProgressBar = memo(function ProgressBar({
     paused,
@@ -134,3 +130,60 @@ const ProgressBar = memo(function ProgressBar({
         </div>
     );
 });
+
+const Song = ({ song }: { song: Item }) => {
+    const sortedAlbumArt = song.album.images.sort((a, b) => a.width - b.width);
+
+    return (
+        <div className="spotify-status flex rounded-md text-white sm:p-4 w-max">
+            <a
+                rel="noreferrer"
+                target="_blank"
+                href={song.external_urls.spotify}
+                className="relative my-auto mr-4 w-28"
+            >
+                <picture>
+                    <img
+                        className="w-full rounded-md"
+                        src={
+                            sortedAlbumArt?.[2]?.url ??
+                            sortedAlbumArt?.[1]?.url ??
+                            sortedAlbumArt?.[0]?.url
+                        }
+                        alt={`Album art for ${song.album.name}`}
+                    ></img>
+                    <img
+                        className="absolute top-0 z-[-1] w-full rounded-md blur-md"
+                        src={sortedAlbumArt?.[0]?.url}
+                        alt={`Album art for ${song.album.name}`}
+                    ></img>
+                </picture>
+            </a>
+            <div className="my-auto w-full">
+                <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href={song.external_urls.spotify}
+                    className="text-[.85rem] font-bold hover:underline hover:opacity-100"
+                >
+                    {song.name}
+                </a>
+                <div className="text-xs">
+                    {song.artists.map((artist, i) => (
+                        <span key={artist.name}>
+                            <a
+                                rel="noreferrer"
+                                target="_blank"
+                                className="text-white opacity-75 transition-colors hover:underline hover:opacity-100"
+                                href={artist.external_urls.spotify}
+                            >
+                                {artist.name}
+                            </a>
+                            {i !== song.artists.length - 1 ? ', ' : ''}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
