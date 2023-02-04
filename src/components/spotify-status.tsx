@@ -16,15 +16,15 @@ export const SpotifyStatus = () => {
         }),
         refetchInterval: 10000
     });
-    const [isHovering, setIsHovering] = useState(false);
+    const [isHovering, setIsHovering] = useState(true);
 
     if (!data?.currentSong) return null;
 
     return (
-        <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md  text-white">
+        <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md pointer-events-none text-white">
             <div
                 className={clsx(
-                    'transition-colors border border-transparent rounded-lg w-max max-w-full mx-1 my-2 px-1 py-1 sm:p-0',
+                    'pointer-events-auto transition-colors border border-transparent rounded-lg w-max max-w-full mx-1 my-2 px-1 py-1 sm:p-0',
                     {
                         'bg-black/50 backdrop-blur-sm !border-[#C9C9C9]/30 ':
                             isHovering

@@ -13,7 +13,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     return (
         <QueryClientProvider client={queryClient}>
             <Component {...pageProps} />
-            <div className="absolute bottom-0 z-20">
+            <div className="absolute bottom-0 z-20 pointer-events-none">
                 <SpotifyStatus />
             </div>
         </QueryClientProvider>
