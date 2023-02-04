@@ -118,7 +118,14 @@ const Song = ({ song, small }: { song: Item; small?: boolean }) => {
     const sortedAlbumArt = song.album.images.sort((a, b) => a.width - b.width);
 
     return (
-        <div className="spotify-status flex rounded-md text-white p-2 sm:p-4">
+        <div
+            className={clsx(
+                'spotify-status flex rounded-md text-white p-2 sm:p-4',
+                {
+                    'sm:py-2': small
+                }
+            )}
+        >
             <a
                 rel="noreferrer"
                 target="_blank"
