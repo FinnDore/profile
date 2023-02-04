@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
 import { useMobile } from '../hooks/is-mobile';
 import type { CurrentSong, Item } from '../_types/spotify';
+
 export const SpotifyStatus = () => {
     const { data } = useQuery({
         queryKey: ['spot'],
@@ -16,7 +17,36 @@ export const SpotifyStatus = () => {
         }),
         refetchInterval: 10000
     });
-    const [isHovering, setIsHovering] = useState(false);
+    const [isHovering, setIsHovering] = useState(true);
+
+    const spring = useSpring({
+        to: isHovering
+            ? {
+                  opacity: 1,
+                  transform: 'translateY(0%)',
+                  background: 'rgba(0,0,0,0.5)',
+                  borderColor: 'rgba(201, 201, 201, 0.3)'
+              }
+            : {
+                  opacity: 0,
+                  transform: 'translateY(10%)',
+                  borderColor: 'transparent'
+              },
+        config: config.stiff
+    });
+
+    const spring2 = useSpring({
+        to: isHovering
+            ? {
+                  opacity: 1,
+                  transform: 'translateY(0%)'
+              }
+            : {
+                  opacity: 0,
+                  transform: 'translateY(10%)'
+              },
+        config: config.stiff
+    });
 
     if (!data?.currentSong) return null;
 
@@ -24,28 +54,35 @@ export const SpotifyStatus = () => {
         <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md pointer-events-none text-white">
             <div
                 className={clsx(
-                    'pointer-events-auto transition-colors border border-transparent rounded-lg w-max max-w-full mx-1 my-2 px-1 py-1 sm:p-0',
+                    'pointer-events-auto relative w-max max-w-full mx-1 my-2 px-1 py-1 sm:p-0',
                     {
-                        'bg-black/50 backdrop-blur-sm !border-[#C9C9C9]/30 ':
-                            isHovering
+                        'bg-black/50  !border-[#C9C9C9]/30 ': isHovering
                     }
                 )}
-                onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
             >
-                <TopSongs isHovering={isHovering} />
-                {isHovering && (
-                    <>
-                        <Separator className="mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
-                        <h2 className="px-4 uppercase font-bold text-xs">
-                            Currently playing:
-                        </h2>
-                    </>
-                )}
-                <Song song={data.currentSong.item} />
+                <animated.div style={spring2}>
+                    <h2 className="px-4 uppercase font-bold text-xs pt-2 sm:pt-4">
+                        My top songs:
+                    </h2>
+
+                    <TopSongs isHovering={isHovering} />
+                    <Separator className="mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
+                    <h2 className="px-4 uppercase font-bold text-xs">
+                        Currently playing:
+                    </h2>
+                </animated.div>
+                <div onMouseEnter={() => setIsHovering(true)}>
+                    <Song song={data.currentSong.item} />
+                </div>
+
+                <animated.div
+                    style={spring}
+                    className="backdrop-blur-sm rounded-lg border absolute w-full h-full top-0 -z-10"
+                ></animated.div>
             </div>
 
-            <div className="absolute bottom-0 left-0 w-full">
+            <div className="absolute bottom-0 left-0 w-full ">
                 <ProgressBar
                     snapshotTime={data.timestamp}
                     paused={!data.currentSong.is_playing}
@@ -70,16 +107,9 @@ const TopSongs = memo(function TopSongs({
             )
     });
 
-    const spring = useSpring({
-        to: isHovering
-            ? { opacity: 1, transform: 'translateY(0%)' }
-            : { opacity: 0, transform: 'translateY(10%)' },
-        config: config.stiff
-    });
-
     if (!data) return null;
     return (
-        <animated.div style={spring} className="flex-col">
+        <animated.div className="flex-col">
             {data.map(song => (
                 <Song key={song.name} song={song} />
             ))}
