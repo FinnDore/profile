@@ -17,7 +17,7 @@ export const SpotifyStatus = () => {
         }),
         refetchInterval: 10000
     });
-    const [isHovering, setIsHovering] = useState(true);
+    const [isHovering, setIsHovering] = useState(false);
 
     const spring = useSpring({
         to: isHovering
@@ -94,11 +94,7 @@ export const SpotifyStatus = () => {
     );
 };
 
-const TopSongs = memo(function TopSongs({
-    isHovering
-}: {
-    isHovering: boolean;
-}) {
+const TopSongs = memo(function TopSongs() {
     const { data } = useQuery({
         queryKey: ['top-songs'],
         queryFn: async () =>
