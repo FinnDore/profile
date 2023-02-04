@@ -16,7 +16,7 @@ export const SpotifyStatus = () => {
         }),
         refetchInterval: 10000
     });
-    const [isHovering, setIsHovering] = useState(true);
+    const [isHovering, setIsHovering] = useState(false);
 
     if (!data?.currentSong) return null;
 
