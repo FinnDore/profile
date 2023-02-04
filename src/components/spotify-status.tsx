@@ -20,23 +20,23 @@ export const SpotifyStatus = () => {
     if (!data?.currentSong) return null;
 
     return (
-        <div className="spotify-status flex w-[100vw] rounded-md p-2 py-3 text-white">
-            {/* <TopSongs isHovering={isHovering} /> */}
-
+        <div className="spotify-status flex w-[100vw] flex-col rounded-md p-2 py-3 text-white">
             <div
                 className={clsx(
-                    'transition-colors border border-transparent rounded-lg ',
+                    'transition-colors border border-transparent rounded-lg w-max ',
                     {
-                        'bg-black/50 backdrop-blur-sm  w-min !border-[#C9C9C9]/30 ':
+                        'bg-black/50 backdrop-blur-sm !border-[#C9C9C9]/30 ':
                             isHovering
                     }
                 )}
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
             >
+                <TopSongs isHovering={isHovering} />
                 <Song song={data.currentSong.item} />
             </div>
-            <div className="absolute bottom-0 left-0 w-full ">
+
+            <div className="absolute bottom-0 left-0 w-full">
                 <ProgressBar
                     snapshotTime={data.timestamp}
                     paused={!data.currentSong.is_playing}
@@ -63,13 +63,13 @@ const TopSongs = memo(function TopSongs({
 
     const spring = useSpring({
         to: isHovering
-            ? { opacity: 1, transform: 'translateY(-100%)' }
-            : { opacity: 0, transform: 'translateY(0%)' }
+            ? { opacity: 1, transform: 'translateY(0%)' }
+            : { opacity: 0, transform: 'translateY(10%)' }
     });
 
     if (!data) return null;
     return (
-        <animated.div style={spring} className="absolute flex-col">
+        <animated.div style={spring} className="flex-col">
             {data.map(song => (
                 <Song key={song.name} song={song} />
             ))}
@@ -120,7 +120,7 @@ const ProgressBar = memo(function ProgressBar({
     const progressPercent = (currentProgress / duration) * 100;
 
     return (
-        <div className="h-[.2rem] w-full rounded-full ">
+        <div className="h-[.2rem] w-full rounded-full">
             <div
                 className="m-w-full h-full rounded-full bg-[#ff5119] transition-all"
                 style={{
@@ -135,14 +135,14 @@ const Song = ({ song }: { song: Item }) => {
     const sortedAlbumArt = song.album.images.sort((a, b) => a.width - b.width);
 
     return (
-        <div className="spotify-status flex rounded-md text-white sm:p-4 w-max">
+        <div className="spotify-status flex rounded-md text-white sm:p-4">
             <a
                 rel="noreferrer"
                 target="_blank"
                 href={song.external_urls.spotify}
-                className="relative my-auto mr-4 w-28"
+                className="relative my-auto mr-4 min-w-[5.5rem] w-[5.5rem]"
             >
-                <picture>
+                <picture className="">
                     <img
                         className="w-full rounded-md"
                         src={
