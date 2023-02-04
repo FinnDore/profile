@@ -66,12 +66,13 @@ export const SpotifyStatus = () => {
                         My top songs:
                     </h2>
 
-                    <TopSongs isHovering={isHovering} />
+                    <TopSongs />
                     <Separator className="mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
                     <h2 className="px-4 uppercase font-bold text-xs">
                         Currently playing:
                     </h2>
                 </animated.div>
+
                 <div onMouseEnter={() => setIsHovering(true)}>
                     <Song song={data.currentSong.item} />
                 </div>
@@ -107,11 +108,71 @@ const TopSongs = memo(function TopSongs() {
     return (
         <animated.div className="flex-col">
             {data.map(song => (
-                <Song key={song.name} song={song} />
+                <Song key={song.name} song={song} small={true} />
             ))}
         </animated.div>
     );
 });
+
+const Song = ({ song, small }: { song: Item; small?: boolean }) => {
+    const sortedAlbumArt = song.album.images.sort((a, b) => a.width - b.width);
+
+    return (
+        <div className="spotify-status flex rounded-md text-white p-2 sm:p-4">
+            <a
+                rel="noreferrer"
+                target="_blank"
+                href={song.external_urls.spotify}
+                className={clsx('relative my-auto mr-4', {
+                    'w-[5rem] min-w-[5rem]': !small,
+                    'w-[3.5rem] min-w-[3.5rem]': small
+                })}
+            >
+                <picture>
+                    <img
+                        className="w-full rounded-md"
+                        src={
+                            sortedAlbumArt?.[2]?.url ??
+                            sortedAlbumArt?.[1]?.url ??
+                            sortedAlbumArt?.[0]?.url
+                        }
+                        alt={`Album art for ${song.album.name}`}
+                    ></img>
+                    <img
+                        className="absolute top-0 z-[-1] w-full rounded-md blur-md"
+                        src={sortedAlbumArt?.[0]?.url}
+                        alt={`Album art for ${song.album.name}`}
+                    ></img>
+                </picture>
+            </a>
+            <div className="my-auto w-full">
+                <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href={song.external_urls.spotify}
+                    className="text-[.85rem] font-bold hover:underline hover:opacity-100"
+                >
+                    {song.name}
+                </a>
+                <div className="text-xs">
+                    {song.artists.map((artist, i) => (
+                        <span key={artist.name}>
+                            <a
+                                rel="noreferrer"
+                                target="_blank"
+                                className="text-white opacity-75 transition-colors hover:underline hover:opacity-100"
+                                href={artist.external_urls.spotify}
+                            >
+                                {artist.name}
+                            </a>
+                            {i !== song.artists.length - 1 ? ', ' : ''}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const ProgressBar = memo(function ProgressBar({
     paused,
@@ -166,60 +227,3 @@ const ProgressBar = memo(function ProgressBar({
         </div>
     );
 });
-
-const Song = ({ song }: { song: Item }) => {
-    const sortedAlbumArt = song.album.images.sort((a, b) => a.width - b.width);
-
-    return (
-        <div className="spotify-status flex rounded-md text-white p-2 sm:p-4">
-            <a
-                rel="noreferrer"
-                target="_blank"
-                href={song.external_urls.spotify}
-                className="relative my-auto mr-4 min-w-[5.5rem] w-[5.5rem]"
-            >
-                <picture className="">
-                    <img
-                        className="w-full rounded-md"
-                        src={
-                            sortedAlbumArt?.[2]?.url ??
-                            sortedAlbumArt?.[1]?.url ??
-                            sortedAlbumArt?.[0]?.url
-                        }
-                        alt={`Album art for ${song.album.name}`}
-                    ></img>
-                    <img
-                        className="absolute top-0 z-[-1] w-full rounded-md blur-md"
-                        src={sortedAlbumArt?.[0]?.url}
-                        alt={`Album art for ${song.album.name}`}
-                    ></img>
-                </picture>
-            </a>
-            <div className="my-auto w-full">
-                <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href={song.external_urls.spotify}
-                    className="text-[.85rem] font-bold hover:underline hover:opacity-100"
-                >
-                    {song.name}
-                </a>
-                <div className="text-xs">
-                    {song.artists.map((artist, i) => (
-                        <span key={artist.name}>
-                            <a
-                                rel="noreferrer"
-                                target="_blank"
-                                className="text-white opacity-75 transition-colors hover:underline hover:opacity-100"
-                                href={artist.external_urls.spotify}
-                            >
-                                {artist.name}
-                            </a>
-                            {i !== song.artists.length - 1 ? ', ' : ''}
-                        </span>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-};
