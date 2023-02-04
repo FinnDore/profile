@@ -1,3 +1,4 @@
+import { Separator } from '@radix-ui/react-separator';
 import { animated, useSpring } from '@react-spring/web';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -20,10 +21,10 @@ export const SpotifyStatus = () => {
     if (!data?.currentSong) return null;
 
     return (
-        <div className="spotify-status flex w-[100vw] flex-col rounded-md p-2 py-3 text-white">
+        <div className="spotify-status flex w-[100vw] max-w-[98vw] flex-col rounded-md  text-white">
             <div
                 className={clsx(
-                    'transition-colors border border-transparent rounded-lg w-max ',
+                    'transition-colors border border-transparent rounded-lg w-max mx-1 my-2 px-1 py-1 sm:p-0',
                     {
                         'bg-black/50 backdrop-blur-sm !border-[#C9C9C9]/30 ':
                             isHovering
@@ -33,6 +34,14 @@ export const SpotifyStatus = () => {
                 onMouseLeave={() => setIsHovering(false)}
             >
                 <TopSongs isHovering={isHovering} />
+                {isHovering && (
+                    <>
+                        <Separator className="mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
+                        <h2 className="px-4 uppercase font-bold text-xs">
+                            Currently playing:
+                        </h2>
+                    </>
+                )}
                 <Song song={data.currentSong.item} />
             </div>
 
@@ -135,7 +144,7 @@ const Song = ({ song }: { song: Item }) => {
     const sortedAlbumArt = song.album.images.sort((a, b) => a.width - b.width);
 
     return (
-        <div className="spotify-status flex rounded-md text-white sm:p-4">
+        <div className="spotify-status flex rounded-md text-white p-2 sm:p-4">
             <a
                 rel="noreferrer"
                 target="_blank"
