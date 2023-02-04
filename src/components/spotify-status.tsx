@@ -1,5 +1,5 @@
 import { Separator } from '@radix-ui/react-separator';
-import { animated, useSpring } from '@react-spring/web';
+import { animated, config, useSpring } from '@react-spring/web';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
@@ -21,10 +21,10 @@ export const SpotifyStatus = () => {
     if (!data?.currentSong) return null;
 
     return (
-        <div className="spotify-status flex w-[100vw] max-w-[98vw] flex-col rounded-md  text-white">
+        <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md  text-white">
             <div
                 className={clsx(
-                    'transition-colors border border-transparent rounded-lg w-max mx-1 my-2 px-1 py-1 sm:p-0',
+                    'transition-colors border border-transparent rounded-lg w-max max-w-full mx-1 my-2 px-1 py-1 sm:p-0',
                     {
                         'bg-black/50 backdrop-blur-sm !border-[#C9C9C9]/30 ':
                             isHovering
@@ -73,7 +73,8 @@ const TopSongs = memo(function TopSongs({
     const spring = useSpring({
         to: isHovering
             ? { opacity: 1, transform: 'translateY(0%)' }
-            : { opacity: 0, transform: 'translateY(10%)' }
+            : { opacity: 0, transform: 'translateY(10%)' },
+        config: config.stiff
     });
 
     if (!data) return null;
