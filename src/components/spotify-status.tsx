@@ -62,13 +62,13 @@ export const SpotifyStatus = () => {
                 onMouseLeave={() => setIsHovering(false)}
             >
                 <animated.div style={spring2}>
-                    <h2 className="px-4 uppercase font-bold text-xs pt-2 sm:pt-4">
+                    <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-2 sm:pt-4">
                         My top songs:
                     </h2>
 
                     <TopSongs />
-                    <Separator className="mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
-                    <h2 className="px-4 uppercase font-bold text-xs">
+                    <Separator className="mx-4 sm:mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
+                    <h2 className="sm:px-4 px-2 uppercase font-bold text-xs">
                         Currently playing:
                     </h2>
                 </animated.div>
@@ -157,7 +157,12 @@ const Song = ({ song, small }: { song: Item; small?: boolean }) => {
                     rel="noreferrer"
                     target="_blank"
                     href={song.external_urls.spotify}
-                    className="text-[.85rem] font-bold hover:underline hover:opacity-100"
+                    className={clsx(
+                        'text-[.85rem] font-bold hover:underline hover:opacity-100',
+                        {
+                            'text-[.7rem]': small
+                        }
+                    )}
                 >
                     {song.name}
                 </a>
@@ -167,7 +172,12 @@ const Song = ({ song, small }: { song: Item; small?: boolean }) => {
                             <a
                                 rel="noreferrer"
                                 target="_blank"
-                                className="text-white opacity-75 transition-colors hover:underline hover:opacity-100"
+                                className={clsx(
+                                    'text-white opacity-75 transition-colors hover:underline hover:opacity-100',
+                                    {
+                                        'text-[.7rem]': small
+                                    }
+                                )}
                                 href={artist.external_urls.spotify}
                             >
                                 {artist.name}
