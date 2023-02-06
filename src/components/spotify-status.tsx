@@ -24,7 +24,6 @@ export const SpotifyStatus = () => {
             ? {
                   opacity: 1,
                   transform: 'translateY(0%)',
-                  background: 'rgba(0,0,0,0.5)',
                   borderColor: 'rgba(201, 201, 201, 0.3)'
               }
             : {
@@ -53,21 +52,22 @@ export const SpotifyStatus = () => {
     return (
         <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md pointer-events-none text-white">
             <div
-                className={clsx(
-                    'pointer-events-auto relative w-max max-w-full mx-1 my-2 px-1 py-1 sm:p-0',
-                    {
-                        'bg-black/50  !border-[#C9C9C9]/30 ': isHovering
-                    }
-                )}
+                className="pointer-events-auto relative w-max max-w-full mx-1 my-2 px-1 py-1 sm:p-0"
                 onMouseLeave={() => setIsHovering(false)}
             >
-                <animated.div style={spring2}>
-                    <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-2 sm:pt-4">
+                <animated.div
+                    style={spring2}
+                    className={clsx({
+                        'pointer-events-none': !isHovering
+                    })}
+                >
+                    <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4">
                         My top songs:
                     </h2>
 
                     <TopSongs />
                     <Separator className="mx-4 sm:mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
+
                     <h2 className="sm:px-4 px-2 uppercase font-bold text-xs">
                         Currently playing:
                     </h2>
@@ -79,7 +79,7 @@ export const SpotifyStatus = () => {
 
                 <animated.div
                     style={spring}
-                    className="backdrop-blur-sm rounded-lg border absolute w-full h-full top-0 -z-10"
+                    className=" backdrop-blur-sm rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
                 ></animated.div>
             </div>
 
@@ -120,7 +120,7 @@ const Song = ({ song, small }: { song: Item; small?: boolean }) => {
     return (
         <div
             className={clsx(
-                'spotify-status flex rounded-md text-white p-2 sm:p-4',
+                'spotify-status flex rounded-md text-white px-2 py-1 sm:p-4',
                 {
                     'sm:py-2': small
                 }
