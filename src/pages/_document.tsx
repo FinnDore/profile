@@ -10,11 +10,12 @@ export default function document() {
             <title>Finn</title>
             <Head>
                 <link rel="icon" href="/favicon.ico" />
-                {/* <meta
-                    property="og:image"
-                    content="https://thoogle.finndore.dev/cover.webp"
-                /> */}
-                {/* <meta name="twitter:card" content="summary_large_image"></meta> */}
+                <script
+                    async
+                    defer
+                    data-website-id="0acffcd3-e206-4840-bfb2-68c89da2e36e"
+                    src="https://umami.finndore.dev/umami.js"
+                ></script>
             </Head>
             <body>
                 <Main />
