@@ -3,8 +3,8 @@ import { animated, config, useSpring } from '@react-spring/web';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
-import { useMobile } from '../hooks/is-mobile';
 import type { CurrentSong, Item } from '../_types/spotify';
+import { useMobile } from '../hooks/is-mobile';
 
 export const SpotifyStatus = () => {
     const { data } = useQuery({
@@ -79,7 +79,7 @@ export const SpotifyStatus = () => {
 
                 <animated.div
                     style={spring}
-                    className=" backdrop-blur-sm rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
+                    className="min-w-[250px] backdrop-blur-sm rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
                 ></animated.div>
             </div>
 
