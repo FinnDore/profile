@@ -11,7 +11,7 @@ const ShaderPlane = () => {
     const { width, height } = useThree(state => state.viewport);
     const res = new Vector2(width, width);
     const [clock] = useState(new Clock());
-    const [image] = useLoader(TextureLoader, ['/lines.png']);
+    const [image] = useLoader(TextureLoader, ['/lines.webp']);
     const passedImage = useRef(false);
     const isMobile = useMobile();
 
