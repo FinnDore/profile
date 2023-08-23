@@ -56,16 +56,6 @@ const Home: NextPage<
                     </h2>
                 </div>
             </div>
-            <div className="absolute bottom-0 z-20">
-                <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href="https://github.com/finndore"
-                    className="absolute right-2 bottom-3 sm:bottom-4 sm:right-4"
-                >
-                    <GitHubLogoIcon color="white" width={25} height={25} />
-                </a>
-            </div>
         </main>
     </>
 );

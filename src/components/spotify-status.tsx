@@ -74,16 +74,16 @@ export const SpotifyStatus = () => {
                 </animated.div>
 
                 <div onMouseEnter={() => setIsHovering(true)}>
-                    <Song song={data.currentSong.item} />
+                    <Song song={data.currentSong.item} border={true} />
                 </div>
 
                 <animated.div
                     style={spring}
-                    className="min-w-[250px] backdrop-blur-sm rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
+                    className="min-w-[250px] backdrop-blur-[2px] rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
                 ></animated.div>
             </div>
 
-            <div className="absolute bottom-0 left-0 w-full ">
+            <div className="absolute bottom-0 left-0 w-full">
                 <ProgressBar
                     snapshotTime={data.timestamp}
                     paused={!data.currentSong.is_playing}
@@ -114,7 +114,15 @@ const TopSongs = memo(function TopSongs() {
     );
 });
 
-const Song = ({ song, small }: { song: Item; small?: boolean }) => {
+const Song = ({
+    song,
+    small,
+    border
+}: {
+    song: Item;
+    small?: boolean;
+    border?: boolean;
+}) => {
     const sortedAlbumArt = song.album.images.sort((a, b) => a.width - b.width);
 
     return (
@@ -137,7 +145,9 @@ const Song = ({ song, small }: { song: Item; small?: boolean }) => {
             >
                 <picture>
                     <img
-                        className="w-full rounded-md"
+                        className={clsx('w-full rounded-md', {
+                            'border-white/30 border': border
+                        })}
                         src={
                             sortedAlbumArt?.[2]?.url ??
                             sortedAlbumArt?.[1]?.url ??
@@ -145,6 +155,7 @@ const Song = ({ song, small }: { song: Item; small?: boolean }) => {
                         }
                         alt={`Album art for ${song.album.name}`}
                     ></img>
+
                     <img
                         className="absolute top-0 z-[-1] w-full rounded-md blur-md"
                         src={sortedAlbumArt?.[0]?.url}
