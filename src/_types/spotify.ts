@@ -1,30 +1,30 @@
 export interface CurrentSong {
-    progress_ms: number;
+    progressMs: number;
     timestamp: number;
     item: Item;
-    is_playing: boolean;
+    isPlaying: boolean;
 }
 
 export interface Item {
     name: string;
-    duration_ms: number;
-    preview_url: string;
+    durationMs: number;
+    previewUrl: string;
     album: Album;
     artists: Artist[];
-    external_urls: ExternalUrls;
+    externalUrls: ExternalUrls;
 }
 
 export interface Album {
-    album_type: string;
+    albumType: string;
     artists: Artist[];
-    external_urls: ExternalUrls;
+    externalUrls: ExternalUrls;
     images: Image[];
     name: string;
     uri: string;
 }
 
 export interface Artist {
-    external_urls: ExternalUrls;
+    externalUrls: ExternalUrls;
     href: string;
     name: string;
     uri: string;

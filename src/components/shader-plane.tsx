@@ -21,7 +21,7 @@ const ShaderPlane = () => {
         setTimeout(() => state.invalidate(), Math.max(0, timeUntilNextFrame));
 
         if (ref.current) {
-            ref.current.time += delta;
+            ref.current.time += delta + 2;
             ref.current.resolution = res;
             if (image && !passedImage.current) {
                 passedImage.current = true;
