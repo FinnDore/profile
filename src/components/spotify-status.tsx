@@ -7,6 +7,7 @@ import type { CurrentSong, Item } from '../_types/spotify';
 import { useMobile } from '../hooks/is-mobile';
 
 export const SpotifyStatus = () => {
+    const [isHovering, setIsHovering] = useState(false);
     const { data } = useQuery({
         queryKey: ['spot'],
         queryFn: async () => ({
@@ -17,7 +18,6 @@ export const SpotifyStatus = () => {
         }),
         refetchInterval: 10000
     });
-    const [isHovering, setIsHovering] = useState(false);
 
     const spring = useSpring({
         to: isHovering
@@ -86,9 +86,9 @@ export const SpotifyStatus = () => {
             <div className="absolute bottom-0 left-0 w-full">
                 <ProgressBar
                     snapshotTime={data.timestamp}
-                    paused={!data.currentSong.is_playing}
-                    progress={data.currentSong.progress_ms}
-                    duration={data.currentSong.item.duration_ms}
+                    paused={!data.currentSong.isPlaying}
+                    progress={data.currentSong.progressMs}
+                    duration={data.currentSong.item.durationMs}
                 />
             </div>
         </div>
@@ -137,7 +137,7 @@ const Song = ({
             <a
                 rel="noreferrer"
                 target="_blank"
-                href={song.external_urls.spotify}
+                href={song.externalUrls.spotify}
                 className={clsx('relative my-auto mr-4', {
                     'w-[5rem] min-w-[5rem]': !small,
                     'w-[3.5rem] min-w-[3.5rem]': small
@@ -167,7 +167,7 @@ const Song = ({
                 <a
                     rel="noreferrer"
                     target="_blank"
-                    href={song.external_urls.spotify}
+                    href={song.externalUrls.spotify}
                     className={clsx(
                         'text-[.85rem] font-bold hover:underline hover:opacity-100',
                         {
@@ -189,7 +189,7 @@ const Song = ({
                                         'text-[.7rem]': small
                                     }
                                 )}
-                                href={artist.external_urls.spotify}
+                                href={artist.externalUrls.spotify}
                             >
                                 {artist.name}
                             </a>
