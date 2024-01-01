@@ -1,12 +1,21 @@
+import {
+    PauseIcon,
+    PlayIcon,
+    TrackNextIcon,
+    TrackPreviousIcon
+} from '@radix-ui/react-icons';
 import { Separator } from '@radix-ui/react-separator';
 import { animated, config, useSpring } from '@react-spring/web';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { memo, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { clamp } from 'three/src/math/MathUtils';
 import type { CurrentSong, Item } from '../_types/spotify';
 import { useMobile } from '../hooks/is-mobile';
 
 export const SpotifyStatus = () => {
+    const session = useSession();
     const [isHovering, setIsHovering] = useState(false);
     const { data } = useQuery({
         queryKey: ['spot'],
@@ -51,36 +60,42 @@ export const SpotifyStatus = () => {
 
     return (
         <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md pointer-events-none text-white">
-            <div
-                className="pointer-events-auto relative w-max max-w-full mx-1 my-2 px-1 py-1 sm:p-0"
-                onMouseLeave={() => setIsHovering(false)}
-            >
-                <animated.div
-                    style={spring2}
-                    className={clsx({
-                        'pointer-events-none': !isHovering
-                    })}
+            <div className="pointer-events-auto relative w-full max-w-full mx-1 my-2 px-1 py-1 sm:p-0 flex justify-between">
+                <div
+                    className="relative"
+                    onMouseLeave={() => setIsHovering(false)}
                 >
-                    <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4">
-                        My top songs:
-                    </h2>
+                    <animated.div
+                        style={spring2}
+                        className={clsx({
+                            'pointer-events-none': !isHovering
+                        })}
+                    >
+                        <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4">
+                            My top songs:
+                        </h2>
 
-                    <TopSongs />
-                    <Separator className="mx-4 sm:mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
+                        <TopSongs />
+                        <Separator className="mx-4 sm:mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
 
-                    <h2 className="sm:px-4 px-2 uppercase font-bold text-xs">
-                        Currently playing:
-                    </h2>
-                </animated.div>
+                        <h2 className="sm:px-4 px-2 uppercase font-bold text-xs">
+                            Currently playing:
+                        </h2>
+                    </animated.div>
 
-                <div onMouseEnter={() => setIsHovering(true)}>
-                    <Song song={data.currentSong.item} border={true} />
+                    <div onMouseEnter={() => setIsHovering(true)}>
+                        <Song song={data.currentSong.item} border={true} />
+                    </div>
+
+                    <animated.div
+                        style={spring}
+                        className="min-w-[250px] backdrop-blur-[2px] rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
+                    ></animated.div>
                 </div>
 
-                <animated.div
-                    style={spring}
-                    className="min-w-[250px] backdrop-blur-[2px] rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
-                ></animated.div>
+                {session.data?.user.verified && (
+                    <Controls currentSong={data.currentSong} />
+                )}
             </div>
 
             <div className="absolute bottom-0 left-0 w-full">
@@ -228,7 +243,15 @@ const ProgressBar = memo(function ProgressBar({
 
                 const newProgress = progress + timeSinceSnapshot;
                 setCurrentProgress(newProgress);
-
+                navigator.mediaSession.setPositionState({
+                    duration: Math.floor(duration / 1000),
+                    playbackRate: 1,
+                    position: clamp(
+                        Math.floor(newProgress / 1000),
+                        0,
+                        duration / 1000
+                    )
+                });
                 if ((newProgress / duration) * 100 >= 100 && !hasInvalidated) {
                     hasInvalidated = true;
                     queryClient.invalidateQueries(['spot']);
@@ -255,3 +278,139 @@ const ProgressBar = memo(function ProgressBar({
         </div>
     );
 });
+
+const Controls = (props: { currentSong: CurrentSong }) => {
+    const videoRef = useRef<HTMLAudioElement | null>(null);
+    const queryClient = useQueryClient();
+
+    const setIsPlaying = useCallback(
+        async (isPlaying: boolean) =>
+            queryClient.setQueryData(
+                ['spot'],
+                (
+                    data:
+                        | {
+                              currentSong: CurrentSong;
+                              timestamp: number;
+                          }
+                        | undefined
+                ) =>
+                    data
+                        ? {
+                              ...data,
+                              currentSong: {
+                                  ...data.currentSong,
+                                  isPlaying: isPlaying
+                              }
+                          }
+                        : undefined
+            ),
+        [queryClient]
+    );
+
+    const nextTrack = useCallback(async () => {
+        await fetch('/api/player/next');
+        queryClient.invalidateQueries(['spot']);
+        videoRef.current?.play();
+        setIsPlaying(true);
+    }, [queryClient, setIsPlaying]);
+
+    const previousTrack = useCallback(async () => {
+        await fetch('/api/player/previous');
+        queryClient.invalidateQueries(['spot']);
+        videoRef.current?.play();
+
+        setIsPlaying(true);
+    }, [queryClient, setIsPlaying]);
+
+    const pause = useCallback(async () => {
+        await fetch('/api/player/pause');
+        queryClient.invalidateQueries(['spot']);
+        videoRef.current?.pause();
+        setIsPlaying(false);
+    }, [queryClient, setIsPlaying]);
+
+    const play = useCallback(async () => {
+        await fetch('/api/player/play');
+
+        queryClient.invalidateQueries(['spot']);
+        videoRef.current?.play();
+        setIsPlaying(true);
+    }, [queryClient, setIsPlaying]);
+
+    useEffect(() => {
+        navigator.mediaSession.setActionHandler('previoustrack', previousTrack);
+        navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
+        navigator.mediaSession.setActionHandler('pause', pause);
+        navigator.mediaSession.setActionHandler('play', play);
+        window.addEventListener(
+            'keydown',
+            e => {
+                switch (e.code) {
+                    case 'KeyK':
+                        play();
+                        break;
+                    case 'KeyJ':
+                        pause();
+                        break;
+                    case 'KeyL':
+                        nextTrack();
+                        break;
+                    case 'KeyH':
+                        previousTrack();
+                        break;
+                }
+            },
+            { passive: true }
+        );
+    }, [nextTrack, pause, play, previousTrack]);
+
+    useEffect(() => {
+        if (props.currentSong.isPlaying) {
+            videoRef.current?.play();
+        } else {
+            videoRef.current?.pause();
+        }
+
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: props.currentSong.item.name,
+            artist: props.currentSong.item.artists
+                .map(artist => artist.name)
+                .join(', '),
+            album: props.currentSong.item.album.name,
+            artwork: props.currentSong.item.album.images.map(image => ({
+                src: image.url,
+                sizes: `${image.width}x${image.height}`
+            }))
+        });
+
+        document.title = `${props.currentSong.item.name} • ${props.currentSong.item.artists[0]?.name}`;
+    }, [props.currentSong]);
+
+    return (
+        <div className={'relative mt-auto h-max'}>
+            <div className="absolute bg-black/80 blur-lg w-full h-full"></div>
+            <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
+                <TrackPreviousIcon onClick={nextTrack} width={20} height={20} />
+            </button>
+
+            <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
+                {!props.currentSong.isPlaying ? (
+                    <PlayIcon onClick={play} width={20} height={20} />
+                ) : (
+                    <PauseIcon onClick={pause} width={20} height={20} />
+                )}
+            </button>
+            <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
+                <TrackNextIcon onClick={nextTrack} width={20} height={20} />
+            </button>
+            <audio
+                className="hidden"
+                src="yes.mp3"
+                loop={true}
+                autoPlay={true}
+                ref={videoRef}
+            />
+        </div>
+    );
+};
