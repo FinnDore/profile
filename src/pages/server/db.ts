@@ -19,6 +19,7 @@ export const prisma =
             env.NODE_ENV === 'development'
                 ? ['query', 'error', 'warn']
                 : ['error']
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any);
 
 if (env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
