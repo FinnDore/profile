@@ -14,7 +14,7 @@ export default function document() {
                     async
                     defer
                     data-website-id="0acffcd3-e206-4840-bfb2-68c89da2e36e"
-                    src="https://umami.finndore.dev/umami.js"
+                    src="https://umami.finndore.dev/script.js"
                 ></script>
             </Head>
             <body>
