@@ -1,7 +1,7 @@
 import { createClient } from '@libsql/client';
 import { PrismaLibSQL } from '@prisma/adapter-libsql';
 import { PrismaClient } from '@prisma/client';
-import { env } from '../../env/server.mjs';
+import { env } from '../env/server.mjs';
 
 const libsql = createClient({
     url: `${process.env.DATABASE_URL}`,

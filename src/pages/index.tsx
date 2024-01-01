@@ -1,9 +1,8 @@
-import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { type NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { lazy, Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import { env } from '../env/server.mjs';
 
 const ShaderPlane = lazy(() => import('../components/shader-plane'));

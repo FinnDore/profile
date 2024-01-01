@@ -12,10 +12,13 @@ const player = async (req: NextApiRequest, res: NextApiResponse) => {
         req,
         res
     });
-    console.log(session);
-    if (!session.user.verified) return res.status(401).end();
+
+    if (!session?.user.verified) return res.status(401).end();
+
     await fetch(
-        `http://127.0.0.1:3001/player/${encodeURIComponent(req.query.state)}`,
+        `http://spot.finndore.dev/player/${encodeURIComponent(
+            req.query.state
+        )}`,
         {
             method: 'post',
             headers: {

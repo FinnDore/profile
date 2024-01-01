@@ -1,12 +1,27 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { GetServerSidePropsContext } from 'next';
-import type { DefaultSession } from 'next-auth';
+import type { AuthOptions, DefaultSession, Session } from 'next-auth';
 import NextAuth, { getServerSession } from 'next-auth';
 import type { SendVerificationRequestParams } from 'next-auth/providers';
 import EmailProvider from 'next-auth/providers/email';
 import { Resend } from 'resend';
 import { env } from '../../../env/server.mjs';
-import { prisma } from '../../server/db';
+import { prisma } from '../../../server/db';
+
+declare module 'next-auth' {
+    interface Session extends DefaultSession {
+        user: {
+            id: string;
+            verified: boolean;
+        } & DefaultSession['user'];
+    }
+
+    // interface User {
+    //   // ...other properties
+    //   // role: UserRole;
+    // }
+}
+
 export const resend = new Resend(env.RESEND_API_KEY);
 
 export const sendVerificationRequest = async (
@@ -24,7 +39,7 @@ export const sendVerificationRequest = async (
     }
 };
 
-export const authOptions = {
+export const authOptions: AuthOptions = {
     // Configure one or more authentication providers
     providers: [
         EmailProvider({
@@ -34,10 +49,12 @@ export const authOptions = {
     ],
     adapter: PrismaAdapter(prisma),
     callbacks: {
-        session({ session, user }: any) {
+        session({ session, user }) {
             if (session.user) {
                 session.user.id = user.id;
-                session.user.verified = user.verified;
+                session.user.verified = (
+                    user as unknown as Session['user']
+                ).verified;
             }
             return session;
         }
@@ -45,20 +62,6 @@ export const authOptions = {
 };
 
 export default NextAuth(authOptions);
-
-declare module 'next-auth' {
-    interface Session extends DefaultSession {
-        user: {
-            id: string;
-            verified: boolean;
-        } & DefaultSession['user'];
-    }
-
-    // interface User {
-    //   // ...other properties
-    //   // role: UserRole;
-    // }
-}
 
 export const getServerAuthSession = (ctx: {
     req: GetServerSidePropsContext['req'];
