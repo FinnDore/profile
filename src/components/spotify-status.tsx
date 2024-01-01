@@ -1,8 +1,14 @@
+import {
+    PauseIcon,
+    PlayIcon,
+    TrackNextIcon,
+    TrackPreviousIcon
+} from '@radix-ui/react-icons';
 import { Separator } from '@radix-ui/react-separator';
 import { animated, config, useSpring } from '@react-spring/web';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import type { CurrentSong, Item } from '../_types/spotify';
 import { useMobile } from '../hooks/is-mobile';
 
@@ -52,35 +58,39 @@ export const SpotifyStatus = () => {
     return (
         <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md pointer-events-none text-white">
             <div
-                className="pointer-events-auto relative w-max max-w-full mx-1 my-2 px-1 py-1 sm:p-0"
+                className="pointer-events-auto relative w-full max-w-full mx-1 my-2 px-1 py-1 sm:p-0 flex justify-between"
                 onMouseLeave={() => setIsHovering(false)}
             >
-                <animated.div
-                    style={spring2}
-                    className={clsx({
-                        'pointer-events-none': !isHovering
-                    })}
-                >
-                    <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4">
-                        My top songs:
-                    </h2>
+                <div className="relative">
+                    <animated.div
+                        style={spring2}
+                        className={clsx({
+                            'pointer-events-none': !isHovering
+                        })}
+                    >
+                        <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4">
+                            My top songs:
+                        </h2>
 
-                    <TopSongs />
-                    <Separator className="mx-4 sm:mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
+                        <TopSongs />
+                        <Separator className="mx-4 sm:mx-8 bg-[#C9C9C9]/20 h-0.5 my-3 rounded " />
 
-                    <h2 className="sm:px-4 px-2 uppercase font-bold text-xs">
-                        Currently playing:
-                    </h2>
-                </animated.div>
+                        <h2 className="sm:px-4 px-2 uppercase font-bold text-xs">
+                            Currently playing:
+                        </h2>
+                    </animated.div>
 
-                <div onMouseEnter={() => setIsHovering(true)}>
-                    <Song song={data.currentSong.item} border={true} />
+                    <div onMouseEnter={() => setIsHovering(true)}>
+                        <Song song={data.currentSong.item} border={true} />
+                    </div>
+
+                    <animated.div
+                        style={spring}
+                        className="min-w-[250px] backdrop-blur-[2px] rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
+                    ></animated.div>
                 </div>
 
-                <animated.div
-                    style={spring}
-                    className="min-w-[250px] backdrop-blur-[2px] rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
-                ></animated.div>
+                <Controls paused={!data.currentSong?.isPlaying} />
             </div>
 
             <div className="absolute bottom-0 left-0 w-full">
@@ -255,3 +265,103 @@ const ProgressBar = memo(function ProgressBar({
         </div>
     );
 });
+
+const Controls = (props: { paused: boolean }) => {
+    const videoRef = useRef<HTMLAudioElement | null>(null);
+    const queryClient = useQueryClient();
+
+    const setIsPlaying = useCallback(
+        async (isPlaying: boolean) =>
+            queryClient.setQueryData(
+                ['spot'],
+                (
+                    data:
+                        | {
+                              currentSong: CurrentSong;
+                              timestamp: number;
+                          }
+                        | undefined
+                ) =>
+                    data
+                        ? {
+                              ...data,
+                              currentSong: {
+                                  ...data.currentSong,
+                                  isPlaying: isPlaying
+                              }
+                          }
+                        : undefined
+            ),
+        [queryClient]
+    );
+
+    const nextTrack = useCallback(async () => {
+        await fetch('/api/player/next');
+        queryClient.invalidateQueries(['spot']);
+        videoRef.current?.play();
+        setIsPlaying(true);
+    }, [queryClient, setIsPlaying]);
+
+    const previousTrack = useCallback(async () => {
+        await fetch('/api/player/previous');
+        queryClient.invalidateQueries(['spot']);
+        videoRef.current?.play();
+
+        setIsPlaying(true);
+    }, [queryClient, setIsPlaying]);
+
+    const pause = useCallback(async () => {
+        await fetch('/api/player/pause');
+        queryClient.invalidateQueries(['spot']);
+        videoRef.current?.pause();
+        setIsPlaying(false);
+    }, [queryClient, setIsPlaying]);
+
+    const play = useCallback(async () => {
+        await fetch('/api/player/play');
+
+        queryClient.invalidateQueries(['spot']);
+        videoRef.current?.play();
+        setIsPlaying(true);
+    }, [queryClient, setIsPlaying]);
+
+    useEffect(() => {
+        navigator.mediaSession.setActionHandler('previoustrack', previousTrack);
+        navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
+        navigator.mediaSession.setActionHandler('pause', pause);
+        navigator.mediaSession.setActionHandler('play', play);
+    }, [nextTrack, pause, play, previousTrack]);
+
+    useEffect(() => {
+        if (props.paused) {
+            videoRef.current?.pause();
+        } else {
+            videoRef.current?.play();
+        }
+    }, [props.paused]);
+
+    return (
+        <div className="mt-auto h-max">
+            <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
+                <TrackPreviousIcon onClick={nextTrack} width={20} height={20} />
+            </button>
+
+            <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
+                {props.paused ? (
+                    <PlayIcon onClick={play} width={20} height={20} />
+                ) : (
+                    <PauseIcon onClick={pause} width={20} height={20} />
+                )}
+            </button>
+            <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
+                <TrackNextIcon onClick={nextTrack} width={20} height={20} />
+            </button>
+            <audio
+                className="hidden"
+                src="http://localhost:3000/c.mp4"
+                loop={true}
+                ref={videoRef}
+            />
+        </div>
+    );
+};
