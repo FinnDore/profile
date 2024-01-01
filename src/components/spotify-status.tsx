@@ -249,7 +249,11 @@ const ProgressBar = memo(function ProgressBar({
                 navigator.mediaSession.setPositionState({
                     duration: Math.floor(duration / 1000),
                     playbackRate: 1,
-                    position: clamp(Math.floor(newProgress / 1000), 0, duration)
+                    position: clamp(
+                        Math.floor(newProgress / 1000),
+                        0,
+                        duration / 1000
+                    )
                 });
                 if ((newProgress / duration) * 100 >= 100 && !hasInvalidated) {
                     hasInvalidated = true;
@@ -382,7 +386,8 @@ const Controls = (props: { currentSong: CurrentSong }) => {
                 sizes: `${image.width}x${image.height}`
             }))
         });
-        console.log(navigator.mediaSession.metadata);
+
+        document.title = `${props.currentSong.item.name} • ${props.currentSong.item.artists[0]?.name}`;
     }, [props.currentSong]);
 
     return (
@@ -404,7 +409,7 @@ const Controls = (props: { currentSong: CurrentSong }) => {
             </button>
             <audio
                 className="hidden"
-                src="http://localhost:3000/c.mp4"
+                src="yes.mp3"
                 loop={true}
                 autoPlay={true}
                 ref={videoRef}
