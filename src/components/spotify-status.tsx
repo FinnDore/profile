@@ -249,7 +249,7 @@ const ProgressBar = memo(function ProgressBar({
                     position: clamp(
                         Math.floor(newProgress / 1000),
                         0,
-                        duration / 1000
+                        Math.floor(duration / 1000)
                     )
                 });
                 if ((newProgress / duration) * 100 >= 100 && !hasInvalidated) {
@@ -312,6 +312,7 @@ const Controls = (props: { currentSong: CurrentSong }) => {
         await fetch('/api/player/next');
         queryClient.invalidateQueries(['spot']);
         videoRef.current?.play();
+        console.log('next');
         setIsPlaying(true);
     }, [queryClient, setIsPlaying]);
 
@@ -319,7 +320,7 @@ const Controls = (props: { currentSong: CurrentSong }) => {
         await fetch('/api/player/previous');
         queryClient.invalidateQueries(['spot']);
         videoRef.current?.play();
-
+        console.log('previous');
         setIsPlaying(true);
     }, [queryClient, setIsPlaying]);
 
@@ -333,13 +334,17 @@ const Controls = (props: { currentSong: CurrentSong }) => {
     const play = useCallback(async () => {
         await fetch('/api/player/play');
 
+        console.log('play');
         queryClient.invalidateQueries(['spot']);
         videoRef.current?.play();
         setIsPlaying(true);
     }, [queryClient, setIsPlaying]);
 
     useEffect(() => {
-        navigator.mediaSession.setActionHandler('previoustrack', previousTrack);
+        navigator.mediaSession.setActionHandler(
+            'previoustrack',
+            () => void previousTrack()
+        );
         navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
         navigator.mediaSession.setActionHandler('pause', pause);
         navigator.mediaSession.setActionHandler('play', play);
@@ -391,7 +396,11 @@ const Controls = (props: { currentSong: CurrentSong }) => {
         <div className={'relative mt-auto h-max'}>
             <div className="absolute bg-black/80 blur-lg w-full h-full"></div>
             <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
-                <TrackPreviousIcon onClick={nextTrack} width={20} height={20} />
+                <TrackPreviousIcon
+                    onClick={previousTrack}
+                    width={20}
+                    height={20}
+                />
             </button>
 
             <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">

@@ -15,7 +15,7 @@ const player = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!session?.user.verified) return res.status(401).end();
 
-    await fetch(
+    const spotResponse = await fetch(
         `https://spot.finndore.dev/player/${encodeURIComponent(
             req.query.state
         )}`,
@@ -26,7 +26,12 @@ const player = async (req: NextApiRequest, res: NextApiResponse) => {
             }
         }
     );
-    res.status(200).end();
+    if (spotResponse.status !== 200) {
+        console.log('error: ', spotResponse.statusText);
+        res.status(500).end();
+    } else {
+        res.status(200).end();
+    }
 };
 
 export default player;
