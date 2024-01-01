@@ -7,7 +7,11 @@ import { z } from 'zod';
  */
 export const serverSchema = z.object({
     NODE_ENV: z.enum(['development', 'test', 'production']),
-    EXTERNAL_AUTH_TOKEN: z.string().min(1)
+    EXTERNAL_AUTH_TOKEN: z.string().min(1),
+    RESEND_API_KEY: z.string().min(1),
+    JWT_SECRET: z.string().min(25),
+    DATABASE_URL: z.string().min(1),
+    TURSO_AUTH_TOKEN: z.string().min(1)
 });
 
 /**

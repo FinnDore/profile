@@ -9,7 +9,13 @@ import '../styles/globals.css';
 
 const queryClient = new QueryClient();
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+const MyApp: AppType = ({
+    Component,
+    pageProps
+}: {
+    Component: any;
+    pageProps: any;
+}) => {
     return (
         <QueryClientProvider client={queryClient}>
             <Component {...pageProps} />

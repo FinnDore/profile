@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { env } from '../../../env/server.mjs';
+import { getServerAuthSession } from '../auth/[...nextauth]';
 
 const player = async (req: NextApiRequest, res: NextApiResponse) => {
     if (typeof req.query.state !== 'string') {
@@ -7,6 +8,12 @@ const player = async (req: NextApiRequest, res: NextApiResponse) => {
         return;
     }
 
+    const session = await getServerAuthSession({
+        req,
+        res
+    });
+    console.log(session);
+    if (!session.user.verified) return res.status(401).end();
     await fetch(
         `http://127.0.0.1:3001/player/${encodeURIComponent(req.query.state)}`,
         {

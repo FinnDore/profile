@@ -8,11 +8,13 @@ import { Separator } from '@radix-ui/react-separator';
 import { animated, config, useSpring } from '@react-spring/web';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
+import { SessionProvider, signIn, useSession } from 'next-auth/react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import type { CurrentSong, Item } from '../_types/spotify';
 import { useMobile } from '../hooks/is-mobile';
 
 export const SpotifyStatus = () => {
+    // const session = useSession();
     const [isHovering, setIsHovering] = useState(false);
     const { data } = useQuery({
         queryKey: ['spot'],
@@ -57,18 +59,21 @@ export const SpotifyStatus = () => {
 
     return (
         <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md pointer-events-none text-white">
-            <div
-                className="pointer-events-auto relative w-full max-w-full mx-1 my-2 px-1 py-1 sm:p-0 flex justify-between"
-                onMouseLeave={() => setIsHovering(false)}
-            >
-                <div className="relative">
+            <div className="pointer-events-auto relative w-full max-w-full mx-1 my-2 px-1 py-1 sm:p-0 flex justify-between">
+                <div
+                    className="relative"
+                    onMouseLeave={() => setIsHovering(false)}
+                >
                     <animated.div
                         style={spring2}
                         className={clsx({
                             'pointer-events-none': !isHovering
                         })}
                     >
-                        <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4">
+                        <h2
+                            className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4"
+                            onClick={() => signIn()}
+                        >
                             My top songs:
                         </h2>
 
@@ -90,7 +95,9 @@ export const SpotifyStatus = () => {
                     ></animated.div>
                 </div>
 
-                <Controls paused={!data.currentSong?.isPlaying} />
+                <SessionProvider>
+                    <Controls paused={!data.currentSong?.isPlaying} />
+                </SessionProvider>
             </div>
 
             <div className="absolute bottom-0 left-0 w-full">
@@ -269,6 +276,7 @@ const ProgressBar = memo(function ProgressBar({
 const Controls = (props: { paused: boolean }) => {
     const videoRef = useRef<HTMLAudioElement | null>(null);
     const queryClient = useQueryClient();
+    const session = useSession();
 
     const setIsPlaying = useCallback(
         async (isPlaying: boolean) =>
@@ -341,7 +349,11 @@ const Controls = (props: { paused: boolean }) => {
     }, [props.paused]);
 
     return (
-        <div className="mt-auto h-max">
+        <div
+            className={clsx('relative mt-auto h-max', {
+                hidden: !session.data?.user.verified
+            })}
+        >
             <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
                 <TrackPreviousIcon onClick={nextTrack} width={20} height={20} />
             </button>
@@ -360,8 +372,10 @@ const Controls = (props: { paused: boolean }) => {
                 className="hidden"
                 src="http://localhost:3000/c.mp4"
                 loop={true}
+                autoPlay={true}
                 ref={videoRef}
             />
+            <div className="absolute bg-black/70 blur-lg w-full h-full"></div>
         </div>
     );
 };
