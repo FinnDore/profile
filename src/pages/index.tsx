@@ -23,7 +23,7 @@ const Home: NextPage<
                     async
                     defer
                     data-website-id="cb9fc9bb-db7c-4a30-a675-7a9b3052bedf"
-                    src="https://umami.finndore.dev/umami.js"
+                    src="https://umami.finndore.dev/script.js"
                 ></script>
             )}
         </Head>

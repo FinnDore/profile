@@ -10,12 +10,6 @@ export default function document() {
             <title>Finn</title>
             <Head>
                 <link rel="icon" href="/favicon.ico" />
-                <script
-                    async
-                    defer
-                    data-website-id="0acffcd3-e206-4840-bfb2-68c89da2e36e"
-                    src="https://umami.finndore.dev/script.js"
-                ></script>
             </Head>
             <body>
                 <Main />
