@@ -8,7 +8,7 @@ import { Separator } from '@radix-ui/react-separator';
 import { animated, config, useSpring } from '@react-spring/web';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { clamp } from 'three/src/math/MathUtils';
 import type { CurrentSong, Item } from '../_types/spotify';
@@ -71,10 +71,7 @@ export const SpotifyStatus = () => {
                             'pointer-events-none': !isHovering
                         })}
                     >
-                        <h2
-                            className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4"
-                            onClick={() => signIn()}
-                        >
+                        <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4">
                             My top songs:
                         </h2>
 
