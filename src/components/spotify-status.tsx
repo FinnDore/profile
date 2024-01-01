@@ -8,13 +8,13 @@ import { Separator } from '@radix-ui/react-separator';
 import { animated, config, useSpring } from '@react-spring/web';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { SessionProvider, signIn, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import type { CurrentSong, Item } from '../_types/spotify';
 import { useMobile } from '../hooks/is-mobile';
 
 export const SpotifyStatus = () => {
-    // const session = useSession();
+    const session = useSession();
     const [isHovering, setIsHovering] = useState(false);
     const { data } = useQuery({
         queryKey: ['spot'],
@@ -95,9 +95,9 @@ export const SpotifyStatus = () => {
                     ></animated.div>
                 </div>
 
-                <SessionProvider>
+                {session.data?.user.verified && (
                     <Controls paused={!data.currentSong?.isPlaying} />
-                </SessionProvider>
+                )}
             </div>
 
             <div className="absolute bottom-0 left-0 w-full">
@@ -276,7 +276,6 @@ const ProgressBar = memo(function ProgressBar({
 const Controls = (props: { paused: boolean }) => {
     const videoRef = useRef<HTMLAudioElement | null>(null);
     const queryClient = useQueryClient();
-    const session = useSession();
 
     const setIsPlaying = useCallback(
         async (isPlaying: boolean) =>
@@ -338,6 +337,26 @@ const Controls = (props: { paused: boolean }) => {
         navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
         navigator.mediaSession.setActionHandler('pause', pause);
         navigator.mediaSession.setActionHandler('play', play);
+        window.addEventListener(
+            'keydown',
+            e => {
+                switch (e.code) {
+                    case 'KeyK':
+                        play();
+                        break;
+                    case 'KeyJ':
+                        pause();
+                        break;
+                    case 'KeyL':
+                        nextTrack();
+                        break;
+                    case 'KeyH':
+                        previousTrack();
+                        break;
+                }
+            },
+            { passive: true }
+        );
     }, [nextTrack, pause, play, previousTrack]);
 
     useEffect(() => {
@@ -349,11 +368,7 @@ const Controls = (props: { paused: boolean }) => {
     }, [props.paused]);
 
     return (
-        <div
-            className={clsx('relative mt-auto h-max', {
-                hidden: !session.data?.user.verified
-            })}
-        >
+        <div className={'relative mt-auto h-max'}>
             <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
                 <TrackPreviousIcon onClick={nextTrack} width={20} height={20} />
             </button>
