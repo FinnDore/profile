@@ -16,7 +16,7 @@ const player = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!session?.user.verified) return res.status(401).end();
 
     await fetch(
-        `http://spot.finndore.dev/player/${encodeURIComponent(
+        `https://spot.finndore.dev/player/${encodeURIComponent(
             req.query.state
         )}`,
         {
