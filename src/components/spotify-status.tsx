@@ -10,6 +10,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { signIn, useSession } from 'next-auth/react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { clamp } from 'three/src/math/MathUtils';
 import type { CurrentSong, Item } from '../_types/spotify';
 import { useMobile } from '../hooks/is-mobile';
 
@@ -96,7 +97,7 @@ export const SpotifyStatus = () => {
                 </div>
 
                 {session.data?.user.verified && (
-                    <Controls paused={!data.currentSong?.isPlaying} />
+                    <Controls currentSong={data.currentSong} />
                 )}
             </div>
 
@@ -245,7 +246,11 @@ const ProgressBar = memo(function ProgressBar({
 
                 const newProgress = progress + timeSinceSnapshot;
                 setCurrentProgress(newProgress);
-
+                navigator.mediaSession.setPositionState({
+                    duration: Math.floor(duration / 1000),
+                    playbackRate: 1,
+                    position: clamp(Math.floor(newProgress / 1000), 0, duration)
+                });
                 if ((newProgress / duration) * 100 >= 100 && !hasInvalidated) {
                     hasInvalidated = true;
                     queryClient.invalidateQueries(['spot']);
@@ -273,7 +278,7 @@ const ProgressBar = memo(function ProgressBar({
     );
 });
 
-const Controls = (props: { paused: boolean }) => {
+const Controls = (props: { currentSong: CurrentSong }) => {
     const videoRef = useRef<HTMLAudioElement | null>(null);
     const queryClient = useQueryClient();
 
@@ -360,21 +365,35 @@ const Controls = (props: { paused: boolean }) => {
     }, [nextTrack, pause, play, previousTrack]);
 
     useEffect(() => {
-        if (props.paused) {
-            videoRef.current?.pause();
-        } else {
+        if (props.currentSong.isPlaying) {
             videoRef.current?.play();
+        } else {
+            videoRef.current?.pause();
         }
-    }, [props.paused]);
+
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: props.currentSong.item.name,
+            artist: props.currentSong.item.artists
+                .map(artist => artist.name)
+                .join(', '),
+            album: props.currentSong.item.album.name,
+            artwork: props.currentSong.item.album.images.map(image => ({
+                src: image.url,
+                sizes: `${image.width}x${image.height}`
+            }))
+        });
+        console.log(navigator.mediaSession.metadata);
+    }, [props.currentSong]);
 
     return (
         <div className={'relative mt-auto h-max'}>
+            <div className="absolute bg-black/80 blur-lg w-full h-full"></div>
             <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
                 <TrackPreviousIcon onClick={nextTrack} width={20} height={20} />
             </button>
 
             <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
-                {props.paused ? (
+                {!props.currentSong.isPlaying ? (
                     <PlayIcon onClick={play} width={20} height={20} />
                 ) : (
                     <PauseIcon onClick={pause} width={20} height={20} />
@@ -390,7 +409,6 @@ const Controls = (props: { paused: boolean }) => {
                 autoPlay={true}
                 ref={videoRef}
             />
-            <div className="absolute bg-black/70 blur-lg w-full h-full"></div>
         </div>
     );
 };
