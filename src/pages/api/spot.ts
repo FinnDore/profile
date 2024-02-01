@@ -10,5 +10,5 @@ const spot = async (req: NextApiRequest, res: NextApiResponse) => {
 export default spot;
 
 export const config = {
-    runtime: 'edge'
+    runtime: 'experimental-edge'
 };
