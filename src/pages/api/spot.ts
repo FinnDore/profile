@@ -1,10 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
-const spot = async (req: NextApiRequest, res: NextApiResponse) => {
-    const spotRes = await fetch('https://spot.finndore.dev', {});
-
-    const spotData = await spotRes.json();
-    res.status(200).json(spotData);
+const spot = async () => {
+    return Response.json(
+        await (await fetch('https://spot.finndore.dev', {})).json()
+    );
 };
 
 export default spot;
