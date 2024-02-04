@@ -1,6 +1,6 @@
 const spot = async () => {
-    return Response.json(
-        await (await fetch('https://spot.finndore.dev', {})).json()
+    return new Response(
+        await (await fetch('https://spot.finndore.dev', {})).text()
     );
 };
 
