@@ -8,7 +8,7 @@ export interface CurrentSong {
 export interface Item {
     name: string;
     durationMs: number;
-    previewUrl: string;
+    previewUrl?: string;
     album: Album;
     artists: Artist[];
     externalUrls: ExternalUrls;
