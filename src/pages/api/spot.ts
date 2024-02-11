@@ -1,6 +1,7 @@
 const spot = async () => {
+    console.log('INFO: Requesting current song');
     return new Response(
-        await (await fetch('https://spot.finndore.dev', {})).text()
+        await (await fetch('https://spot.finndore.dev')).text()
     );
 };
 

@@ -15,6 +15,7 @@ const player = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!session?.user.verified) return res.status(401).end();
 
+    console.log(`INFO: changing player state ${req.query.state}`);
     const spotResponse = await fetch(
         `https://spot.finndore.dev/player/${encodeURIComponent(
             req.query.state
