@@ -99,6 +99,7 @@ export const SpotifyStatus = () => {
                 {session.data?.user.verified && (
                     <Controls currentSong={data.currentSong} />
                 )}
+                {true && <Controls currentSong={data.currentSong} />}
             </div>
 
             <div className="absolute bottom-0 left-0 w-full">
@@ -396,7 +397,7 @@ const Controls = (props: { currentSong: CurrentSong }) => {
     }, [props.currentSong]);
 
     return (
-        <div className={'relative mt-auto h-max'}>
+        <div className="relative mt-auto h-max pointer-events-auto">
             <div className="absolute bg-black/80 blur-lg w-full h-full"></div>
             <button className="transition-opacity hover:opacity-90 opacity-60 px-2 py-1 sm:py-4">
                 <TrackPreviousIcon
