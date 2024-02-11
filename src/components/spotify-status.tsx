@@ -60,9 +60,9 @@ export const SpotifyStatus = () => {
 
     return (
         <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md pointer-events-none text-white">
-            <div className="pointer-events-auto relative w-full max-w-full mx-1 my-2 px-1 py-1 sm:p-0 flex justify-between">
+            <div className="relative w-full max-w-full mx-1 my-2 px-1 py-1 sm:p-0 flex justify-between">
                 <div
-                    className="relative"
+                    className="relative pointer-events-auto"
                     onMouseLeave={() => setIsHovering(false)}
                 >
                     <animated.div
@@ -83,7 +83,10 @@ export const SpotifyStatus = () => {
                         </h2>
                     </animated.div>
 
-                    <div onMouseEnter={() => setIsHovering(true)}>
+                    <div
+                        onMouseEnter={() => setIsHovering(true)}
+                        className="pointer-events-auto"
+                    >
                         <Song song={data.currentSong.item} border={true} />
                     </div>
 
