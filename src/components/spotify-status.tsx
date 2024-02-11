@@ -99,7 +99,6 @@ export const SpotifyStatus = () => {
                 {session.data?.user.verified && (
                     <Controls currentSong={data.currentSong} />
                 )}
-                {true && <Controls currentSong={data.currentSong} />}
             </div>
 
             <div className="absolute bottom-0 left-0 w-full">
