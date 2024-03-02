@@ -21,9 +21,8 @@ const Home: NextPage<
             {pageProps.isProd && (
                 <script
                     async
-                    defer
-                    data-website-id="cb9fc9bb-db7c-4a30-a675-7a9b3052bedf"
                     src="https://umami.finndore.dev/script.js"
+                    data-website-id="0acffcd3-e206-4840-bfb2-68c89da2e36e"
                 ></script>
             )}
         </Head>
