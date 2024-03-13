@@ -1,7 +1,6 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { type NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { Suspense, lazy } from 'react';
 import { env } from '../env/server.mjs';
 
@@ -45,12 +44,12 @@ const Home: NextPage<
                             Github
                         </a>{' '}
                         -{' '}
-                        <Link
+                        <a
+                            href="https://arc.net/folder/3824DB56-5972-45E9-BE4C-D0460E501044"
                             className="underline transition-all hover:text-rose-500"
-                            href="/reading-list"
                         >
-                            Reading list
-                        </Link>
+                            Projects
+                        </a>
                     </h2>
                 </div>
             </div>
