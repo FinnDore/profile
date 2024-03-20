@@ -62,16 +62,16 @@ export const SpotifyStatus = () => {
         <div className="spotify-status flex w-[calc(100vw-.5rem)] max-w-[calc(100vw-0.5rem)] flex-col rounded-md pointer-events-none text-white">
             <div className="relative w-full max-w-full mx-1 my-2 px-1 py-1 sm:p-0 flex justify-between">
                 <div
-                    className="relative pointer-events-auto"
+                    className="relative pointer-events-none"
                     onMouseLeave={() => setIsHovering(false)}
                 >
                     <animated.div
                         style={spring2}
                         className={clsx({
-                            'pointer-events-none': !isHovering
+                            'pointer-events-auto': isHovering
                         })}
                     >
-                        <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-1 sm:pt-4">
+                        <h2 className="px-2 sm:px-4 uppercase font-bold text-xs pt-2 sm:pt-4">
                             My top songs:
                         </h2>
 
@@ -92,7 +92,12 @@ export const SpotifyStatus = () => {
 
                     <animated.div
                         style={spring}
-                        className="min-w-[250px] backdrop-blur-[2px] rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference"
+                        className={clsx(
+                            'min-w-[250px] backdrop-blur-[2px] rounded-lg bg-black/50 border absolute w-full h-full top-0 -z-10 bg-blend-difference',
+                            {
+                                'pointer-events-auto': isHovering
+                            }
+                        )}
                     ></animated.div>
                 </div>
 
@@ -146,7 +151,7 @@ const Song = ({
     return (
         <div
             className={clsx(
-                'spotify-status flex rounded-md text-white px-2 py-1 sm:p-4',
+                'spotify-status flex rounded-md text-white px-2 py-2 sm:p-4',
                 {
                     'sm:py-2': small
                 }
