@@ -5,7 +5,7 @@ import '@fontsource/roboto';
 import '@fontsource/roboto-serif';
 import '@fontsource/roboto/900.css';
 import { SessionProvider } from 'next-auth/react';
-import { SpotifyStatus } from '../components/spotify-status';
+import { SpotifyStatus } from '../../components/spotify-status';
 import '../styles/globals.css';
 
 const queryClient = new QueryClient();

@@ -2,9 +2,9 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { type NextPage } from 'next';
 import Head from 'next/head';
 import { Suspense, lazy } from 'react';
-import { env } from '../env/server.mjs';
+import { env } from '../../env/server.mjs';
 
-const ShaderPlane = lazy(() => import('../components/shader-plane'));
+const ShaderPlane = lazy(() => import('../../components/shader-plane'));
 
 export const getStaticProps = (async () => {
     return {
