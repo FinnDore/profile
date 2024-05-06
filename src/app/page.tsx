@@ -167,7 +167,7 @@ function AlbumCover(props: { album: Album }) {
             <picture>
                 <img
                     className="album-shadow h-full w-full rounded-2xl border border-white/60"
-                    src={props.album.images[0]!.url}
+                    src={props.album.images[0]?.url ?? "TODO"}
                     alt="TODO"
                 />
             </picture>
