@@ -19,23 +19,25 @@ const queryClient = new QueryClient();
 /* eslint-disable @next/next/no-img-element */
 export default function Page() {
     return (
-        <main className="grid h-screen flex-col place-content-center bg-white">
-            <img
-                className="relative m-auto aspect-auto max-h-[70vh] contrast-125 md:hidden"
-                src="/finn-sm.webp"
-                alt="Picture with the text 'finn'"
-            />
-            <img
-                className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] contrast-125 md:block"
-                src="/finn-crop.webp"
-                alt="Picture with the text 'finn'"
-            />
-            <QueryClientProvider client={queryClient}>
-                <div className="absolute bottom-0 flex w-full justify-between px-4">
-                    <Spot />
-                    <Github />
-                </div>
-            </QueryClientProvider>
+        <main className="flex h-screen flex-col bg-white">
+            <div className="relative m-auto w-screen md:w-auto">
+                <img
+                    className="relative m-auto aspect-auto max-h-[70vh] contrast-125 md:hidden"
+                    src="/finn-sm.webp"
+                    alt="Picture with the text 'finn'"
+                />
+                <img
+                    className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] contrast-125 md:block"
+                    src="/finn-crop.webp"
+                    alt="Picture with the text 'finn'"
+                />
+                <QueryClientProvider client={queryClient}>
+                    <div className="absolute mx-auto flex w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
+                        <Spot />
+                        <Github />
+                    </div>
+                </QueryClientProvider>
+            </div>
         </main>
     );
 }
