@@ -21,12 +21,12 @@ export default function Page() {
     return (
         <main className="grid h-screen flex-col place-content-center bg-white">
             <img
-                className="relative m-auto aspect-auto max-h-[70vh] md:hidden"
+                className="relative m-auto aspect-auto max-h-[70vh] contrast-125 md:hidden"
                 src="/finn-sm.webp"
                 alt="Picture with the text 'finn'"
             />
             <img
-                className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] md:block"
+                className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] contrast-125 md:block"
                 src="/finn-crop.webp"
                 alt="Picture with the text 'finn'"
             />
