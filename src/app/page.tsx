@@ -27,7 +27,7 @@ export default function Page() {
             />
             <img
                 className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] md:block"
-                src="/finn.webp"
+                src="/finn-crop.webp"
                 alt="Picture with the text 'finn'"
             />
             <QueryClientProvider client={queryClient}>
@@ -134,7 +134,7 @@ function Spot() {
 
     return (
         <div
-            className="relative w-96 p-4"
+            className="relative p-4"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
