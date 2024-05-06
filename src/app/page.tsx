@@ -145,17 +145,21 @@ function SongName(props: { song: Item; className?: string; small?: boolean }) {
                 props.className
             )}
         >
-            <p
-                className={clsx('font-bold', {
+            <a
+                href={props.song.previewUrl}
+                className={clsx('font-bold hover:underline', {
                     'text-lg': !props.small,
                     'text-sm': props.small,
                 })}
             >
                 {props.song.name}
-            </p>
-            <p className="text-sm">
+            </a>
+            <a
+                href={props.song.artists[0]?.href}
+                className="hover:underline text-sm"
+            >
                 {props.song.artists[0]?.name ?? 'Unknown artist'}
-            </p>
+            </a>
         </div>
     );
 }
