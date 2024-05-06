@@ -66,7 +66,7 @@ function Github() {
     );
 
     return (
-        <div className="mt-auto p-4">
+        <div className="flex-flex-col mt-auto p-4">
             <div className="flex max-h-16 flex-col flex-wrap">
                 {contributionQuery.data?.map((day) => {
                     const opacity = Math.max(
@@ -86,6 +86,17 @@ function Github() {
                         ></div>
                     );
                 })}
+            </div>
+            <div className="mt-2 flex gap-3">
+                <picture className="my-auto ">
+                    <img className="w-4" src="/pr.svg" alt="Github logo" />
+                </picture>
+                <div className="text-xs">
+                    <h2 className="font-bold">feat: updated the template</h2>
+                    <p>
+                        finndore / <b>t3-starter</b>
+                    </p>
+                </div>
             </div>
         </div>
     );
