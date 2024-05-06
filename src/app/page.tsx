@@ -8,7 +8,7 @@ import {
 import clsx from "clsx";
 import { IBM_Plex_Mono } from "next/font/google";
 import { useMemo, useState } from "react";
-import { Album, CurrentSong, Item } from "../_types/spotify";
+import type { Album, CurrentSong, Item } from "../_types/spotify";
 
 const ibm_plex_mono = IBM_Plex_Mono({
     weight: ["400", "600"],
@@ -111,7 +111,7 @@ function Github() {
     );
 }
 
-export function Spot() {
+function Spot() {
     const [isHovering, setIsHovering] = useState(false);
     const currentSongQuery = useQuery({
         queryKey: ["spot"],
