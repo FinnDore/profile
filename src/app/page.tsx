@@ -5,6 +5,7 @@ import {
     QueryClientProvider,
     useQuery,
 } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { useState } from 'react';
 import type { Album, CurrentSong, Item } from '../_types/spotify';
 
@@ -34,7 +35,7 @@ export default function Page() {
 }
 
 export function Spot() {
-    const [isHovering, setIsHovering] = useState(false);
+    const [isHovering, setIsHovering] = useState(true);
     const currentSongQuery = useQuery({
         queryKey: ['spot'],
         queryFn: async () => ({
@@ -54,10 +55,9 @@ export function Spot() {
             ),
     });
 
-    console.log(topSongQuery.data);
     return (
         <div
-            className="relative"
+            className="relative p-4 w-96"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
@@ -104,29 +104,55 @@ function TopSong(props: { song: Item; index: number; isHovering: boolean }) {
     const spring = useSpring({
         to: props.isHovering
             ? {
-                  translateY: `-${(props.index + 1) * 3.2}rem`,
-                  rotate: rotations[props.index],
+                  translateY: `-${(props.index + 1) * 3.5}rem`,
                   zIndex: 9 - props.index,
               }
             : {
                   translateY: `0rem`,
-                  rotate: -(props.index * 8),
                   zIndex: 9 - props.index,
               },
         config: config.gentle,
     });
+
+    const rotationSpring = useSpring({
+        rotate: props.isHovering ? rotations[props.index] : -(props.index * 8),
+        config: config.gentle,
+    });
+
     console.log(spring);
     return (
-        <animated.div className="absolute" style={spring}>
-            <AlbumCover album={props.song.album} />
+        <animated.div className="absolute flex" style={spring}>
+            <animated.div style={rotationSpring}>
+                <AlbumCover album={props.song.album} />
+            </animated.div>
+            <SongName
+                song={props.song}
+                small={true}
+                className={clsx('transition-all', {
+                    'opacity-0': !props.isHovering,
+                    'opacity-100': props.isHovering,
+                })}
+            />
         </animated.div>
     );
 }
 
-function SongName(props: { song: Item }) {
+function SongName(props: { song: Item; className?: string; small?: boolean }) {
     return (
-        <div className="flex flex-col justify-center ml-8">
-            <p className="text-lg font-bold">{props.song.name}</p>
+        <div
+            className={clsx(
+                'flex flex-col justify-center ml-8',
+                props.className
+            )}
+        >
+            <p
+                className={clsx('font-bold', {
+                    'text-lg': !props.small,
+                    'text-sm': props.small,
+                })}
+            >
+                {props.song.name}
+            </p>
             <p className="text-sm">
                 {props.song.artists[0]?.name ?? 'Unknown artist'}
             </p>
