@@ -46,12 +46,14 @@ function Github() {
     const contributionQuery = useQuery({
         queryKey: ["github"],
         queryFn: async () =>
-            await fetch("/api/github").then(
-                (res) =>
-                    res.json() as unknown as {
+            await fetch("https://gh.finndore.dev/contributions/finndore").then(
+                async (res) => {
+                    const val = (await res.json()) as unknown as {
                         contributionCount: number;
                         date: string;
-                    }[],
+                    }[];
+                    return val.splice(val.length - 42, val.length);
+                },
             ),
         refetchInterval: 10000,
     });
@@ -75,7 +77,7 @@ function Github() {
     return (
         <div className="flex-flex-col mt-auto p-4">
             <div className={ibm_plex_mono.className}>
-                <div className={"mb-2 flex gap-3 "}>
+                <div className={"mb-2 flex gap-3"}>
                     <picture className="my-auto ">
                         <img className="w-4" src="/pr.svg" alt="Github logo" />
                     </picture>
@@ -89,7 +91,7 @@ function Github() {
                     </div>
                 </div>
             </div>
-            <div className="flex max-h-16 flex-col flex-wrap">
+            <div className=" flex max-h-16 flex-col flex-wrap">
                 {contributionQuery.data.map((day) => {
                     const opacity = Math.max(
                         0.0,
@@ -100,7 +102,7 @@ function Github() {
                             key={day.date}
                             style={{
                                 backgroundColor:
-                                    opacity < 0.1
+                                    opacity < 0.025
                                         ? "white"
                                         : `rgba(0, 0, 0, ${Math.max(opacity)})`,
                             }}
