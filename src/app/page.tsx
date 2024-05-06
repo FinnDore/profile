@@ -6,8 +6,8 @@ import {
     useQuery,
 } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { useState } from 'react';
-import type { Album, CurrentSong, Item } from '../_types/spotify';
+import { useMemo, useState } from 'react';
+import { Album, CurrentSong, Item } from '../_types/spotify';
 
 const queryClient = new QueryClient();
 
@@ -25,17 +25,74 @@ export default function Page() {
                 src="/finn.webp"
                 alt="Picture with the text 'finn'"
             />
-            <div className="mx-4">
-                <QueryClientProvider client={queryClient}>
+            <QueryClientProvider client={queryClient}>
+                <div className="px-4 flex justify-between">
                     <Spot />
-                </QueryClientProvider>
-            </div>
+                    <Github />
+                </div>
+            </QueryClientProvider>
         </main>
     );
 }
 
+const stops = ['#323232', '#9A9A9A', '#FFFF'];
+
+function Github() {
+    const contributionQuery = useQuery({
+        queryKey: ['github'],
+        queryFn: async () =>
+            await fetch('/api/github').then(
+                (res) =>
+                    res.json() as unknown as {
+                        contributionCount: number;
+                        date: string;
+                    }[]
+            ),
+        refetchInterval: 10000,
+    });
+
+    const { max, min } = useMemo(
+        () =>
+            contributionQuery.data?.reduce(
+                (acc, day) => {
+                    return {
+                        max: Math.max(acc.max, day.contributionCount),
+                        min: Math.min(acc.min, day.contributionCount),
+                    };
+                },
+                { max: 0, min: Infinity }
+            ) ?? { max: 0, min: 0 },
+        [contributionQuery.data]
+    );
+
+    return (
+        <div className="p-4 mt-auto">
+            <div className="flex flex-col flex-wrap max-h-16">
+                {contributionQuery.data?.map((day) => {
+                    const opacity = Math.max(
+                        0.0,
+                        (day.contributionCount - min) / (max - 3 - min)
+                    );
+                    return (
+                        <div
+                            key={day.date}
+                            style={{
+                                backgroundColor:
+                                    opacity < 0.1
+                                        ? 'white'
+                                        : `rgba(0, 0, 0, ${Math.max(opacity)})`,
+                            }}
+                            className="bg-black rounded-sm w-4 aspect-square m-0.5 contribution-shaddow"
+                        ></div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
 export function Spot() {
-    const [isHovering, setIsHovering] = useState(true);
+    const [isHovering, setIsHovering] = useState(false);
     const currentSongQuery = useQuery({
         queryKey: ['spot'],
         queryFn: async () => ({
