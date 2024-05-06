@@ -5,18 +5,18 @@ import type * as THREE from "three";
 import { Texture, Vector2 } from "three";
 
 export type MosaicProps = {
-  resolution: Vector2;
-  time: number;
-  uTexture: THREE.Texture;
+    resolution: Vector2;
+    time: number;
+    uTexture: THREE.Texture;
 };
 
 const MosaicMaterial = shaderMaterial(
-  {
-    time: 0,
-    resolution: new Vector2(1, 1),
-    uTexture: new Texture(),
-  },
-  `
+    {
+        time: 0,
+        resolution: new Vector2(1, 1),
+        uTexture: new Texture(),
+    },
+    `
 
     #ifdef GL_ES
         precision mediump float;
@@ -30,7 +30,7 @@ const MosaicMaterial = shaderMaterial(
         gl_Position =  projectionMatrix * modelViewMatrix * vec4(position, 1.0);  
     }
 `,
-  `
+    `
 
     #ifdef GL_ES
         precision mediump float;
@@ -188,16 +188,16 @@ const MosaicMaterial = shaderMaterial(
         vec3 bgColor = texture2D(uTexture, vUv).rgb;
         gl_FragColor = vec4(blendColorDodge(color / 2.5, bgColor * 10.0, 3.0), 1.0);
     }
-`
+`,
 );
 
 extend({ MosaicMaterial });
 
 declare module "@react-three/fiber" {
-  interface ThreeElements {
-    mosaicMaterial: ReactThreeFiber.MaterialNode<
-      THREE.ShaderMaterial & MosaicProps,
-      MosaicProps
-    >;
-  }
+    interface ThreeElements {
+        mosaicMaterial: ReactThreeFiber.MaterialNode<
+            THREE.ShaderMaterial & MosaicProps,
+            MosaicProps
+        >;
+    }
 }

@@ -9,61 +9,63 @@ import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db";
 
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-      verified: boolean;
-    } & DefaultSession["user"];
-  }
+    interface Session extends DefaultSession {
+        user: {
+            id: string;
+            verified: boolean;
+        } & DefaultSession["user"];
+    }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+    // interface User {
+    //   // ...other properties
+    //   // role: UserRole;
+    // }
 }
 
 export const resend = new Resend(env.RESEND_API_KEY);
 
 export const sendVerificationRequest = async (
-  params: SendVerificationRequestParams
+    params: SendVerificationRequestParams,
 ) => {
-  try {
-    await resend.emails.send({
-      from: "Finn <noreply@finndore.dev>",
-      to: params.identifier,
-      subject: "yes",
-      html: `your login email :3 ${params.url}`,
-    });
-  } catch (error) {
-    console.log("email error: ", { error });
-  }
+    try {
+        await resend.emails.send({
+            from: "Finn <noreply@finndore.dev>",
+            to: params.identifier,
+            subject: "yes",
+            html: `your login email :3 ${params.url}`,
+        });
+    } catch (error) {
+        console.log("email error: ", { error });
+    }
 };
 
 export const authOptions: AuthOptions = {
-  // Configure one or more authentication providers
-  providers: [
-    EmailProvider({
-      from: "Finn <noreply@finndore.dev>",
-      sendVerificationRequest,
-    }),
-  ],
-  adapter: PrismaAdapter(prisma),
-  callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-        session.user.verified = (user as unknown as Session["user"]).verified;
-      }
-      return session;
+    // Configure one or more authentication providers
+    providers: [
+        EmailProvider({
+            from: "Finn <noreply@finndore.dev>",
+            sendVerificationRequest,
+        }),
+    ],
+    adapter: PrismaAdapter(prisma),
+    callbacks: {
+        session({ session, user }) {
+            if (session.user) {
+                session.user.id = user.id;
+                session.user.verified = (
+                    user as unknown as Session["user"]
+                ).verified;
+            }
+            return session;
+        },
     },
-  },
 };
 
 export default NextAuth(authOptions);
 
 export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
+    req: GetServerSidePropsContext["req"];
+    res: GetServerSidePropsContext["res"];
 }) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
+    return getServerSession(ctx.req, ctx.res, authOptions);
 };

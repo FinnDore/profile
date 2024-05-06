@@ -1,32 +1,32 @@
-'use client';
-import { animated, config, useSpring } from '@react-spring/web';
+"use client";
+import { animated, config, useSpring } from "@react-spring/web";
 import {
     QueryClient,
     QueryClientProvider,
     useQuery,
-} from '@tanstack/react-query';
-import clsx from 'clsx';
-import { useMemo, useState } from 'react';
-import { Album, CurrentSong, Item } from '../_types/spotify';
+} from "@tanstack/react-query";
+import clsx from "clsx";
+import { useMemo, useState } from "react";
+import { Album, CurrentSong, Item } from "../_types/spotify";
 
 const queryClient = new QueryClient();
 
 /* eslint-disable @next/next/no-img-element */
 export default function Page() {
     return (
-        <main className="h-screen bg-white flex flex-col">
+        <main className="flex h-screen flex-col bg-white">
             <img
-                className="m-auto md:hidden max-h-[70vh] relative aspect-auto"
+                className="relative m-auto aspect-auto max-h-[70vh] md:hidden"
                 src="/finn-sm.webp"
                 alt="Picture with the text 'finn'"
             />
             <img
-                className="mx-auto md:block hidden max-w-[clamp(80vw,75rem,90vw)] relative aspect-auto"
+                className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] md:block"
                 src="/finn.webp"
                 alt="Picture with the text 'finn'"
             />
             <QueryClientProvider client={queryClient}>
-                <div className="px-4 flex justify-between">
+                <div className="flex justify-between px-4">
                     <Spot />
                     <Github />
                 </div>
@@ -35,18 +35,18 @@ export default function Page() {
     );
 }
 
-const stops = ['#323232', '#9A9A9A', '#FFFF'];
+const stops = ["#323232", "#9A9A9A", "#FFFF"];
 
 function Github() {
     const contributionQuery = useQuery({
-        queryKey: ['github'],
+        queryKey: ["github"],
         queryFn: async () =>
-            await fetch('/api/github').then(
+            await fetch("/api/github").then(
                 (res) =>
                     res.json() as unknown as {
                         contributionCount: number;
                         date: string;
-                    }[]
+                    }[],
             ),
         refetchInterval: 10000,
     });
@@ -60,18 +60,18 @@ function Github() {
                         min: Math.min(acc.min, day.contributionCount),
                     };
                 },
-                { max: 0, min: Infinity }
+                { max: 0, min: Infinity },
             ) ?? { max: 0, min: 0 },
-        [contributionQuery.data]
+        [contributionQuery.data],
     );
 
     return (
-        <div className="p-4 mt-auto">
-            <div className="flex flex-col flex-wrap max-h-16">
+        <div className="mt-auto p-4">
+            <div className="flex max-h-16 flex-col flex-wrap">
                 {contributionQuery.data?.map((day) => {
                     const opacity = Math.max(
                         0.0,
-                        (day.contributionCount - min) / (max - 3 - min)
+                        (day.contributionCount - min) / (max - 3 - min),
                     );
                     return (
                         <div
@@ -79,10 +79,10 @@ function Github() {
                             style={{
                                 backgroundColor:
                                     opacity < 0.1
-                                        ? 'white'
+                                        ? "white"
                                         : `rgba(0, 0, 0, ${Math.max(opacity)})`,
                             }}
-                            className="bg-black rounded-sm w-4 aspect-square m-0.5 contribution-shaddow"
+                            className="contribution-shaddow m-0.5 aspect-square w-4 rounded-sm bg-black"
                         ></div>
                     );
                 })}
@@ -94,10 +94,10 @@ function Github() {
 export function Spot() {
     const [isHovering, setIsHovering] = useState(false);
     const currentSongQuery = useQuery({
-        queryKey: ['spot'],
+        queryKey: ["spot"],
         queryFn: async () => ({
-            currentSong: await fetch('/api/spot').then(
-                (res) => res.json() as unknown as CurrentSong
+            currentSong: await fetch("/api/spot").then(
+                (res) => res.json() as unknown as CurrentSong,
             ),
             timestamp: new Date().getTime(),
         }),
@@ -105,16 +105,16 @@ export function Spot() {
     });
 
     const topSongQuery = useQuery({
-        queryKey: ['top-songs'],
+        queryKey: ["top-songs"],
         queryFn: async () =>
-            await fetch('/api/top-songs').then(
-                (res) => res.json() as unknown as Item[]
+            await fetch("/api/top-songs").then(
+                (res) => res.json() as unknown as Item[],
             ),
     });
 
     return (
         <div
-            className="relative p-4 w-96"
+            className="relative w-96 p-4"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
@@ -127,7 +127,7 @@ export function Spot() {
                 />
             ))}
             {currentSongQuery.data && (
-                <div className="z-10 relative flex">
+                <div className="relative z-10 flex">
                     <AlbumCover
                         album={currentSongQuery.data.currentSong.item.album}
                     />
@@ -141,12 +141,12 @@ export function Spot() {
 function AlbumCover(props: { album: Album }) {
     return (
         <div className="relative aspect-square w-24">
-            <div className=" w-full h-full overflow-hidden absolute rounded-2xl">
-                <div className="w-full h-full noise"></div>
+            <div className=" absolute h-full w-full overflow-hidden rounded-2xl">
+                <div className="noise h-full w-full"></div>
             </div>
             <picture>
                 <img
-                    className="w-full h-full rounded-2xl border border-white/60 album-shadow"
+                    className="album-shadow h-full w-full rounded-2xl border border-white/60"
                     src={props.album.images[0]!.url}
                     alt="TODO"
                 />
@@ -185,9 +185,9 @@ function TopSong(props: { song: Item; index: number; isHovering: boolean }) {
             <SongName
                 song={props.song}
                 small={true}
-                className={clsx('transition-all', {
-                    'opacity-0': !props.isHovering,
-                    'opacity-100': props.isHovering,
+                className={clsx("transition-all", {
+                    "opacity-0": !props.isHovering,
+                    "opacity-100": props.isHovering,
                 })}
             />
         </animated.div>
@@ -198,23 +198,23 @@ function SongName(props: { song: Item; className?: string; small?: boolean }) {
     return (
         <div
             className={clsx(
-                'flex flex-col justify-center ml-8',
-                props.className
+                "ml-8 flex flex-col justify-center",
+                props.className,
             )}
         >
             <a
                 href={props.song.previewUrl}
-                className={clsx('font-bold hover:underline', {
-                    'text-sm': props.small,
+                className={clsx("font-bold hover:underline", {
+                    "text-sm": props.small,
                 })}
             >
                 {props.song.name}
             </a>
             <a
                 href={props.song.artists[0]?.href}
-                className="hover:underline text-sm"
+                className="text-sm hover:underline"
             >
-                {props.song.artists[0]?.name ?? 'Unknown artist'}
+                {props.song.artists[0]?.name ?? "Unknown artist"}
             </a>
         </div>
     );

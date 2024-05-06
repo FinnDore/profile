@@ -11,16 +11,16 @@ import "../styles/globals.css";
 const queryClient = new QueryClient();
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
-      <div className="absolute bottom-0 z-20 pointer-events-none max-h-full">
-        <SessionProvider>
-          <SpotifyStatus />
-        </SessionProvider>
-      </div>
-    </QueryClientProvider>
-  );
+    return (
+        <QueryClientProvider client={queryClient}>
+            <Component {...pageProps} />
+            <div className="pointer-events-none absolute bottom-0 z-20 max-h-full">
+                <SessionProvider>
+                    <SpotifyStatus />
+                </SessionProvider>
+            </div>
+        </QueryClientProvider>
+    );
 };
 
 export default MyApp;

@@ -1,5 +1,5 @@
-import type { NextApiResponse } from 'next';
-import { env } from '../../env/server.mjs';
+import type { NextApiResponse } from "next";
+import { env } from "../../env/server.mjs";
 
 const query = `
 query($userName:String!) {
@@ -20,7 +20,7 @@ query($userName:String!) {
 `;
 
 async function retrieveContributionData(
-    userName: string
+    userName: string,
 ): Promise<GithubResponse> {
     const variables = `
   {
@@ -31,8 +31,8 @@ async function retrieveContributionData(
         query,
         variables,
     };
-    const res = await fetch('https://api.github.com/graphql', {
-        method: 'POST',
+    const res = await fetch("https://api.github.com/graphql", {
+        method: "POST",
         headers: {
             Authorization: `Bearer ${env.GITHUB_TOKEN}`,
         },
@@ -45,13 +45,13 @@ async function retrieveContributionData(
 }
 
 export default async function handler(req: Request, res: NextApiResponse) {
-    const response = await retrieveContributionData('finndore');
+    const response = await retrieveContributionData("finndore");
     const cal = response.data.user.contributionsCollection.contributionCalendar;
 
     const contributions = cal.weeks.flatMap((week) => week.contributionDays);
 
     res.json(
-        contributions.splice(contributions.length - 36, contributions.length)
+        contributions.splice(contributions.length - 36, contributions.length),
     );
 }
 
