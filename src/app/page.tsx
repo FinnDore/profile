@@ -6,15 +6,20 @@ import {
     useQuery,
 } from "@tanstack/react-query";
 import clsx from "clsx";
+import { IBM_Plex_Mono } from "next/font/google";
 import { useMemo, useState } from "react";
 import { Album, CurrentSong, Item } from "../_types/spotify";
 
+const ibm_plex_mono = IBM_Plex_Mono({
+    weight: ["400", "600"],
+    subsets: ["latin"],
+});
 const queryClient = new QueryClient();
 
 /* eslint-disable @next/next/no-img-element */
 export default function Page() {
     return (
-        <main className="flex h-screen flex-col bg-white">
+        <main className="grid h-screen flex-col place-content-center bg-white">
             <img
                 className="relative m-auto aspect-auto max-h-[70vh] md:hidden"
                 src="/finn-sm.webp"
@@ -26,7 +31,7 @@ export default function Page() {
                 alt="Picture with the text 'finn'"
             />
             <QueryClientProvider client={queryClient}>
-                <div className="flex justify-between px-4">
+                <div className="absolute bottom-0 flex w-full justify-between px-4">
                     <Spot />
                     <Github />
                 </div>
@@ -34,8 +39,6 @@ export default function Page() {
         </main>
     );
 }
-
-const stops = ["#323232", "#9A9A9A", "#FFFF"];
 
 function Github() {
     const contributionQuery = useQuery({
@@ -65,10 +68,27 @@ function Github() {
         [contributionQuery.data],
     );
 
+    if (!contributionQuery.data) return null;
+
     return (
         <div className="flex-flex-col mt-auto p-4">
+            <div className={ibm_plex_mono.className}>
+                <div className={"mb-2 flex gap-3 "}>
+                    <picture className="my-auto ">
+                        <img className="w-4" src="/pr.svg" alt="Github logo" />
+                    </picture>
+                    <div className="text-xs">
+                        <h2 className="font-bold">
+                            feat: updated the template
+                        </h2>
+                        <p>
+                            finndore / <b>t3-starter</b>
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div className="flex max-h-16 flex-col flex-wrap">
-                {contributionQuery.data?.map((day) => {
+                {contributionQuery.data.map((day) => {
                     const opacity = Math.max(
                         0.0,
                         (day.contributionCount - min) / (max - 3 - min),
@@ -86,17 +106,6 @@ function Github() {
                         ></div>
                     );
                 })}
-            </div>
-            <div className="mt-2 flex gap-3">
-                <picture className="my-auto ">
-                    <img className="w-4" src="/pr.svg" alt="Github logo" />
-                </picture>
-                <div className="text-xs">
-                    <h2 className="font-bold">feat: updated the template</h2>
-                    <p>
-                        finndore / <b>t3-starter</b>
-                    </p>
-                </div>
             </div>
         </div>
     );
@@ -215,15 +224,15 @@ function SongName(props: { song: Item; className?: string; small?: boolean }) {
         >
             <a
                 href={props.song.previewUrl}
-                className={clsx("font-bold hover:underline", {
-                    "text-sm": props.small,
+                className={clsx("text-sm font-bold hover:underline", {
+                    "text-xs": props.small,
                 })}
             >
                 {props.song.name}
             </a>
             <a
                 href={props.song.artists[0]?.href}
-                className="text-sm hover:underline"
+                className="text-xs hover:underline"
             >
                 {props.song.artists[0]?.name ?? "Unknown artist"}
             </a>
