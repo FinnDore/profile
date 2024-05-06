@@ -1,9 +1,11 @@
 'use client';
+import { animated, config, useSpring } from '@react-spring/web';
 import {
     QueryClient,
     QueryClientProvider,
     useQuery,
 } from '@tanstack/react-query';
+import { useState } from 'react';
 import type { Album, CurrentSong, Item } from '../_types/spotify';
 
 const queryClient = new QueryClient();
@@ -32,6 +34,7 @@ export default function Page() {
 }
 
 export function Spot() {
+    const [isHovering, setIsHovering] = useState(false);
     const currentSongQuery = useQuery({
         queryKey: ['spot'],
         queryFn: async () => ({
@@ -53,38 +56,68 @@ export function Spot() {
 
     console.log(topSongQuery.data);
     return (
-        <div className="relative z-10">
-            {topSongQuery.data?.map((song, i) => (
-                <div
-                    className="absolute"
+        <div
+            className="relative"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+        >
+            {topSongQuery.data?.map((song, index) => (
+                <TopSong
+                    song={song}
+                    index={index}
+                    isHovering={isHovering}
                     key={song.name}
-                    style={{
-                        transform: `rotate(-${i * 10}deg)`,
-                        zIndex: 10 - i,
-                    }}
-                >
-                    <AlbumCover album={song.album} />
-                </div>
-            ))}
-            {currentSongQuery.data && (
-                <AlbumCover
-                    album={currentSongQuery.data.currentSong.item.album}
                 />
-            )}
+            ))}
+            <div className="z-10 relative">
+                {currentSongQuery.data && (
+                    <AlbumCover
+                        album={currentSongQuery.data.currentSong.item.album}
+                    />
+                )}
+            </div>
         </div>
     );
 }
 
 function AlbumCover(props: { album: Album }) {
     return (
-        <div>
+        <div className="relative aspect-square w-24">
+            <div className=" w-full h-full overflow-hidden absolute rounded-2xl">
+                <div className="w-full h-full noise"></div>
+            </div>
             <picture>
                 <img
-                    className="w-24 aspect-square rounded-2xl border border-white/60 album-shadow"
+                    className="w-full h-full rounded-2xl border border-white/60 album-shadow"
                     src={props.album.images[0]!.url}
                     alt="TODO"
                 />
             </picture>
         </div>
+    );
+}
+
+const rotations = [6, -16, 20, 10];
+
+function TopSong(props: { song: Item; index: number; isHovering: boolean }) {
+    const spring = useSpring({
+        to: props.isHovering
+            ? {
+                  translateY: `-${(props.index + 1) * 3.2}rem`,
+                  rotate: rotations[props.index],
+                  zIndex: 9 - props.index,
+              }
+            : {
+                  translateY: `0rem`,
+                  rotate: -(props.index * 8),
+                  zIndex: 9 - props.index,
+              },
+        config: config.gentle,
+    });
+    console.log(spring);
+    return (
+        <animated.div className="absolute" style={spring}>
+            <AlbumCover album={props.song.album} />
+        </animated.div>
     );
 }
