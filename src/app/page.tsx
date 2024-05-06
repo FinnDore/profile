@@ -106,7 +106,7 @@ function Github() {
                                         ? "white"
                                         : `rgba(0, 0, 0, ${Math.max(opacity)})`,
                             }}
-                            className="contribution-shaddow m-0.5 aspect-square w-4 rounded-sm bg-black"
+                            className="contribution-shaddow m-0.5 aspect-square w-4 cursor-pointer rounded-sm bg-black transition-all hover:scale-110"
                         ></div>
                     );
                 })}
