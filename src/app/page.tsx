@@ -28,7 +28,7 @@ export default function Page() {
                 />
                 <img
                     className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] contrast-125 md:block"
-                    src="/finn-crop.webp"
+                    src="/finn-crop-small.webp"
                     alt="Picture with the text 'finn'"
                 />
                 <QueryClientProvider client={queryClient}>
