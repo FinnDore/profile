@@ -25,7 +25,7 @@ export default function Page() {
                 src="/finn.webp"
                 alt="Picture with the text 'finn'"
             />
-            <div className="grid place-items-center">
+            <div className="mx-4">
                 <QueryClientProvider client={queryClient}>
                     <Spot />
                 </QueryClientProvider>
@@ -148,7 +148,6 @@ function SongName(props: { song: Item; className?: string; small?: boolean }) {
             <a
                 href={props.song.previewUrl}
                 className={clsx('font-bold hover:underline', {
-                    'text-lg': !props.small,
                     'text-sm': props.small,
                 })}
             >
