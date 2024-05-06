@@ -69,13 +69,14 @@ export function Spot() {
                     key={song.name}
                 />
             ))}
-            <div className="z-10 relative">
-                {currentSongQuery.data && (
+            {currentSongQuery.data && (
+                <div className="z-10 relative flex">
                     <AlbumCover
                         album={currentSongQuery.data.currentSong.item.album}
                     />
-                )}
-            </div>
+                    <SongName song={currentSongQuery.data.currentSong.item} />
+                </div>
+            )}
         </div>
     );
 }
@@ -119,5 +120,16 @@ function TopSong(props: { song: Item; index: number; isHovering: boolean }) {
         <animated.div className="absolute" style={spring}>
             <AlbumCover album={props.song.album} />
         </animated.div>
+    );
+}
+
+function SongName(props: { song: Item }) {
+    return (
+        <div className="flex flex-col justify-center ml-8">
+            <p className="text-lg font-bold">{props.song.name}</p>
+            <p className="text-sm">
+                {props.song.artists[0]?.name ?? 'Unknown artist'}
+            </p>
+        </div>
     );
 }
