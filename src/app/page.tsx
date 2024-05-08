@@ -127,8 +127,10 @@ function useDebounceFunction<T extends (...args: any[]) => any>(
             if (timeout) clearTimeout(timeout);
             setTimeoutValue(setTimeout(() => func(...args), delay));
         }) as T;
-    }, [timeout, delay, func]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [delay, func]);
 }
+let a = 0;
 
 function Spot() {
     const [isHovering, setIsHovering] = useState(false);
@@ -151,6 +153,7 @@ function Spot() {
                 (res) => res.json() as unknown as Item[],
             ),
     });
+    console.log(a++);
 
     return (
         <div
@@ -163,7 +166,7 @@ function Spot() {
                     song={song}
                     index={index}
                     isHovering={isHovering}
-                    key={song.name}
+                    key={song.name + index}
                 />
             ))}
             {currentSongQuery.data && (
@@ -196,7 +199,6 @@ function AlbumCover(props: { album: Album }) {
 }
 
 const rotations = [6, -16, 20, 10];
-
 function TopSong(props: { song: Item; index: number; isHovering: boolean }) {
     const spring = useSpring({
         to: props.isHovering
@@ -216,7 +218,6 @@ function TopSong(props: { song: Item; index: number; isHovering: boolean }) {
         config: config.gentle,
     });
 
-    console.log(spring);
     return (
         <animated.div className="absolute flex" style={spring}>
             <animated.div style={rotationSpring}>
