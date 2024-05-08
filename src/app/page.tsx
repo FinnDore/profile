@@ -122,15 +122,16 @@ function useDebounceFunction<T extends (...args: any[]) => any>(
 ): T {
     const [timeout, setTimeoutValue] = useState<NodeJS.Timeout | null>(null);
 
-    return useMemo(() => {
-        return ((...args: Parameters<T>) => {
-            if (timeout) clearTimeout(timeout);
-            setTimeoutValue(setTimeout(() => func(...args), delay));
-        }) as T;
+    return useMemo(
+        () =>
+            ((...args: Parameters<T>) => {
+                if (timeout) clearTimeout(timeout);
+                setTimeoutValue(setTimeout(() => func(...args), delay));
+            }) as T,
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [delay, func]);
+        [delay, func],
+    );
 }
-let a = 0;
 
 function Spot() {
     const [isHovering, setIsHovering] = useState(false);
@@ -153,7 +154,6 @@ function Spot() {
                 (res) => res.json() as unknown as Item[],
             ),
     });
-    console.log(a++);
 
     return (
         <div
@@ -184,7 +184,7 @@ function Spot() {
 function AlbumCover(props: { album: Album }) {
     return (
         <div className="relative aspect-square w-24">
-            <div className=" absolute h-full w-full overflow-hidden rounded-2xl">
+            <div className="absolute h-full w-full overflow-hidden rounded-2xl">
                 <div className="noise h-full w-full"></div>
             </div>
             <picture>
