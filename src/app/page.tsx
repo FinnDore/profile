@@ -115,8 +115,24 @@ function Github() {
     );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function useDebounceFunction<T extends (...args: any[]) => any>(
+    func: T,
+    delay = 100,
+): T {
+    const [timeout, setTimeoutValue] = useState<NodeJS.Timeout | null>(null);
+
+    return useMemo(() => {
+        return ((...args: Parameters<T>) => {
+            if (timeout) clearTimeout(timeout);
+            setTimeoutValue(setTimeout(() => func(...args), delay));
+        }) as T;
+    }, [timeout, delay, func]);
+}
+
 function Spot() {
     const [isHovering, setIsHovering] = useState(false);
+    const debouncedSetIsHovering = useDebounceFunction(setIsHovering);
     const currentSongQuery = useQuery({
         queryKey: ["spot"],
         queryFn: async () => ({
@@ -139,8 +155,8 @@ function Spot() {
     return (
         <div
             className="relative p-4"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
+            onMouseEnter={() => debouncedSetIsHovering(true)}
+            onMouseLeave={() => debouncedSetIsHovering(false)}
         >
             {topSongQuery.data?.map((song, index) => (
                 <TopSong
