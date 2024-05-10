@@ -30,7 +30,6 @@ export function Spotify() {
 
     return (
         <div
-            className="relative p-4"
             onMouseEnter={() => debouncedSetIsHovering(true)}
             onMouseLeave={() => debouncedSetIsHovering(false)}
         >

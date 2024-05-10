@@ -41,9 +41,9 @@ export function Github() {
     if (!contributionQuery.data) return null;
 
     return (
-        <div className="flex-flex-col mt-auto p-4">
+        <div className="pointer-events-auto mt-auto flex flex-col gap-2">
             <div className={ibm_plex_mono.className}>
-                <div className={"mb-2 flex gap-3"}>
+                <div className={"flex gap-3"}>
                     <picture className="my-auto ">
                         <img className="w-4" src="/pr.svg" alt="Github logo" />
                     </picture>

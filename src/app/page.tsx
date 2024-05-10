@@ -8,29 +8,54 @@ const queryClient = new QueryClient();
 /* eslint-disable @next/next/no-img-element */
 export default function Page() {
     return (
-        <main className="flex h-screen flex-col bg-white">
-            <div className="relative m-auto w-screen md:w-auto md:pt-16">
-                <img
-                    className="relative m-auto aspect-auto max-h-[70vh] contrast-125 md:hidden"
-                    src="/finn-sm.webp"
-                    alt="Picture with the text 'finn'"
-                />
-                <img
-                    className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] contrast-125 md:block"
-                    src="/finn-crop-small.webp"
-                    alt="Picture with the text 'finn'"
-                />
-                <QueryClientProvider client={queryClient}>
-                    <div className="h-16">
-                        <div className="absolute mx-auto flex w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
-                            <Spotify />
-                            <Github />
+        <QueryClientProvider client={queryClient}>
+            <main className="flex h-screen flex-col bg-white">
+                <div className="relative m-auto w-screen md:w-auto md:pt-16">
+                    <img
+                        className="relative m-auto aspect-auto max-h-[70vh] contrast-125 md:hidden"
+                        src="/finn-sm.webp"
+                        alt="Picture with the text 'finn'"
+                    />
+                    <img
+                        className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] contrast-125 md:block"
+                        src="/finn-crop-small.webp"
+                        alt="Picture with the text 'finn'"
+                    />
+                    <div className="mx-auto flex h-16 w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
+                        <div className="mx-auto">
+                            <h1>
+                                Ugh, i write code or somthing
+                                {" - "}
+                                <a
+                                    href="https://finndore.dev"
+                                    className="underline"
+                                >
+                                    projects
+                                </a>
+                                {" - "}
+                                <a
+                                    href="https://finndore.dev/g"
+                                    className="underline"
+                                >
+                                    github
+                                </a>
+                            </h1>
                         </div>
                     </div>
-                </QueryClientProvider>
-                <Showcase />
-            </div>
-        </main>
+                    {/* <Showcase /> */}
+                </div>
+
+                <div className="pointer-events-none fixed z-50 flex h-screen w-full flex-col justify-end">
+                    <div className="pointer-events-auto flex w-full justify-end p-2 md:p-4">
+                        <div className="absolute bottom-2 left-2 md:bottom-4 md:left-4">
+                            <Spotify />
+                        </div>
+
+                        <Github />
+                    </div>
+                </div>
+            </main>
+        </QueryClientProvider>
     );
 }
 
