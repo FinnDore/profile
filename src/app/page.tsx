@@ -1,6 +1,5 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Github } from "./(components)/github";
 import { Spotify } from "./(components)/spotify";
 
 const queryClient = new QueryClient();
@@ -24,11 +23,36 @@ export default function Page() {
                     <div className="h-16">
                         <div className="absolute mx-auto flex w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
                             <Spotify />
-                            <Github />
+                            <div className="my-auto flex flex-col gap-2">
+                                <div className="flex gap-2">
+                                    <h2 className="mb-auto italic opacity-80">
+                                        Ugh, i write code or something
+                                        {" - "}
+                                        <a
+                                            className="underline transition-all hover:text-rose-500"
+                                            href="https://github.com/finndore"
+                                        >
+                                            Github
+                                        </a>
+                                        {" - "}
+                                        <a
+                                            href="https://arc.net/folder/3824DB56-5972-45E9-BE4C-D0460E501044"
+                                            className="underline transition-all hover:text-rose-500"
+                                        >
+                                            Projects
+                                        </a>
+                                    </h2>
+                                    {/* <BorderGlowButton>
+                                        Projects
+                                    </BorderGlowButton>
+                                    <BorderGlowButton>Github</BorderGlowButton> */}
+                                </div>
+                            </div>
+                            {/* <Github /> */}
                         </div>
                     </div>
                 </QueryClientProvider>
-                <Showcase />
+                {/* <Showcase /> */}
             </div>
         </main>
     );
@@ -50,3 +74,47 @@ function Showcase() {
         </div>
     );
 }
+
+import { useEffect, useRef, useState } from "react";
+
+const BorderGlowButton = (props: { children: React.ReactNode }) => {
+    const ref = useRef<HTMLButtonElement>(null);
+    const [mousePosition, setMousePosition] = useState({
+        x: "-100%",
+        y: "-100%",
+    });
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            if (!ref.current) return;
+            const rect = ref.current.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            setMousePosition({ x: `${x}px`, y: `${y}px` });
+        };
+        document.addEventListener("mousemove", handleMouseMove);
+        return () => {
+            document.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
+
+    return (
+        <button
+            className="relative transform overflow-hidden rounded-lg bg-[#ffffff] transition-transform ease-in-out active:scale-90"
+            ref={ref}
+        >
+            <span
+                className={`absolute z-0 h-28 w-28 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(#6a6a6a_0%,transparent_70%)] `}
+                style={
+                    {
+                        left: mousePosition.x,
+                        top: mousePosition.y,
+                    } as any
+                }
+            ></span>
+            <div className="text-md relative z-10 m-[1px] rounded-[calc(0.5rem-1px)]  bg-white/90 px-4 py-1  backdrop-blur-sm">
+                {props.children}
+            </div>
+        </button>
+    );
+};
