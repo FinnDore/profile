@@ -41,9 +41,9 @@ export function Github() {
     if (!contributionQuery.data) return null;
 
     return (
-        <div className="flex-flex-col mt-auto p-4">
+        <div className="mt-auto flex flex-col-reverse gap-2 p-4">
             <div className={ibm_plex_mono.className}>
-                <div className={"mb-2 flex gap-3"}>
+                <div className={"flex gap-3"}>
                     <picture className="my-auto ">
                         <img className="w-4" src="/pr.svg" alt="Github logo" />
                     </picture>
@@ -57,7 +57,7 @@ export function Github() {
                     </div>
                 </div>
             </div>
-            <div className=" flex max-h-16 flex-col flex-wrap">
+            <div className="flex max-h-16 flex-col flex-wrap">
                 {contributionQuery.data.map((day) => {
                     const opacity = Math.max(
                         0.0,
