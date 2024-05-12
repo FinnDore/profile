@@ -6,6 +6,17 @@ import { useState } from "react";
 import { useDebounceFunction } from "../../hooks/debounce-function";
 import type { Album, CurrentSong, Item } from "../../_types/spotify";
 
+function useTopSongs(limit = 4) {
+    const query = new URLSearchParams({ limit: limit.toString() });
+    return useQuery({
+        queryKey: ["top-songs", limit],
+        queryFn: async () =>
+            await fetch("http://0.0.0.0:3001/top-songs?" + query).then(
+                (res) => res.json() as unknown as Item[],
+            ),
+    });
+}
+
 export function Spotify() {
     const [isHovering, setIsHovering] = useState(false);
     const debouncedSetIsHovering = useDebounceFunction(setIsHovering);
@@ -20,13 +31,7 @@ export function Spotify() {
         refetchInterval: 10000,
     });
 
-    const topSongQuery = useQuery({
-        queryKey: ["top-songs"],
-        queryFn: async () =>
-            await fetch("/api/top-songs").then(
-                (res) => res.json() as unknown as Item[],
-            ),
-    });
+    const topSongQuery = useTopSongs();
 
     return (
         <div
@@ -54,15 +59,29 @@ export function Spotify() {
     );
 }
 
-function AlbumCover(props: { album: Album }) {
+function AlbumCover(props: { album: Album; small?: boolean }) {
+    const roundedClass = props.small ? "rounded-md" : "rounded-2xl";
     return (
-        <div className="relative aspect-square w-24">
-            <div className="absolute h-full w-full overflow-hidden rounded-2xl">
+        <div
+            className={clsx("relative aspect-square", {
+                "w-24": !props.small,
+                "w-8": props.small,
+            })}
+        >
+            <div
+                className={clsx(
+                    "absolute h-full w-full overflow-hidden rounded-2xl",
+                    roundedClass,
+                )}
+            >
                 <div className="noise h-full w-full"></div>
             </div>
             <picture>
                 <img
-                    className="album-shadow h-full w-full rounded-2xl border border-white/60"
+                    className={clsx(
+                        "album-shadow h-full w-full border border-white/60",
+                        roundedClass,
+                    )}
                     src={props.album.images[0]?.url ?? "TODO"}
                     alt="TODO"
                 />
@@ -135,6 +154,39 @@ function SongName(props: { song: Item; className?: string; small?: boolean }) {
             >
                 {props.song.artists[0]?.name ?? "Unknown artist"}
             </a>
+        </div>
+    );
+}
+
+export function SpotifyBento() {
+    const topSongQuery = useTopSongs(20);
+    return (
+        <div className="flex flex-col gap-4">
+            <div className="flex max-h-32 flex-col gap-2 overflow-auto px-6">
+                {topSongQuery.data?.map((song) => (
+                    <div className="flex" key={song.name}>
+                        <AlbumCover
+                            key={song.name}
+                            album={song.album}
+                            small={true}
+                        />
+                        <div className="my-auto ml-4 flex justify-center gap-2">
+                            <a
+                                href={song.externalUrls.spotify}
+                                className="text-xs font-bold hover:underline"
+                            >
+                                {song.name}
+                            </a>
+                            <a
+                                href={song.artists[0]?.externalUrls.spotify}
+                                className="text-xs hover:underline"
+                            >
+                                {song.artists[0]?.name ?? "Unknown artist"}
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

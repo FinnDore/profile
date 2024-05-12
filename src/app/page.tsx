@@ -1,7 +1,7 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Location } from "./(components)/location";
-import { Spotify } from "./(components)/spotify";
+import { Spotify, SpotifyBento } from "./(components)/spotify";
 
 const queryClient = new QueryClient();
 
@@ -79,10 +79,10 @@ export default function Page() {
                             bgColor="bg-[#1CD76031]"
                             bgGlow="bg-[radial-gradient(#1CD760_0%,transparent_70%)]"
                             name="Spotify"
-                            icon={<GitHubLogoIcon />}
+                            icon={<img src="/spotify.png" alt="Spotify logo" />}
                         />
                         <div className="my-auto">
-                            <Github />
+                            <SpotifyBento />
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ export default function Page() {
     );
 }
 
-function Showcase() {
+export function Showcase() {
     return (
         <div className="gap-13 flex flex-col pb-12">
             <div className="mx-12">
