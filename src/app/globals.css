@@ -68,6 +68,7 @@
 .marker-outer {
     width: 17px;
     height: 17px;
+    filter: saturate(1.5);
 
     background: rgba(255, 0, 61, 0.38);
     border: 2px solid rgba(255, 12, 12, 0.07);

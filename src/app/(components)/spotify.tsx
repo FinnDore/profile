@@ -162,7 +162,7 @@ export function SpotifyBento() {
     const topSongQuery = useTopSongs(20);
     return (
         <div className="flex flex-col gap-4">
-            <div className="flex max-h-32 flex-col gap-2 overflow-auto px-6">
+            <div className="flex max-h-32 flex-col gap-2 overflow-auto px-6 pb-6">
                 {topSongQuery.data?.map((song) => (
                     <div className="flex" key={song.name}>
                         <AlbumCover
