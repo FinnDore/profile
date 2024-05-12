@@ -1,5 +1,8 @@
 "use client";
+import { GitHubLogoIcon, GlobeIcon } from "@radix-ui/react-icons";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Github } from "./(components)/github";
+import { Label } from "./(components)/label";
 import { Location } from "./(components)/location";
 import { Spotify, SpotifyBento } from "./(components)/spotify";
 
@@ -91,7 +94,7 @@ export default function Page() {
     );
 }
 
-export function Showcase() {
+function Showcase() {
     return (
         <div className="gap-13 flex flex-col pb-12">
             <div className="mx-12">
@@ -107,7 +110,3 @@ export function Showcase() {
         </div>
     );
 }
-
-import { GitHubLogoIcon, GlobeIcon } from "@radix-ui/react-icons";
-import { Github } from "./(components)/github";
-import { Label } from "./(components)/label";
