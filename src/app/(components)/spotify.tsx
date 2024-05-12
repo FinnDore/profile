@@ -11,7 +11,7 @@ function useTopSongs(limit = 4) {
     return useQuery({
         queryKey: ["top-songs", limit],
         queryFn: async () =>
-            await fetch("http://0.0.0.0:3001/top-songs?" + query).then(
+            await fetch("https://spot.finndore.dev/top-songs?" + query).then(
                 (res) => res.json() as unknown as Item[],
             ),
     });
@@ -23,7 +23,7 @@ export function Spotify() {
     const currentSongQuery = useQuery({
         queryKey: ["spot"],
         queryFn: async () => ({
-            currentSong: await fetch("/api/spot").then(
+            currentSong: await fetch("https://spot.finndore.dev").then(
                 (res) => res.json() as unknown as CurrentSong,
             ),
             timestamp: new Date().getTime(),
