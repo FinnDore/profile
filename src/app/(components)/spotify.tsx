@@ -2,7 +2,7 @@
 import { animated, config, useSpring } from "@react-spring/web";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDebounceFunction } from "../../hooks/debounce-function";
 import type { Album, CurrentSong, Item } from "../../_types/spotify";
 
@@ -33,13 +33,28 @@ export function Spotify() {
 
     const topSongQuery = useTopSongs();
 
+    const { currentSong, topSongs } = useMemo(() => {
+        if (!topSongQuery.data) return {};
+        if (!currentSongQuery.data) {
+            const [current, ...top] = topSongQuery.data;
+            return {
+                currentSong: current,
+                topSongs: top,
+            };
+        }
+        return {
+            currentSong: currentSongQuery.data.currentSong.item,
+            topSong: topSongQuery.data,
+        };
+    }, [currentSongQuery.data, topSongQuery.data]);
+
     return (
         <div
             className="relative p-4"
             onMouseEnter={() => debouncedSetIsHovering(true)}
             onMouseLeave={() => debouncedSetIsHovering(false)}
         >
-            {topSongQuery.data?.map((song, index) => (
+            {topSongs?.map((song, index) => (
                 <TopSong
                     song={song}
                     index={index}
@@ -47,12 +62,10 @@ export function Spotify() {
                     key={song.name + index}
                 />
             ))}
-            {currentSongQuery.data && (
+            {currentSong && (
                 <div className="relative z-10 flex">
-                    <AlbumCover
-                        album={currentSongQuery.data.currentSong.item.album}
-                    />
-                    <SongName song={currentSongQuery.data.currentSong.item} />
+                    <AlbumCover album={currentSong.album} />
+                    <SongName song={currentSong} />
                 </div>
             )}
         </div>
