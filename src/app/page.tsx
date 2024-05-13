@@ -24,35 +24,33 @@ export default function Page() {
                         src="/finn-crop-small.webp"
                         alt="Picture with the text 'finn'"
                     />
-                    <div className="h-16">
-                        <div className="absolute mx-auto flex h-32 w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
-                            <Spotify />
-                            <div className="my-auto flex flex-col gap-2">
-                                <div className="flex gap-2">
-                                    <h2 className="mb-auto italic opacity-80">
-                                        Ugh, i write code or something
-                                        {" - "}
-                                        <a
-                                            className="underline transition-all hover:text-rose-500"
-                                            href="https://github.com/finndore"
-                                        >
-                                            Github
-                                        </a>
-                                        {" - "}
-                                        <a
-                                            href="https://arc.net/folder/3824DB56-5972-45E9-BE4C-D0460E501044"
-                                            className="underline transition-all hover:text-rose-500"
-                                        >
-                                            Projects
-                                        </a>
-                                    </h2>
-                                </div>
+                    <div className="absolute mx-auto flex h-32 w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
+                        <Spotify />
+                        <div className="my-auto flex flex-col gap-2">
+                            <div className="flex gap-2">
+                                <h2 className="mb-auto italic opacity-80">
+                                    Ugh, i write code or something
+                                    {" - "}
+                                    <a
+                                        className="underline transition-all hover:text-rose-500"
+                                        href="https://github.com/finndore"
+                                    >
+                                        Github
+                                    </a>
+                                    {" - "}
+                                    <a
+                                        href="https://arc.net/folder/3824DB56-5972-45E9-BE4C-D0460E501044"
+                                        className="underline transition-all hover:text-rose-500"
+                                    >
+                                        Projects
+                                    </a>
+                                </h2>
                             </div>
                         </div>
                     </div>
                     {/* <Showcase /> */}
                 </div>
-                <div className="flex flex-wrap gap-16 px-12 py-32">
+                <div className="mx-auto flex flex-wrap gap-16 px-12 py-32">
                     <div className="flex h-full flex-col">
                         <Label
                             bgColor="bg-[#ff003d31]"
