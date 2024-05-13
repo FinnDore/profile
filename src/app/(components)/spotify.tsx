@@ -44,10 +44,11 @@ export function Spotify() {
         }
         return {
             currentSong: currentSongQuery.data.currentSong.item,
-            topSong: topSongQuery.data,
+            topSongs: topSongQuery.data,
         };
     }, [currentSongQuery.data, topSongQuery.data]);
 
+    console.log(currentSong, topSongs);
     return (
         <div
             className="relative p-4"
