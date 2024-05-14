@@ -50,6 +50,7 @@ export default function Page() {
                     </div>
                     {/* <Showcase /> */}
                 </div>
+                <Showcase />
                 <div className="mx-auto flex flex-wrap gap-16 px-12 py-32">
                     <div className="flex h-full flex-col">
                         <Label
@@ -94,7 +95,7 @@ export default function Page() {
 
 function Showcase() {
     return (
-        <div className="gap-13 flex flex-col pb-12">
+        <div className="gap-13 mx-auto flex w-full max-w-6xl flex-col py-32 pb-12">
             <div className="mx-12">
                 <h1 className="mb-4 text-2xl font-bold">Vote</h1>
                 <div className="relative h-[700px] rounded-md bg-black p-2 shadow-2xl dark:bg-white">
