@@ -13,7 +13,7 @@ export default function Page() {
     return (
         <main className="flex h-screen flex-col bg-white">
             <QueryClientProvider client={queryClient}>
-                <div className="relative m-auto w-screen md:w-auto md:pt-16">
+                <div className="relative z-10 m-auto w-screen md:w-auto md:pt-16">
                     <img
                         className="relative m-auto aspect-auto max-h-[70vh] select-none contrast-125 md:hidden"
                         src="/finn-sm.webp"
