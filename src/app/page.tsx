@@ -51,7 +51,7 @@ export default function Page() {
                     {/* <Showcase /> */}
                 </div>
                 <Showcase />
-                <div className="mx-auto flex flex-wrap gap-16 px-12 py-32">
+                <div className="mx-auto flex flex-wrap gap-16 px-12 py-12">
                     <div className="flex h-full flex-col">
                         <Label
                             bgColor="bg-[#ff003d31]"
@@ -95,15 +95,32 @@ export default function Page() {
 
 function Showcase() {
     return (
-        <div className="gap-13 mx-auto flex w-full max-w-6xl flex-col py-32 pb-12">
+        <div className="gap-13 z-20 mx-auto flex w-full max-w-6xl flex-col pb-12 pt-32">
             <div className="mx-12">
-                <h1 className="mb-4 text-2xl font-bold">Vote</h1>
-                <div className="relative h-[700px] rounded-md bg-black p-2 shadow-2xl dark:bg-white">
-                    <div className="noise"></div>
-                    <iframe
-                        src="https://v.finndore.dev"
-                        className="relative z-10 h-full w-full rounded"
-                    ></iframe>
+                <div className="relative h-[700px] overflow-hidden rounded-lg border border-black/10 bg-black p-2 shadow-md dark:bg-white">
+                    <div className="absolute left-0 top-0 z-0 h-full w-full p-2 ">
+                        <div className="noise absolute left-0 top-0 w-full opacity-40 invert"></div>
+                        <div className="relative h-full w-full rounded-md border border-black/10 bg-white shadow-md"></div>
+                    </div>
+                    <div className="relative flex h-full flex-col p-4">
+                        <h1 className="mb-4 text-2xl font-bold">Vote</h1>
+                        <div className="mt-auto flex">
+                            <picture>
+                                <img
+                                    src="/projects/v-dark.png"
+                                    alt="Vote"
+                                    className="rounded-md"
+                                />
+                            </picture>
+                            <picture>
+                                <img
+                                    src="/projects/v-light.png"
+                                    alt="Vote"
+                                    className="rounded-md"
+                                />
+                            </picture>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
