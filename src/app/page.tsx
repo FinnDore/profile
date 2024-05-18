@@ -58,7 +58,7 @@ export default function Page() {
                     {/* <Showcase /> */}
                 </div>
                 <Showcase />
-                <div className="mx-auto flex flex-wrap gap-16 px-12 py-12">
+                <div className="mx-auto flex flex-wrap gap-16 px-12 pb-12">
                     <div className="flex h-full flex-col">
                         <div className="mx-auto">
                             <Label
@@ -145,7 +145,7 @@ function Showcase() {
 
     return (
         <div
-            className="z-20 mx-auto  flex w-full max-w-6xl flex-col gap-16 pb-24 pt-32"
+            className="z-20 mx-auto  flex w-full max-w-6xl flex-col gap-16 pb-32 pt-32"
             onClick={() =>
                 setTab(
                     {
