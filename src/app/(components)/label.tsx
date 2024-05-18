@@ -3,14 +3,26 @@ import { useEffect, useRef, useState } from "react";
 
 export function Label(props: {
     name: string;
-    icon: React.ReactNode;
+    icon?: React.ReactNode;
     bgColor: `bg-[${string}]`;
     bgGlow: `bg-[radial-gradient(#${string}_0%,transparent_70%)]`;
+    smallRound?: boolean;
 }) {
     return (
-        <BorderGlowButton bgColor={props.bgColor} bgGlow={props.bgGlow}>
-            <div className="my-auto h-4 w-4">{props.icon}</div>
-            <span className="text-sm">{props.name}</span>
+        <BorderGlowButton
+            smallRound={props.smallRound}
+            bgColor={props.bgColor}
+            bgGlow={props.bgGlow}
+        >
+            {props.icon && <div className="my-auto h-4 w-4">{props.icon}</div>}
+            <span
+                className={clsx({
+                    "text-sm": props.icon,
+                    "text-xs": !props.icon,
+                })}
+            >
+                {props.name}
+            </span>
         </BorderGlowButton>
     );
 }
@@ -19,6 +31,7 @@ const BorderGlowButton = (props: {
     children: React.ReactNode;
     bgColor: `bg-[${string}]`;
     bgGlow: `bg-[radial-gradient(#${string}_0%,transparent_70%)]`;
+    smallRound?: boolean;
 }) => {
     // TODO give creddit
     const ref = useRef<HTMLDivElement>(null);
@@ -44,8 +57,12 @@ const BorderGlowButton = (props: {
     return (
         <div
             className={clsx(
-                "relative mx-auto transform select-none overflow-hidden rounded-2xl transition-transform ease-in-out active:scale-90",
+                "relative w-min transform select-none overflow-hidden transition-transform ease-in-out active:scale-90",
                 props.bgColor,
+                {
+                    "rounded-2xl": !props.smallRound,
+                    "rounded-md": props.smallRound,
+                },
             )}
             ref={ref}
         >
@@ -61,7 +78,15 @@ const BorderGlowButton = (props: {
                     } as any
                 }
             ></span>
-            <div className="relative z-10 m-[1px] flex gap-2 rounded-2xl  bg-white/90 px-4 py-1  backdrop-blur-sm">
+            <div
+                className={clsx(
+                    "relative z-10 m-[1px] flex gap-2 bg-white/90 px-4 py-1  backdrop-blur-sm",
+                    {
+                        "rounded-2xl": !props.smallRound,
+                        "rounded-md": props.smallRound,
+                    },
+                )}
+            >
                 {props.children}
             </div>
         </div>
