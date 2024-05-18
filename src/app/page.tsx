@@ -4,7 +4,10 @@ import {
     GitHubLogoIcon,
     GlobeIcon,
 } from "@radix-ui/react-icons";
+import { animated, config, useSpring } from "@react-spring/web";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import clsx from "clsx";
+import { useState } from "react";
 import { Github } from "./(components)/github";
 import { Label } from "./(components)/label";
 import { Location } from "./(components)/location";
@@ -108,100 +111,156 @@ export default function Page() {
     );
 }
 
-function Showcase() {
+function Arc(props: { children: React.ReactNode; className?: string }) {
     return (
-        <div className="z-20 mx-auto  flex w-full max-w-6xl flex-col gap-16 pb-12 pt-32">
-            <div className="mx-auto flex gap-6">
-                <div className="relative max-w-md rounded-md border border-black/10 bg-black p-1 shadow-md dark:bg-white">
-                    <div className="noise absolute left-0 top-0 w-full opacity-40 invert"></div>
-                    <picture className="w-full">
-                        <img
-                            src="/projects/v-light.png"
-                            alt="Vote"
-                            className="rounded-md border border-black/10 shadow-md"
-                        />
-                    </picture>
+        <div
+            className={clsx(
+                props.className,
+                "max-w-md rounded-md border border-black/10 bg-white p-1 shadow-md",
+            )}
+        >
+            <div className="noise absolute left-0 top-0 w-full opacity-40 invert"></div>
+            {props.children}
+        </div>
+    );
+}
+
+const Tab = {
+    Vote: "Vote",
+    One: "One",
+};
+
+type Tab = (typeof Tab)[keyof typeof Tab];
+
+function Showcase() {
+    const [tab, setTab] = useState<Tab>(Tab.Vote);
+
+    const one = tab === Tab.One;
+    const oneSpring = useSpring({
+        scale: one ? 1 : 0.9,
+        rotate: one ? -4 : 0,
+        trnaslateY: one ? 0 : 20,
+        config: config.wobbly,
+    });
+
+    return (
+        <div
+            className="z-20 mx-auto  flex w-full max-w-6xl flex-col gap-16 pb-24 pt-32"
+            onClick={() =>
+                setTab(
+                    {
+                        [Tab.Vote]: Tab.One,
+                        [Tab.One]: Tab.Vote,
+                    }[tab] as Tab,
+                )
+            }
+        >
+            <div className="mx-auto flex gap-8">
+                <div className="relative max-w-md">
+                    <Arc>
+                        <picture className="w-full">
+                            <img
+                                src="/projects/vote/landing-crop.png"
+                                alt="Vote"
+                                className="rounded-md border border-black/10 shadow-md"
+                            />
+                        </picture>
+                    </Arc>
+
+                    <animated.div
+                        style={oneSpring}
+                        className={clsx(
+                            "absolute top-0 transition-opacity duration-200",
+                            {
+                                "opacity-0": !one,
+                                "opacity-100": one,
+                            },
+                        )}
+                    >
+                        <Arc>
+                            <picture className="w-full invert">
+                                <img
+                                    src="/projects/light-2.png"
+                                    alt="Vote"
+                                    className="rounded-md border border-white/10 shadow-md"
+                                />
+                            </picture>
+                        </Arc>
+                    </animated.div>
                 </div>
-                <div>
-                    <div className="flex gap-4">
-                        <h1 className="text-2xl font-bold">Vote</h1>
-                        <a
-                            href="https://v.finndore.dev/&ref=finndore.dev"
-                            className="my-auto flex gap-1 text-sm text-gray-500 underline hover:text-black"
-                        >
-                            v.finndore.dev
-                            <ExternalLinkIcon className="my-auto scale-75" />
-                        </a>
+                {tab === Tab.Vote && (
+                    <div>
+                        <div className="flex gap-4">
+                            <h1 className="text-2xl font-bold">Vote</h1>
+                            <a
+                                href="https://v.finndore.dev/&ref=finndore.dev"
+                                className="my-auto flex gap-1 text-sm text-gray-500 underline hover:text-black"
+                            >
+                                v.finndore.dev
+                                <ExternalLinkIcon className="my-auto scale-75" />
+                            </a>
+                        </div>
+
+                        <p className="max-w-96">
+                            A simple voting app. Vote on your favorite user from
+                            a list of users. built with Next.js, Prisma, and
+                            SQLite. deployed using kubernetes and teraform.
+                        </p>
+                        <div className="my-2 flex gap-2">
+                            <Label
+                                bgColor="bg-[#00003d31]"
+                                bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
+                                name="Next.js"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#0ca5e931]"
+                                bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
+                                name="Tailwind"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#f1672631]"
+                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                name="Vitess"
+                                smallRound
+                            />
+                        </div>
                     </div>
-                    <p className="max-w-96">
-                        A simple voting app. Vote on your favorite user from a
-                        list of users. built with Next.js, Prisma, and SQLite.
-                        deployed using kubernetes and teraform.
-                    </p>
+                )}
 
-                    <div className="my-2 flex gap-2">
-                        <Label
-                            bgColor="bg-[#00003d31]"
-                            bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
-                            name="Next.js"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#0ca5e931]"
-                            bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
-                            name="Tailwind"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Vitess"
-                            smallRound
-                        />
+                {one && (
+                    <div className="mx-auto flex gap-4">
+                        <div>
+                            <h1 className="text-2xl font-bold">One</h1>
+                            <p className="max-w-96">
+                                A IOT light written using embeded Rust along
+                                with a companion app made with Tauri and nextjs
+                            </p>
+
+                            <div className="my-2 flex gap-2">
+                                <Label
+                                    bgColor="bg-[#f1672631]"
+                                    bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                    name="Rust"
+                                    smallRound
+                                />
+                                <Label
+                                    bgColor="bg-[#00003d31]"
+                                    bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
+                                    name="Next.js"
+                                    smallRound
+                                />
+                                <Label
+                                    bgColor="bg-[#0ca5e931]"
+                                    bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
+                                    name="Tailwind"
+                                    smallRound
+                                />
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div className="mx-auto flex gap-6">
-                <div className="relative max-w-md rounded-md border border-black/10 bg-black p-1 shadow-md dark:bg-white">
-                    <div className="noise absolute left-0 top-0 w-full opacity-40 invert"></div>
-                    <picture className="w-full  invert">
-                        <img
-                            src="/projects/light-2.png"
-                            alt="Vote"
-                            className="rounded-md border border-white/10 shadow-md"
-                        />
-                    </picture>
-                </div>
-
-                <div>
-                    <h1 className="text-2xl font-bold">One</h1>
-                    <p className="max-w-96">
-                        A IOT light written using embeded Rust along with a
-                        companion app made with Tauri and nextjs
-                    </p>
-
-                    <div className="my-2 flex gap-2">
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Rust"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#00003d31]"
-                            bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
-                            name="Next.js"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#0ca5e931]"
-                            bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
-                            name="Tailwind"
-                            smallRound
-                        />
-                    </div>
-                </div>
+                )}
             </div>
             {/* <div className="relative h-[700px] overflow-hidden rounded-lg border border-black/10 bg-black p-2 shadow-md dark:bg-white">
                 <div className="absolute left-0 top-0 z-0 h-full w-full p-2 ">

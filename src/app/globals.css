@@ -98,3 +98,14 @@
         0px 50.6px 33.4px rgba(0, 0, 0, 0.077),
         0px 121px 80px rgba(0, 0, 0, 0.07);
 }
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(2.25rem) rotate(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate(-3deg);
+    }
+}
