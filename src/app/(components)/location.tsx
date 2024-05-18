@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
 import { format } from "date-fns-tz";
 import { useMemo } from "react";
 
-export function Location() {
+export function Location(props: { hideWeather?: boolean }) {
     const locationQuery = useQuery({
         queryKey: ["location"],
         queryFn: async () =>
@@ -31,7 +32,12 @@ export function Location() {
                 <div className="marker-outer absolute left-1/2 top-1/2 z-10 rounded-full">
                     <div className="marker-inner center-absolute rounded-full"></div>
                 </div>
-                <div className="map-gradient absolute h-full w-full"></div>
+                <div
+                    className={clsx(" absolute h-full w-full", {
+                        "map-gradient": !props.hideWeather,
+                        "map-gradient2": props.hideWeather,
+                    })}
+                ></div>
 
                 {location && (
                     <picture>
@@ -40,21 +46,23 @@ export function Location() {
                     </picture>
                 )}
             </div>
-            <div className="flex w-min flex-col justify-center text-nowrap italic">
-                <span>
-                    <b>{formattedTime.time}</b> {formattedTime.abbr}
-                </span>
-                <span>
-                    <b>{currently?.temperature}°C</b>
-                </span>
-                <span>
-                    <b>{currently?.humidity}%</b> humidity
-                </span>
+            {!props.hideWeather && (
+                <div className="flex w-min flex-col justify-center text-nowrap italic">
+                    <span>
+                        <b>{formattedTime.time}</b> {formattedTime.abbr}
+                    </span>
+                    <span>
+                        <b>{currently?.temperature}°C</b>
+                    </span>
+                    <span>
+                        <b>{currently?.humidity}%</b> humidity
+                    </span>
 
-                <span>
-                    <b>{currently?.windSpeed}mph</b> wind
-                </span>
-            </div>
+                    <span>
+                        <b>{currently?.windSpeed}mph</b> wind
+                    </span>
+                </div>
+            )}
         </div>
     );
 }

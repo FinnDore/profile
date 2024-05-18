@@ -133,6 +133,7 @@ const Tab = {
     Vote: "Vote",
     One: "One",
     Spotify: "Spotify",
+    Location: "Location",
 };
 
 type Tab = (typeof Tab)[keyof typeof Tab];
@@ -200,7 +201,8 @@ function Showcase() {
 
     const pauseTimeout = useRef<NodeJS.Timeout | null>(null);
 
-    const spot = tab === Tab.Spotify;
+    const location = tab === Tab.Location;
+    const spot = tab === Tab.Spotify || location;
     const one = tab === Tab.One || spot;
     const oneSpring = useSpring({
         scale: one ? 1 : 0.9,
@@ -211,6 +213,12 @@ function Showcase() {
     const spotSpring = useSpring({
         scale: spot ? 1 : 0.9,
         rotate: spot ? 4 : 0,
+        trnaslateY: spot ? 0 : 20,
+        config: config.wobbly,
+    });
+    const locationSpring = useSpring({
+        scale: spot ? 1 : 0.9,
+        rotate: spot ? -3 : 0,
         trnaslateY: spot ? 0 : 20,
         config: config.wobbly,
     });
@@ -306,6 +314,22 @@ function Showcase() {
                             </div>
                         </Arc>
                     </animated.div>
+                    <animated.div
+                        style={locationSpring}
+                        className={clsx(
+                            "absolute top-0 transition-opacity duration-200",
+                            {
+                                "opacity-0": !location,
+                                "opacity-100": location,
+                            },
+                        )}
+                    >
+                        <Arc className="h-80 w-[26rem]">
+                            <div className="grid h-full place-content-center rounded-md">
+                                <Location hideWeather />
+                            </div>
+                        </Arc>
+                    </animated.div>
                 </div>
                 {tab === Tab.Vote && (
                     <Description
@@ -380,6 +404,24 @@ function Showcase() {
                             name: "finndore/spot",
                         }}
                         description="A spotify api wrapper built to serve top songs and current songs data. Spot also allows control of the currently playing song"
+                    >
+                        <Label
+                            bgColor="bg-[#f1672631]"
+                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                            name="Rust"
+                            className="cursor-pointer"
+                            smallRound
+                        />
+                    </Description>
+                )}
+                {tab === Tab.Location && (
+                    <Description
+                        title="Location"
+                        link={{
+                            url: "https://github.com/finndore/location",
+                            name: "finndore/location",
+                        }}
+                        description="A simple location api that returns my location and weather for that location."
                     >
                         <Label
                             bgColor="bg-[#f1672631]"
