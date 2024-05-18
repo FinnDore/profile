@@ -6,10 +6,10 @@ import {
     GitHubLogoIcon,
     GlobeIcon,
 } from "@radix-ui/react-icons";
-import { animated, config, useSpring } from "@react-spring/web";
+import { animated, config, useInView, useSpring } from "@react-spring/web";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import clsx from "clsx";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Github } from "./(components)/github";
 import { Label } from "./(components)/label";
 import { Location } from "./(components)/location";
@@ -195,7 +195,10 @@ function Description(props: {
 
 function Showcase() {
     const [tab, setTab] = useState<Tab>(Tab.Vote);
-    const [pause, setPause] = useState(false);
+    const [pause, setPause] = useState(true);
+    const [reverse, setReverse] = useState(false);
+
+    const pauseTimeout = useRef<NodeJS.Timeout | null>(null);
 
     const spot = tab === Tab.Spotify;
     const one = tab === Tab.One || spot;
@@ -212,8 +215,6 @@ function Showcase() {
         config: config.wobbly,
     });
 
-    const [reverse, setReverse] = useState(false);
-    const pauseTimeout = useRef<NodeJS.Timeout | null>(null);
     const { next, prev } = useMemo(() => {
         const tabs = Object.values(Tab);
         const index = tabs.indexOf(tab);
@@ -244,8 +245,22 @@ function Showcase() {
         };
     }, [tab, setTab, setReverse, setPause]);
 
+    const [ref, inview] = useInView({
+        once: true,
+        amount: 0.5,
+    });
+
+    useEffect(() => {
+        if (inview) {
+            setPause(false);
+        }
+    }, [inview]);
+
     return (
-        <div className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-16 pb-24 pt-32">
+        <div
+            ref={ref}
+            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-16 pb-24 pt-32"
+        >
             <div className="mx-auto flex gap-8">
                 <div className="relative max-w-md">
                     <Arc>
