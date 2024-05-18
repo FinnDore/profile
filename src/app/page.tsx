@@ -225,7 +225,7 @@ function Showcase() {
                         <div className="flex gap-4">
                             <h1 className="text-2xl font-bold">Vote</h1>
                             <a
-                                href="https://v.finndore.dev/&ref=finndore.dev"
+                                href="https://v.finndore.dev"
                                 className="my-auto flex gap-1 text-sm text-gray-500 underline hover:text-black"
                             >
                                 v.finndore.dev
@@ -332,13 +332,6 @@ function Showcase() {
                     <DoubleArrowRightIcon className="scale-125" />
                 </NextButton>
             </div>
-
-            {/* <div className="relative h-[700px] overflow-hidden rounded-lg border border-black/10 bg-black p-2 shadow-md dark:bg-white">
-                <div className="absolute left-0 top-0 z-0 h-full w-full p-2 ">
-                    <div className="noise absolute left-0 top-0 w-full opacity-40 invert"></div>
-                    <div className="relative h-full w-full rounded-md border border-black/10 bg-white shadow-md"></div>
-                </div>
-           </div> */}
         </div>
     );
 }
