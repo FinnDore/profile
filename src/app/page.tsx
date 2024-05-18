@@ -168,6 +168,31 @@ function Progress(props: { pause: boolean; next: (auto?: boolean) => void }) {
     );
 }
 
+function Description(props: {
+    children: React.ReactNode;
+    title: React.ReactNode;
+    link: { url: string; name: string };
+    description: string;
+}) {
+    return (
+        <div>
+            <div className="flex gap-4">
+                <h1 className="text-2xl font-bold">{props.title}</h1>
+                <a
+                    href={props.link.url}
+                    className="my-auto flex gap-1 text-sm text-gray-500 underline hover:text-black"
+                >
+                    {props.link.name}
+                    <ExternalLinkIcon className="my-auto scale-75" />
+                </a>
+            </div>
+
+            <p className="max-w-96">{props.description}</p>
+            <div className="my-2 flex gap-2">{props.children}</div>
+        </div>
+    );
+}
+
 function Showcase() {
     const [tab, setTab] = useState<Tab>(Tab.Vote);
     const [pause, setPause] = useState(false);
@@ -268,105 +293,87 @@ function Showcase() {
                     </animated.div>
                 </div>
                 {tab === Tab.Vote && (
-                    <div>
-                        <div className="flex gap-4">
-                            <h1 className="text-2xl font-bold">Vote</h1>
-                            <a
-                                href="https://v.finndore.dev"
-                                className="my-auto flex gap-1 text-sm text-gray-500 underline hover:text-black"
-                            >
-                                v.finndore.dev
-                                <ExternalLinkIcon className="my-auto scale-75" />
-                            </a>
-                        </div>
-
-                        <p className="max-w-96">
-                            A simple voting app. Vote on your favorite user from
-                            a list of users. built with Next.js, Prisma, and
-                            SQLite. deployed using kubernetes and teraform.
-                        </p>
-                        <div className="my-2 flex gap-2">
-                            <Label
-                                bgColor="bg-[#00003d31]"
-                                bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
-                                name="Next.js"
-                                className="cursor-pointer"
-                                smallRound
-                            />
-                            <Label
-                                bgColor="bg-[#0ca5e931]"
-                                bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
-                                name="Tailwind"
-                                className="cursor-pointer"
-                                smallRound
-                            />
-                            <Label
-                                bgColor="bg-[#f1672631]"
-                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                                name="Vitess"
-                                className="cursor-pointer"
-                                smallRound
-                            />
-                        </div>
-                    </div>
+                    <Description
+                        title="Vote"
+                        link={{
+                            url: "https://vote.finndore.dev",
+                            name: "vote.finndore.dev",
+                        }}
+                        description="Pointing poker is a waste of time, but to make it as painless as possible ive made modern pointing website. I've utilised websockets to update the UI in real time (try the vote on the front page!)."
+                    >
+                        <Label
+                            bgColor="bg-[#00003d31]"
+                            bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
+                            name="Next.js"
+                            className="cursor-pointer"
+                            smallRound
+                        />
+                        <Label
+                            bgColor="bg-[#0ca5e931]"
+                            bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
+                            name="Tailwind"
+                            className="cursor-pointer"
+                            smallRound
+                        />
+                        <Label
+                            bgColor="bg-[#f1672631]"
+                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                            name="Vitess"
+                            className="cursor-pointer"
+                            smallRound
+                        />
+                    </Description>
                 )}
 
                 {tab === Tab.One && (
-                    <div className="mx-auto flex gap-4">
-                        <div>
-                            <h1 className="text-2xl font-bold">One</h1>
-                            <p className="max-w-96">
-                                A IOT light written using embeded Rust along
-                                with a companion app made with Tauri and nextjs
-                            </p>
-
-                            <div className="my-2 flex gap-2">
-                                <Label
-                                    bgColor="bg-[#f1672631]"
-                                    bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                                    name="Rust"
-                                    className="cursor-pointer"
-                                    smallRound
-                                />
-                                <Label
-                                    bgColor="bg-[#00003d31]"
-                                    bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
-                                    name="Next.js"
-                                    className="cursor-pointer"
-                                    smallRound
-                                />
-                                <Label
-                                    bgColor="bg-[#0ca5e931]"
-                                    bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
-                                    name="Tailwind"
-                                    className="cursor-pointer"
-                                    smallRound
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    <Description
+                        title="One"
+                        link={{
+                            url: "https://github.com/finndore/one",
+                            name: "finndore/one",
+                        }}
+                        description="A IOT light written using embeded Rust along with a companion app made with Tauri and nextjs"
+                    >
+                        <Label
+                            bgColor="bg-[#f1672631]"
+                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                            name="Rust"
+                            className="cursor-pointer"
+                            smallRound
+                        />
+                        <Label
+                            bgColor="bg-[#00003d31]"
+                            bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
+                            name="Next.js"
+                            className="cursor-pointer"
+                            smallRound
+                        />
+                        <Label
+                            bgColor="bg-[#0ca5e931]"
+                            bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
+                            name="Tailwind"
+                            className="cursor-pointer"
+                            smallRound
+                        />
+                    </Description>
                 )}
                 {tab === Tab.Spotify && (
-                    <div className="mx-auto flex gap-4">
-                        <div>
-                            <h1 className="text-2xl font-bold">Spot</h1>
-                            <p className="max-w-96">
-                                A spotify api wrapper built to serve top songs
-                                and current songs data. Spot also allows control
-                                of the currently playing song
-                            </p>
-
-                            <div className="my-2 flex gap-2">
-                                <Label
-                                    bgColor="bg-[#f1672631]"
-                                    bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                                    name="Rust"
-                                    className="cursor-pointer"
-                                    smallRound
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    <Description
+                        title="Spot"
+                        link={{
+                            url: "https://github.com/finndore/spot",
+                            name: "finndore/spot",
+                        }}
+                        description="A spotify api wrapper built to serve top songs and current songs data. Spot also allows control of the currently playing song"
+                    >
+                        <Label
+                            bgColor="bg-[#f1672631]"
+                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                            name="Rust"
+                            className="cursor-pointer"
+                            smallRound
+                        />
+                    </Description>
                 )}
             </div>
             <div className="mx-auto flex flex-col gap-4">
