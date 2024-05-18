@@ -5,6 +5,7 @@ import { Github } from "./(components)/github";
 import { Label } from "./(components)/label";
 import { Location } from "./(components)/location";
 import { Spotify, SpotifyBento } from "./(components)/spotify";
+import { VoteButton } from "./(components)/vote-button";
 
 const queryClient = new QueryClient();
 
@@ -93,33 +94,52 @@ export default function Page() {
     );
 }
 
+function ProjectName(props: { children: React.ReactNode }) {
+    return (
+        <div className="relative mx-auto transform select-none overflow-hidden rounded-md bg-slate-200/40 px-8 py-6 transition-transform ease-in-out active:scale-90">
+            {props.children}
+        </div>
+    );
+}
+
 function Showcase() {
     return (
-        <div className="gap-13 z-20 mx-auto flex w-full max-w-6xl flex-col pb-12 pt-32">
-            <div className="mx-12">
-                <div className="relative h-[700px] overflow-hidden rounded-lg border border-black/10 bg-black p-2 shadow-md dark:bg-white">
-                    <div className="absolute left-0 top-0 z-0 h-full w-full p-2 ">
-                        <div className="noise absolute left-0 top-0 w-full opacity-40 invert"></div>
-                        <div className="relative h-full w-full rounded-md border border-black/10 bg-white shadow-md"></div>
-                    </div>
-                    <div className="relative flex h-full flex-col p-4">
-                        <h1 className="mb-4 text-2xl font-bold">Vote</h1>
-                        <div className="mt-auto flex">
-                            <picture>
-                                <img
-                                    src="/projects/v-dark.png"
-                                    alt="Vote"
-                                    className="rounded-md"
-                                />
-                            </picture>
-                            <picture>
-                                <img
-                                    src="/projects/v-light.png"
-                                    alt="Vote"
-                                    className="rounded-md"
-                                />
-                            </picture>
-                        </div>
+        <div className="gap-13 z-20  mx-auto flex w-full max-w-6xl flex-col pb-12 pt-32">
+            <div className="flex py-6">
+                <VoteButton
+                    users={[
+                        {
+                            name: "finndore",
+                            id: "1",
+                            image: "https://avatars.githubusercontent.com/u/34718806?s=40&v=4",
+                            pfpHash: "1",
+                        },
+                    ]}
+                />
+                <ProjectName>Vote</ProjectName>
+            </div>
+            <div className="relative h-[700px] overflow-hidden rounded-lg border border-black/10 bg-black p-2 shadow-md dark:bg-white">
+                <div className="absolute left-0 top-0 z-0 h-full w-full p-2 ">
+                    <div className="noise absolute left-0 top-0 w-full opacity-40 invert"></div>
+                    <div className="relative h-full w-full rounded-md border border-black/10 bg-white shadow-md"></div>
+                </div>
+                <div className="relative flex h-full flex-col p-4">
+                    <h1 className="mb-4 text-2xl font-bold">Vote</h1>
+                    <div className="mt-auto flex">
+                        <picture>
+                            <img
+                                src="/projects/v-dark.png"
+                                alt="Vote"
+                                className="rounded-md"
+                            />
+                        </picture>
+                        <picture>
+                            <img
+                                src="/projects/v-light.png"
+                                alt="Vote"
+                                className="rounded-md"
+                            />
+                        </picture>
                     </div>
                 </div>
             </div>
