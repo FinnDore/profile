@@ -122,7 +122,7 @@ function Arc(props: { children: React.ReactNode; className?: string }) {
             )}
         >
             <div className="noise absolute left-0 top-0 w-full rounded-md opacity-40 invert"></div>
-            <div className="relative h-full w-full overflow-hidden rounded-md border border-black/10 bg-white/65 shadow-lg">
+            <div className="relative h-full w-full rounded-md border border-black/10 bg-white/65 shadow-lg">
                 {props.children}
             </div>
         </div>
@@ -181,6 +181,7 @@ function Showcase() {
                             <img
                                 src="/projects/vote/landing-crop.png"
                                 alt="Vote"
+                                className="rounded-md"
                             />
                         </picture>
                     </Arc>
@@ -196,7 +197,7 @@ function Showcase() {
                         )}
                     >
                         <Arc>
-                            <picture className="w-full invert">
+                            <picture className="w-full rounded-md invert">
                                 <img src="/projects/light-2.png" alt="Vote" />
                             </picture>
                         </Arc>
@@ -213,7 +214,7 @@ function Showcase() {
                         )}
                     >
                         <Arc className="h-80 w-[26rem]">
-                            <div className="grid h-full place-content-center">
+                            <div className="grid h-full place-content-center rounded-md">
                                 <Spotify />
                             </div>
                         </Arc>
@@ -270,12 +271,6 @@ function Showcase() {
                             </p>
 
                             <div className="my-2 flex gap-2">
-                                <Label
-                                    bgColor="bg-[#f1672631]"
-                                    bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                                    name="Rust"
-                                    smallRound
-                                />
                                 <Label
                                     bgColor="bg-[#00003d31]"
                                     bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
