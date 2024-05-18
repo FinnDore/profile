@@ -187,7 +187,7 @@ function Description(props: {
                 </a>
             </div>
 
-            <p className="max-w-96">{props.description}</p>
+            <p className="max-w-96 pt-1">{props.description}</p>
             <div className="my-2 flex gap-2">{props.children}</div>
         </div>
     );
