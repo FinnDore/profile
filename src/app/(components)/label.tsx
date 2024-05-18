@@ -7,9 +7,11 @@ export function Label(props: {
     bgColor: `bg-[${string}]`;
     bgGlow: `bg-[radial-gradient(#${string}_0%,transparent_70%)]`;
     smallRound?: boolean;
+    className?: string;
 }) {
     return (
         <BorderGlowButton
+            className={props.className}
             smallRound={props.smallRound}
             bgColor={props.bgColor}
             bgGlow={props.bgGlow}
@@ -32,6 +34,7 @@ const BorderGlowButton = (props: {
     bgColor: `bg-[${string}]`;
     bgGlow: `bg-[radial-gradient(#${string}_0%,transparent_70%)]`;
     smallRound?: boolean;
+    className?: string;
 }) => {
     // TODO give creddit
     const ref = useRef<HTMLDivElement>(null);
@@ -57,8 +60,9 @@ const BorderGlowButton = (props: {
     return (
         <div
             className={clsx(
-                "relative w-min transform select-none overflow-hidden transition-transform ease-in-out active:scale-90",
+                props.className,
                 props.bgColor,
+                "relative w-min transform select-none overflow-hidden transition-transform ease-in-out active:scale-90",
                 {
                     "rounded-2xl": !props.smallRound,
                     "rounded-md": props.smallRound,

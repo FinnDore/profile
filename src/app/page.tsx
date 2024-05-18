@@ -143,7 +143,7 @@ function NextButton(props: {
 }) {
     return (
         <button
-            className="group relative rounded-md border border-black/20 p-3 shadow-md transition-all hover:border-black/50 hover:shadow-lg"
+            className="group relative transform rounded-md border border-black/20 p-3 shadow-md transition-all ease-in-out hover:border-black/50 hover:shadow-lg active:scale-90"
             onClick={props.onClick}
         >
             <div className="absolute left-0 top-0 h-full w-full shadow-inner"></div>
@@ -243,18 +243,21 @@ function Showcase() {
                                 bgColor="bg-[#00003d31]"
                                 bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
                                 name="Next.js"
+                                className="cursor-pointer"
                                 smallRound
                             />
                             <Label
                                 bgColor="bg-[#0ca5e931]"
                                 bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
                                 name="Tailwind"
+                                className="cursor-pointer"
                                 smallRound
                             />
                             <Label
                                 bgColor="bg-[#f1672631]"
                                 bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
                                 name="Vitess"
+                                className="cursor-pointer"
                                 smallRound
                             />
                         </div>
@@ -272,15 +275,24 @@ function Showcase() {
 
                             <div className="my-2 flex gap-2">
                                 <Label
+                                    bgColor="bg-[#f1672631]"
+                                    bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                    name="Rust"
+                                    className="cursor-pointer"
+                                    smallRound
+                                />
+                                <Label
                                     bgColor="bg-[#00003d31]"
                                     bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
                                     name="Next.js"
+                                    className="cursor-pointer"
                                     smallRound
                                 />
                                 <Label
                                     bgColor="bg-[#0ca5e931]"
                                     bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
                                     name="Tailwind"
+                                    className="cursor-pointer"
                                     smallRound
                                 />
                             </div>
@@ -302,18 +314,7 @@ function Showcase() {
                                     bgColor="bg-[#f1672631]"
                                     bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
                                     name="Rust"
-                                    smallRound
-                                />
-                                <Label
-                                    bgColor="bg-[#00003d31]"
-                                    bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
-                                    name="Next.js"
-                                    smallRound
-                                />
-                                <Label
-                                    bgColor="bg-[#0ca5e931]"
-                                    bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
-                                    name="Tailwind"
+                                    className="cursor-pointer"
                                     smallRound
                                 />
                             </div>
