@@ -121,8 +121,10 @@ function Arc(props: { children: React.ReactNode; className?: string }) {
                 "max-w-md rounded-md border border-black/10 bg-white p-1 shadow-md",
             )}
         >
-            <div className="noise absolute left-0 top-0 w-full opacity-40 invert"></div>
-            {props.children}
+            <div className="noise absolute left-0 top-0 w-full rounded-md opacity-40 invert"></div>
+            <div className="relative h-full w-full overflow-hidden rounded-md border border-black/10 bg-white/65 shadow-lg">
+                {props.children}
+            </div>
         </div>
     );
 }
@@ -130,6 +132,7 @@ function Arc(props: { children: React.ReactNode; className?: string }) {
 const Tab = {
     Vote: "Vote",
     One: "One",
+    Spotify: "Spotify",
 };
 
 type Tab = (typeof Tab)[keyof typeof Tab];
@@ -144,7 +147,7 @@ function NextButton(props: {
             onClick={props.onClick}
         >
             <div className="absolute left-0 top-0 h-full w-full shadow-inner"></div>
-            <div className="opacity-50 transition-opacity group-hover:opacity-100">
+            <div className="opacity-50 transition-opacity group-hover:opacity-100 ">
                 {props.children}
             </div>
         </button>
@@ -154,11 +157,18 @@ function NextButton(props: {
 function Showcase() {
     const [tab, setTab] = useState<Tab>(Tab.Vote);
 
-    const one = tab === Tab.One;
+    const spot = tab === Tab.Spotify;
+    const one = tab === Tab.One || spot;
     const oneSpring = useSpring({
         scale: one ? 1 : 0.9,
         rotate: one ? -4 : 0,
         trnaslateY: one ? 0 : 20,
+        config: config.wobbly,
+    });
+    const spotSpring = useSpring({
+        scale: spot ? 1 : 0.9,
+        rotate: spot ? 4 : 0,
+        trnaslateY: spot ? 0 : 20,
         config: config.wobbly,
     });
 
@@ -171,7 +181,6 @@ function Showcase() {
                             <img
                                 src="/projects/vote/landing-crop.png"
                                 alt="Vote"
-                                className="rounded-md border border-black/10 shadow-md"
                             />
                         </picture>
                     </Arc>
@@ -188,12 +197,25 @@ function Showcase() {
                     >
                         <Arc>
                             <picture className="w-full invert">
-                                <img
-                                    src="/projects/light-2.png"
-                                    alt="Vote"
-                                    className="rounded-md border border-white/10 shadow-md"
-                                />
+                                <img src="/projects/light-2.png" alt="Vote" />
                             </picture>
+                        </Arc>
+                    </animated.div>
+
+                    <animated.div
+                        style={spotSpring}
+                        className={clsx(
+                            "absolute top-0 transition-opacity duration-200",
+                            {
+                                "opacity-0": !spot,
+                                "opacity-100": spot,
+                            },
+                        )}
+                    >
+                        <Arc className="h-80 w-[26rem]">
+                            <div className="grid h-full place-content-center">
+                                <Spotify />
+                            </div>
                         </Arc>
                     </animated.div>
                 </div>
@@ -238,7 +260,7 @@ function Showcase() {
                     </div>
                 )}
 
-                {one && (
+                {tab === Tab.One && (
                     <div className="mx-auto flex gap-4">
                         <div>
                             <h1 className="text-2xl font-bold">One</h1>
@@ -270,12 +292,47 @@ function Showcase() {
                         </div>
                     </div>
                 )}
+                {tab === Tab.Spotify && (
+                    <div className="mx-auto flex gap-4">
+                        <div>
+                            <h1 className="text-2xl font-bold">Spot</h1>
+                            <p className="max-w-96">
+                                A spotify api wrapper built to serve top songs
+                                and current songs data. Spot also allows control
+                                of the currently playing song
+                            </p>
+
+                            <div className="my-2 flex gap-2">
+                                <Label
+                                    bgColor="bg-[#f1672631]"
+                                    bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                    name="Rust"
+                                    smallRound
+                                />
+                                <Label
+                                    bgColor="bg-[#00003d31]"
+                                    bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
+                                    name="Next.js"
+                                    smallRound
+                                />
+                                <Label
+                                    bgColor="bg-[#0ca5e931]"
+                                    bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
+                                    name="Tailwind"
+                                    smallRound
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
             <div className="mx-auto flex gap-4">
-                <NextButton onClick={() => setTab(Tab.Vote)}>
+                <NextButton onClick={() => setTab(spot ? Tab.One : Tab.Vote)}>
                     <DoubleArrowLeftIcon className="scale-125" />
                 </NextButton>
-                <NextButton onClick={() => setTab(Tab.One)}>
+                <NextButton
+                    onClick={() => setTab(!one ? Tab.One : Tab.Spotify)}
+                >
                     <DoubleArrowRightIcon className="scale-125" />
                 </NextButton>
             </div>
