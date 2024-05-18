@@ -48,7 +48,6 @@ export function Spotify() {
         };
     }, [currentSongQuery.data, topSongQuery.data]);
 
-    console.log(currentSong, topSongs);
     return (
         <div
             className="relative p-4"

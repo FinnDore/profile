@@ -9,7 +9,7 @@ import {
 import { animated, config, useSpring } from "@react-spring/web";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import clsx from "clsx";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Github } from "./(components)/github";
 import { Label } from "./(components)/label";
 import { Location } from "./(components)/location";
@@ -154,8 +154,23 @@ function NextButton(props: {
     );
 }
 
+function Progress(props: { pause: boolean; next: (auto?: boolean) => void }) {
+    return (
+        <div className="h-1 w-full overflow-hidden rounded-md bg-black/10 opacity-35 ">
+            <div
+                style={{
+                    animationPlayState: props.pause ? "paused" : "running",
+                }}
+                onAnimationIteration={() => props.next(true)}
+                className="progress-bar h-full w-full rounded-md bg-black/50 transition-all"
+            ></div>
+        </div>
+    );
+}
+
 function Showcase() {
     const [tab, setTab] = useState<Tab>(Tab.Vote);
+    const [pause, setPause] = useState(false);
 
     const spot = tab === Tab.Spotify;
     const one = tab === Tab.One || spot;
@@ -171,6 +186,38 @@ function Showcase() {
         trnaslateY: spot ? 0 : 20,
         config: config.wobbly,
     });
+
+    const [reverse, setReverse] = useState(false);
+    const pauseTimeout = useRef<NodeJS.Timeout | null>(null);
+    const { next, prev } = useMemo(() => {
+        const tabs = Object.values(Tab);
+        const index = tabs.indexOf(tab);
+        const resetTimer = () => {
+            if (pauseTimeout.current) clearTimeout(pauseTimeout.current);
+            setPause(true);
+            pauseTimeout.current = setTimeout(() => setPause(false), 15000);
+        };
+        return {
+            next: (auto?: boolean) => {
+                if (!auto) {
+                    resetTimer();
+                }
+                if (index + 1 === tabs.length - 1) {
+                    setReverse(true);
+                }
+                setTab(tabs[index + 1] ?? tabs[tabs.length - 1] ?? Tab.Vote);
+            },
+            prev: (auto?: boolean) => {
+                if (!auto) {
+                    resetTimer();
+                }
+                if (index === 1) {
+                    setReverse(false);
+                }
+                setTab(tabs[index - 1] ?? tabs[0] ?? Tab.Vote);
+            },
+        };
+    }, [tab, setTab, setReverse, setPause]);
 
     return (
         <div className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-16 pb-24 pt-32">
@@ -322,15 +369,16 @@ function Showcase() {
                     </div>
                 )}
             </div>
-            <div className="mx-auto flex gap-4">
-                <NextButton onClick={() => setTab(spot ? Tab.One : Tab.Vote)}>
-                    <DoubleArrowLeftIcon className="scale-125" />
-                </NextButton>
-                <NextButton
-                    onClick={() => setTab(!one ? Tab.One : Tab.Spotify)}
-                >
-                    <DoubleArrowRightIcon className="scale-125" />
-                </NextButton>
+            <div className="mx-auto flex flex-col gap-4">
+                <div className="flex gap-4">
+                    <NextButton onClick={() => prev()}>
+                        <DoubleArrowLeftIcon className="scale-125" />
+                    </NextButton>
+                    <NextButton onClick={() => next()}>
+                        <DoubleArrowRightIcon className="scale-125" />
+                    </NextButton>
+                </div>
+                <Progress pause={pause} next={reverse ? prev : next} />
             </div>
         </div>
     );

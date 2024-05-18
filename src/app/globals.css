@@ -109,3 +109,15 @@
         transform: translateY(0) rotate(-3deg);
     }
 }
+
+@keyframes progress-bar {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+.progress-bar {
+    animation: progress-bar 7s linear infinite;
+}
