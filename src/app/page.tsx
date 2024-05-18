@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Github } from "./(components)/github";
+import { Glitch } from "./(components)/glitch";
 import { Label } from "./(components)/label";
 import { Location } from "./(components)/location";
 import { Spotify, SpotifyBento } from "./(components)/spotify";
@@ -217,9 +218,9 @@ function Showcase() {
         config: config.wobbly,
     });
     const locationSpring = useSpring({
-        scale: spot ? 1 : 0.9,
-        rotate: spot ? -3 : 0,
-        trnaslateY: spot ? 0 : 20,
+        scale: location ? 1 : 0.9,
+        rotate: location ? -3 : 0,
+        trnaslateY: location ? 0 : 20,
         config: config.wobbly,
     });
 
@@ -333,7 +334,12 @@ function Showcase() {
                 </div>
                 {tab === Tab.Vote && (
                     <Description
-                        title="Vote"
+                        title={
+                            <div className="flex">
+                                <b>V</b>
+                                <Glitch text="ote" />
+                            </div>
+                        }
                         link={{
                             url: "https://vote.finndore.dev",
                             name: "vote.finndore.dev",
