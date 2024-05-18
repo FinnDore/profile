@@ -1,5 +1,7 @@
 "use client";
 import {
+    DoubleArrowLeftIcon,
+    DoubleArrowRightIcon,
     ExternalLinkIcon,
     GitHubLogoIcon,
     GlobeIcon,
@@ -132,6 +134,23 @@ const Tab = {
 
 type Tab = (typeof Tab)[keyof typeof Tab];
 
+function NextButton(props: {
+    onClick?: () => void;
+    children: React.ReactNode;
+}) {
+    return (
+        <button
+            className="group relative rounded-md border border-black/20 p-3 shadow-md transition-all hover:border-black/50 hover:shadow-lg"
+            onClick={props.onClick}
+        >
+            <div className="absolute left-0 top-0 h-full w-full shadow-inner"></div>
+            <div className="opacity-50 transition-opacity group-hover:opacity-100">
+                {props.children}
+            </div>
+        </button>
+    );
+}
+
 function Showcase() {
     const [tab, setTab] = useState<Tab>(Tab.Vote);
 
@@ -144,17 +163,7 @@ function Showcase() {
     });
 
     return (
-        <div
-            className="z-20 mx-auto  flex w-full max-w-6xl flex-col gap-16 pb-32 pt-32"
-            onClick={() =>
-                setTab(
-                    {
-                        [Tab.Vote]: Tab.One,
-                        [Tab.One]: Tab.Vote,
-                    }[tab] as Tab,
-                )
-            }
-        >
+        <div className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-16 pb-24 pt-32">
             <div className="mx-auto flex gap-8">
                 <div className="relative max-w-md">
                     <Arc>
@@ -262,6 +271,15 @@ function Showcase() {
                     </div>
                 )}
             </div>
+            <div className="mx-auto flex gap-4">
+                <NextButton onClick={() => setTab(Tab.Vote)}>
+                    <DoubleArrowLeftIcon className="scale-125" />
+                </NextButton>
+                <NextButton onClick={() => setTab(Tab.One)}>
+                    <DoubleArrowRightIcon className="scale-125" />
+                </NextButton>
+            </div>
+
             {/* <div className="relative h-[700px] overflow-hidden rounded-lg border border-black/10 bg-black p-2 shadow-md dark:bg-white">
                 <div className="absolute left-0 top-0 z-0 h-full w-full p-2 ">
                     <div className="noise absolute left-0 top-0 w-full opacity-40 invert"></div>
