@@ -181,7 +181,7 @@ function Description(props: {
     return (
         <div>
             <div className="flex gap-4">
-                <h1 className="xss:text-2xl text-xl font-bold">
+                <h1 className="xxs:text-2xl text-xl font-bold">
                     {props.title}
                 </h1>
                 <a
@@ -193,7 +193,7 @@ function Description(props: {
                 </a>
             </div>
 
-            <p className="xxs:text-md max-w-96 pt-1  text-sm">
+            <p className="xxs:text-base max-w-96 pt-1 text-sm">
                 {props.description}
             </p>
             <div className="my-2 flex gap-2">{props.children}</div>
