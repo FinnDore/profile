@@ -34,9 +34,11 @@ export default function Page() {
                         src="/finn-crop-small.webp"
                         alt="Picture with the text 'finn'"
                     />
-                    <div className="absolute mx-auto flex h-32 w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
-                        <Spotify />
-                        <div className="my-auto flex flex-col gap-2">
+                    <div className="mx-auto flex h-32 w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
+                        <div className="xxs:visible relative block">
+                            <Spotify />
+                        </div>
+                        <div className="xxs:text-left my-auto flex flex-col gap-2 text-center">
                             <div className="flex gap-2">
                                 <h2 className="mb-auto italic opacity-80">
                                     Ugh, i write code or something
@@ -61,54 +63,56 @@ export default function Page() {
                     {/* <Showcase /> */}
                 </div>
                 <Showcase />
-                <div className="mx-auto flex flex-wrap gap-16 px-12 pb-12">
-                    <div className="flex h-full flex-col">
-                        <div className="mx-auto">
-                            <Label
-                                bgColor="bg-[#ff003d31]"
-                                bgGlow="bg-[radial-gradient(#ff003d_0%,transparent_70%)]"
-                                name="Location"
-                                icon={<GlobeIcon />}
-                            />
+                {false && (
+                    <div className="mx-auto flex flex-wrap gap-16 px-12 pb-12">
+                        <div className="flex h-full flex-col">
+                            <div className="mx-auto">
+                                <Label
+                                    bgColor="bg-[#ff003d31]"
+                                    bgGlow="bg-[radial-gradient(#ff003d_0%,transparent_70%)]"
+                                    name="Location"
+                                    icon={<GlobeIcon />}
+                                />
+                            </div>
+                            <div className="my-auto">
+                                <Location />
+                            </div>
                         </div>
-                        <div className="my-auto">
-                            <Location />
+                        <div className="w-[1px] bg-black/10"></div>
+                        <div className="flex h-full flex-col">
+                            <div className="mx-auto">
+                                <Label
+                                    bgColor="bg-[#6a6a6a31]"
+                                    bgGlow="bg-[radial-gradient(#6a6a6a_0%,transparent_70%)]"
+                                    name="GitHub"
+                                    icon={<GitHubLogoIcon />}
+                                />
+                            </div>
+                            <div className="my-auto">
+                                <Github />
+                            </div>
+                        </div>
+                        <div className="w-[1px] bg-black/10"></div>
+                        <div className="flex h-full flex-col">
+                            <div className="mx-auto">
+                                <Label
+                                    bgColor="bg-[#1CD76031]"
+                                    bgGlow="bg-[radial-gradient(#1CD760_0%,transparent_70%)]"
+                                    name="Spotify"
+                                    icon={
+                                        <img
+                                            src="/spotify.png"
+                                            alt="Spotify logo"
+                                        />
+                                    }
+                                />
+                            </div>
+                            <div className="my-auto">
+                                <SpotifyBento />
+                            </div>
                         </div>
                     </div>
-                    <div className="w-[1px] bg-black/10"></div>
-                    <div className="flex h-full flex-col">
-                        <div className="mx-auto">
-                            <Label
-                                bgColor="bg-[#6a6a6a31]"
-                                bgGlow="bg-[radial-gradient(#6a6a6a_0%,transparent_70%)]"
-                                name="GitHub"
-                                icon={<GitHubLogoIcon />}
-                            />
-                        </div>
-                        <div className="my-auto">
-                            <Github />
-                        </div>
-                    </div>
-                    <div className="w-[1px] bg-black/10"></div>
-                    <div className="flex h-full flex-col">
-                        <div className="mx-auto">
-                            <Label
-                                bgColor="bg-[#1CD76031]"
-                                bgGlow="bg-[radial-gradient(#1CD760_0%,transparent_70%)]"
-                                name="Spotify"
-                                icon={
-                                    <img
-                                        src="/spotify.png"
-                                        alt="Spotify logo"
-                                    />
-                                }
-                            />
-                        </div>
-                        <div className="my-auto">
-                            <SpotifyBento />
-                        </div>
-                    </div>
-                </div>
+                )}
             </QueryClientProvider>
         </main>
     );
@@ -119,11 +123,11 @@ function Arc(props: { children: React.ReactNode; className?: string }) {
         <div
             className={clsx(
                 props.className,
-                "max-w-md rounded-md border border-black/10 bg-white p-1 shadow-md",
+                "relative max-w-md rounded-md border border-black/10 bg-white p-1 shadow-md",
             )}
         >
             <div className="noise absolute left-0 top-0 w-full rounded-md opacity-40 invert"></div>
-            <div className="relative h-full w-full rounded-md border border-black/10 bg-white/65 shadow-lg">
+            <div className="relative h-full w-full rounded-md border border-black/10 bg-[#fafafafa] shadow-lg">
                 {props.children}
             </div>
         </div>
@@ -145,7 +149,7 @@ function NextButton(props: {
 }) {
     return (
         <button
-            className="group relative transform rounded-md border border-black/20 p-3 shadow-md transition-all ease-in-out hover:border-black/50 hover:shadow-lg active:scale-90"
+            className="group relative transform rounded-md border border-black/20 bg-white p-3 shadow-md transition-all ease-in-out hover:border-black/50 hover:shadow-lg active:scale-90"
             onClick={props.onClick}
         >
             <div className="absolute left-0 top-0 h-full w-full shadow-inner"></div>
@@ -179,7 +183,9 @@ function Description(props: {
     return (
         <div>
             <div className="flex gap-4">
-                <h1 className="text-2xl font-bold">{props.title}</h1>
+                <h1 className="xss:text-2xl text-xl font-bold">
+                    {props.title}
+                </h1>
                 <a
                     href={props.link.url}
                     className="my-auto flex gap-1 text-sm text-gray-500 underline hover:text-black"
@@ -189,7 +195,9 @@ function Description(props: {
                 </a>
             </div>
 
-            <p className="max-w-96 pt-1">{props.description}</p>
+            <p className="xxs:text-md max-w-96 pt-1  text-sm">
+                {props.description}
+            </p>
             <div className="my-2 flex gap-2">{props.children}</div>
         </div>
     );
@@ -205,6 +213,7 @@ function Showcase() {
     const location = tab === Tab.Location;
     const spot = tab === Tab.Spotify || location;
     const one = tab === Tab.One || spot;
+
     const oneSpring = useSpring({
         scale: one ? 1 : 0.9,
         rotate: one ? -4 : 0,
@@ -268,11 +277,11 @@ function Showcase() {
     return (
         <div
             ref={ref}
-            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-16 pb-24 pt-32"
+            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-2 pb-24 lg:gap-16"
         >
-            <div className="mx-auto flex gap-8">
-                <div className="relative max-w-md">
-                    <Arc>
+            <div className="xss:gap-8 mx-auto flex flex-col gap-6 lg:flex-row">
+                <div className="relative mx-auto max-w-[80vw] sm:max-w-md">
+                    <Arc className="mt-14 lg:mt-0">
                         <picture className="w-full">
                             <img
                                 src="/projects/vote/landing-crop.png"
@@ -285,9 +294,9 @@ function Showcase() {
                     <animated.div
                         style={oneSpring}
                         className={clsx(
-                            "absolute top-0 transition-opacity duration-200",
+                            "absolute top-0 w-full transition-opacity duration-200",
                             {
-                                "opacity-0": !one,
+                                "pointer-events-none opacity-0": !one,
                                 "opacity-100": one,
                             },
                         )}
@@ -302,14 +311,14 @@ function Showcase() {
                     <animated.div
                         style={spotSpring}
                         className={clsx(
-                            "absolute top-0 transition-opacity duration-200",
+                            "absolute top-0 w-full transition-opacity duration-200",
                             {
-                                "opacity-0": !spot,
+                                "pointer-events-none opacity-0": !spot,
                                 "opacity-100": spot,
                             },
                         )}
                     >
-                        <Arc className="h-80 w-[26rem]">
+                        <Arc className="xxs:h-72 h-60 w-full sm:h-80">
                             <div className="grid h-full place-content-center rounded-md">
                                 <Spotify />
                             </div>
@@ -318,128 +327,130 @@ function Showcase() {
                     <animated.div
                         style={locationSpring}
                         className={clsx(
-                            "absolute top-0 transition-opacity duration-200",
+                            "absolute top-0 w-full transition-opacity duration-200",
                             {
-                                "opacity-0": !location,
+                                "pointer-events-none opacity-0": !location,
                                 "opacity-100": location,
                             },
                         )}
                     >
-                        <Arc className="h-80 w-[26rem]">
+                        <Arc className="xxs:h-72 h-60 w-full sm:h-80">
                             <div className="grid h-full place-content-center rounded-md">
                                 <Location hideWeather />
                             </div>
                         </Arc>
                     </animated.div>
                 </div>
-                {tab === Tab.Vote && (
-                    <Description
-                        title={
-                            <div className="flex">
-                                <b>V</b>
-                                <Glitch text="ote" />
-                            </div>
-                        }
-                        link={{
-                            url: "https://vote.finndore.dev",
-                            name: "vote.finndore.dev",
-                        }}
-                        description="Pointing poker is a waste of time, but to make it as painless as possible ive made modern pointing website. I've utilised websockets to update the UI in real time (try the vote on the front page!)."
-                    >
-                        <Label
-                            bgColor="bg-[#00003d31]"
-                            bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
-                            name="Next.js"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#0ca5e931]"
-                            bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
-                            name="Tailwind"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Vitess"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                    </Description>
-                )}
+                <div className="xxs:px-0 xxs:h-44 h-36 px-4">
+                    {tab === Tab.Vote && (
+                        <Description
+                            title={
+                                <div className="flex">
+                                    <b>V</b>
+                                    <Glitch text="ote" />
+                                </div>
+                            }
+                            link={{
+                                url: "https://vote.finndore.dev",
+                                name: "vote.finndore.dev",
+                            }}
+                            description="Pointing poker is a waste of time, but to make it as painless as possible ive made modern pointing website. I've utilised websockets to update the UI in real time (try the vote on the front page!)."
+                        >
+                            <Label
+                                bgColor="bg-[#00003d31]"
+                                bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
+                                name="Next.js"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#0ca5e931]"
+                                bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
+                                name="Tailwind"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#f1672631]"
+                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                name="Vitess"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                        </Description>
+                    )}
 
-                {tab === Tab.One && (
-                    <Description
-                        title="One"
-                        link={{
-                            url: "https://github.com/finndore/one",
-                            name: "finndore/one",
-                        }}
-                        description="A IOT light written using embeded Rust along with a companion app made with Tauri and nextjs"
-                    >
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Rust"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#00003d31]"
-                            bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
-                            name="Next.js"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#0ca5e931]"
-                            bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
-                            name="Tailwind"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                    </Description>
-                )}
-                {tab === Tab.Spotify && (
-                    <Description
-                        title="Spot"
-                        link={{
-                            url: "https://github.com/finndore/spot",
-                            name: "finndore/spot",
-                        }}
-                        description="A spotify api wrapper built to serve top songs and current songs data. Spot also allows control of the currently playing song"
-                    >
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Rust"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                    </Description>
-                )}
-                {tab === Tab.Location && (
-                    <Description
-                        title="Location"
-                        link={{
-                            url: "https://github.com/finndore/location",
-                            name: "finndore/location",
-                        }}
-                        description="A simple location api that returns my location and weather for that location."
-                    >
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Rust"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                    </Description>
-                )}
+                    {tab === Tab.One && (
+                        <Description
+                            title="One"
+                            link={{
+                                url: "https://github.com/finndore/one",
+                                name: "finndore/one",
+                            }}
+                            description="A IOT light written using embeded Rust along with a companion app made with Tauri and nextjs"
+                        >
+                            <Label
+                                bgColor="bg-[#f1672631]"
+                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                name="Rust"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#00003d31]"
+                                bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
+                                name="Next.js"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#0ca5e931]"
+                                bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
+                                name="Tailwind"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                        </Description>
+                    )}
+                    {tab === Tab.Spotify && (
+                        <Description
+                            title="Spot"
+                            link={{
+                                url: "https://github.com/finndore/spot",
+                                name: "finndore/spot",
+                            }}
+                            description="A spotify api wrapper built to serve top songs and current songs data. Spot also allows control of the currently playing song"
+                        >
+                            <Label
+                                bgColor="bg-[#f1672631]"
+                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                name="Rust"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                        </Description>
+                    )}
+                    {tab === Tab.Location && (
+                        <Description
+                            title="Location"
+                            link={{
+                                url: "https://github.com/finndore/location",
+                                name: "finndore/location",
+                            }}
+                            description="A simple location api that returns my location and weather for that location."
+                        >
+                            <Label
+                                bgColor="bg-[#f1672631]"
+                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                name="Rust"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                        </Description>
+                    )}
+                </div>
             </div>
-            <div className="mx-auto flex flex-col gap-4">
+            <div className="lg:gap16 mx-auto mt-4 flex flex-col gap-4">
                 <div className="flex gap-4">
                     <NextButton onClick={() => prev()}>
                         <DoubleArrowLeftIcon className="scale-125" />
