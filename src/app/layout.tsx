@@ -17,7 +17,7 @@ export default function Layout(props: { children: React.ReactNode }) {
 }
 
 // TODO UNDO
-export function TailwindIndicator() {
+function TailwindIndicator() {
     "use client";
     const [size, setSize] = useState(0);
     useEffect(() => {

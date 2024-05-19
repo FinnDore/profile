@@ -63,56 +63,54 @@ export default function Page() {
                     {/* <Showcase /> */}
                 </div>
                 <Showcase />
-                {false && (
-                    <div className="mx-auto flex flex-wrap gap-16 px-12 pb-12">
-                        <div className="flex h-full flex-col">
-                            <div className="mx-auto">
-                                <Label
-                                    bgColor="bg-[#ff003d31]"
-                                    bgGlow="bg-[radial-gradient(#ff003d_0%,transparent_70%)]"
-                                    name="Location"
-                                    icon={<GlobeIcon />}
-                                />
-                            </div>
-                            <div className="my-auto">
-                                <Location />
-                            </div>
+                <div className="mx-auto flex flex-wrap gap-16 px-12 pb-12">
+                    <div className="flex h-full flex-col">
+                        <div className="mx-auto">
+                            <Label
+                                bgColor="bg-[#ff003d31]"
+                                bgGlow="bg-[radial-gradient(#ff003d_0%,transparent_70%)]"
+                                name="Location"
+                                icon={<GlobeIcon />}
+                            />
                         </div>
-                        <div className="w-[1px] bg-black/10"></div>
-                        <div className="flex h-full flex-col">
-                            <div className="mx-auto">
-                                <Label
-                                    bgColor="bg-[#6a6a6a31]"
-                                    bgGlow="bg-[radial-gradient(#6a6a6a_0%,transparent_70%)]"
-                                    name="GitHub"
-                                    icon={<GitHubLogoIcon />}
-                                />
-                            </div>
-                            <div className="my-auto">
-                                <Github />
-                            </div>
-                        </div>
-                        <div className="w-[1px] bg-black/10"></div>
-                        <div className="flex h-full flex-col">
-                            <div className="mx-auto">
-                                <Label
-                                    bgColor="bg-[#1CD76031]"
-                                    bgGlow="bg-[radial-gradient(#1CD760_0%,transparent_70%)]"
-                                    name="Spotify"
-                                    icon={
-                                        <img
-                                            src="/spotify.png"
-                                            alt="Spotify logo"
-                                        />
-                                    }
-                                />
-                            </div>
-                            <div className="my-auto">
-                                <SpotifyBento />
-                            </div>
+                        <div className="my-auto">
+                            <Location />
                         </div>
                     </div>
-                )}
+                    <div className="w-[1px] bg-black/10"></div>
+                    <div className="flex h-full flex-col">
+                        <div className="mx-auto">
+                            <Label
+                                bgColor="bg-[#6a6a6a31]"
+                                bgGlow="bg-[radial-gradient(#6a6a6a_0%,transparent_70%)]"
+                                name="GitHub"
+                                icon={<GitHubLogoIcon />}
+                            />
+                        </div>
+                        <div className="my-auto">
+                            <Github />
+                        </div>
+                    </div>
+                    <div className="w-[1px] bg-black/10"></div>
+                    <div className="flex h-full flex-col">
+                        <div className="mx-auto">
+                            <Label
+                                bgColor="bg-[#1CD76031]"
+                                bgGlow="bg-[radial-gradient(#1CD760_0%,transparent_70%)]"
+                                name="Spotify"
+                                icon={
+                                    <img
+                                        src="/spotify.png"
+                                        alt="Spotify logo"
+                                    />
+                                }
+                            />
+                        </div>
+                        <div className="my-auto">
+                            <SpotifyBento />
+                        </div>
+                    </div>
+                </div>
             </QueryClientProvider>
         </main>
     );
