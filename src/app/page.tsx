@@ -35,10 +35,10 @@ export default function Page() {
                         alt="Picture with the text 'finn'"
                     />
                     <div className="mx-auto flex h-32 w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
-                        <div className="xxs:visible relative block">
+                        <div className="relative block md:visible">
                             <Spotify />
                         </div>
-                        <div className="xxs:text-left my-auto flex flex-col gap-2 text-center">
+                        <div className="my-auto flex flex-col gap-2 text-center md:text-left">
                             <div className="flex gap-2">
                                 <h2 className="mb-auto italic opacity-80">
                                     Ugh, i write code or something
