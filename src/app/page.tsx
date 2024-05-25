@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import {
     DoubleArrowLeftIcon,
@@ -16,7 +17,6 @@ import { Spotify } from "./(components)/spotify";
 
 const queryClient = new QueryClient();
 
-/* eslint-disable @next/next/no-img-element */
 export default function Page() {
     return (
         <main className="flex h-screen flex-col bg-white">
