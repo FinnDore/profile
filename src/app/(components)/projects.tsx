@@ -183,7 +183,7 @@ export function Projects() {
                     >
                         <Arc>
                             <picture className="w-full rounded-md invert">
-                                <img src="/projects/light-2.png" alt="Vote" />
+                                <img src="/projects/one.png" alt="Vote" />
                             </picture>
                         </Arc>
                     </animated.div>
