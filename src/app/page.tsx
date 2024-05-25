@@ -3,18 +3,16 @@ import {
     DoubleArrowLeftIcon,
     DoubleArrowRightIcon,
     ExternalLinkIcon,
-    GitHubLogoIcon,
-    GlobeIcon,
 } from "@radix-ui/react-icons";
 import { animated, config, useInView, useSpring } from "@react-spring/web";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Github } from "./(components)/github";
+import { Arc } from "./(components)/arc";
 import { Glitch } from "./(components)/glitch";
 import { Label } from "./(components)/label";
 import { Location } from "./(components)/location";
-import { Spotify, SpotifyBento } from "./(components)/spotify";
+import { Spotify } from "./(components)/spotify";
 
 const queryClient = new QueryClient();
 
@@ -34,8 +32,8 @@ export default function Page() {
                         src="/finn-crop-small.webp"
                         alt="Picture with the text 'finn'"
                     />
-                    <div className="mx-auto flex h-32 w-full justify-between px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 xl:-translate-y-24">
-                        <div className="relative block md:visible">
+                    <div className="mx-auto flex h-32 w-full justify-center px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 md:justify-between xl:-translate-y-24">
+                        <div className="relative hidden md:block">
                             <Spotify />
                         </div>
                         <div className="my-auto flex flex-col gap-2 text-center md:text-left">
@@ -60,75 +58,10 @@ export default function Page() {
                             </div>
                         </div>
                     </div>
-                    {/* <Showcase /> */}
                 </div>
                 <Showcase />
-                <div className="mx-auto flex flex-wrap gap-16 px-12 pb-12">
-                    <div className="flex h-full flex-col">
-                        <div className="mx-auto">
-                            <Label
-                                bgColor="bg-[#ff003d31]"
-                                bgGlow="bg-[radial-gradient(#ff003d_0%,transparent_70%)]"
-                                name="Location"
-                                icon={<GlobeIcon />}
-                            />
-                        </div>
-                        <div className="my-auto">
-                            <Location />
-                        </div>
-                    </div>
-                    <div className="w-[1px] bg-black/10"></div>
-                    <div className="flex h-full flex-col">
-                        <div className="mx-auto">
-                            <Label
-                                bgColor="bg-[#6a6a6a31]"
-                                bgGlow="bg-[radial-gradient(#6a6a6a_0%,transparent_70%)]"
-                                name="GitHub"
-                                icon={<GitHubLogoIcon />}
-                            />
-                        </div>
-                        <div className="my-auto">
-                            <Github />
-                        </div>
-                    </div>
-                    <div className="w-[1px] bg-black/10"></div>
-                    <div className="flex h-full flex-col">
-                        <div className="mx-auto">
-                            <Label
-                                bgColor="bg-[#1CD76031]"
-                                bgGlow="bg-[radial-gradient(#1CD760_0%,transparent_70%)]"
-                                name="Spotify"
-                                icon={
-                                    <img
-                                        src="/spotify.png"
-                                        alt="Spotify logo"
-                                    />
-                                }
-                            />
-                        </div>
-                        <div className="my-auto">
-                            <SpotifyBento />
-                        </div>
-                    </div>
-                </div>
             </QueryClientProvider>
         </main>
-    );
-}
-
-function Arc(props: { children: React.ReactNode; className?: string }) {
-    return (
-        <div
-            className={clsx(
-                props.className,
-                "relative max-w-md rounded-md border border-black/10 bg-white p-1 shadow-md",
-            )}
-        >
-            <div className="noise absolute left-0 top-0 w-full rounded-md opacity-40 invert"></div>
-            <div className="relative h-full w-full rounded-md border border-black/10 bg-[#fafafafa] shadow-lg">
-                {props.children}
-            </div>
-        </div>
     );
 }
 
@@ -181,7 +114,7 @@ function Description(props: {
     return (
         <div>
             <div className="flex gap-4">
-                <h1 className="xxs:text-2xl text-xl font-bold">
+                <h1 className="text-xl font-bold xxs:text-2xl">
                     {props.title}
                 </h1>
                 <a
@@ -193,7 +126,7 @@ function Description(props: {
                 </a>
             </div>
 
-            <p className="xxs:text-base max-w-96 pt-1 text-sm">
+            <p className="max-w-96 pt-1 text-sm xxs:text-base">
                 {props.description}
             </p>
             <div className="my-2 flex gap-2">{props.children}</div>
@@ -277,7 +210,7 @@ function Showcase() {
             ref={ref}
             className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-2 pb-24 lg:gap-16"
         >
-            <div className="xss:gap-8 mx-auto flex flex-col gap-6 lg:flex-row">
+            <div className="mx-auto flex flex-col gap-6 xxs:gap-8 lg:flex-row">
                 <div className="relative mx-auto max-w-[80vw] sm:max-w-md">
                     <Arc className="mt-14 lg:mt-0">
                         <picture className="w-full">
@@ -316,7 +249,7 @@ function Showcase() {
                             },
                         )}
                     >
-                        <Arc className="xxs:h-72 h-60 w-full sm:h-80">
+                        <Arc className="h-60 w-full xxs:h-72 sm:h-80">
                             <div className="grid h-full place-content-center rounded-md">
                                 <Spotify />
                             </div>
@@ -332,14 +265,14 @@ function Showcase() {
                             },
                         )}
                     >
-                        <Arc className="xxs:h-72 h-60 w-full sm:h-80">
+                        <Arc className="h-60 w-full xxs:h-72 sm:h-80">
                             <div className="grid h-full place-content-center rounded-md">
                                 <Location hideWeather />
                             </div>
                         </Arc>
                     </animated.div>
                 </div>
-                <div className="xxs:px-0 xxs:h-44 h-36 px-4">
+                <div className="h-36 px-4 xxs:h-44 xxs:px-0">
                     {tab === Tab.Vote && (
                         <Description
                             title={

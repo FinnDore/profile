@@ -77,8 +77,8 @@ function AlbumCover(props: { album: Album; small?: boolean }) {
     return (
         <div
             className={clsx("relative aspect-square", {
-                "w-24": !props.small,
-                "w-8": props.small,
+                "w-24 min-w-24": !props.small,
+                "w-8 min-w-8": props.small,
             })}
         >
             <div
@@ -92,7 +92,11 @@ function AlbumCover(props: { album: Album; small?: boolean }) {
             <picture>
                 <img
                     className={clsx(
-                        "album-shadow h-full w-full border border-white/60",
+                        "album-shadow h-full w-full border ",
+                        {
+                            "border-white/60": !props.small,
+                            "border-transparent": props.small,
+                        },
                         roundedClass,
                     )}
                     src={props.album.images[0]?.url ?? "TODO"}
