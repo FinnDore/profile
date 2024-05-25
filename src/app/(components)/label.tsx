@@ -1,18 +1,16 @@
 import { clsx } from "clsx";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 function WrappingLink(props: { href: string; children: React.ReactNode }) {
     return (
-        <Link
-            prefetch={false}
+        <a
             href={props.href}
             target="_blank"
             rel="noreferrer"
             className="hover:underline"
         >
             {props.children}
-        </Link>
+        </a>
     );
 }
 
