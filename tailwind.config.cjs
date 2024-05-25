@@ -6,9 +6,6 @@ module.exports = {
             animation: {
                 "fade-in": "fade-in .25s linear forwards",
             },
-            colors: {
-                primary: "#dd4e41",
-            },
             screens: {
                 xxs: "500px",
             },

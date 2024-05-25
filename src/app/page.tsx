@@ -81,7 +81,7 @@ function NextButton(props: {
     return (
         <button
             className="group relative transform rounded-md border border-black/20 bg-white p-3 shadow-md transition-all ease-in-out hover:border-black/50 hover:shadow-lg active:scale-90"
-            onClick={() => props.onClick()}
+            onClick={() => props.onClick?.()}
         >
             <div className="absolute left-0 top-0 h-full w-full shadow-inner"></div>
             <div className="opacity-50 transition-opacity group-hover:opacity-100 ">
@@ -129,7 +129,9 @@ function Description(props: {
             <p className="max-w-96 pt-1 text-sm xxs:text-base">
                 {props.description}
             </p>
-            <div className="my-2 flex gap-2">{props.children}</div>
+            <div className="my-2.5 flex flex-nowrap gap-2">
+                {props.children}
+            </div>
         </div>
     );
 }
@@ -291,6 +293,7 @@ function Showcase() {
                                 bgColor="bg-[#00003d31]"
                                 bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
                                 name="Next.js"
+                                link="https://nextjs.org"
                                 className="cursor-pointer"
                                 smallRound
                             />
@@ -298,6 +301,7 @@ function Showcase() {
                                 bgColor="bg-[#0ca5e931]"
                                 bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
                                 name="Tailwind"
+                                link="https://tailwindcss.com"
                                 className="cursor-pointer"
                                 smallRound
                             />
@@ -305,6 +309,15 @@ function Showcase() {
                                 bgColor="bg-[#f1672631]"
                                 bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
                                 name="Vitess"
+                                link="https://vitess.io"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#ef444431]"
+                                bgGlow="bg-[radial-gradient(#ef4444_0%,transparent_70%)]"
+                                name="Tanstack Query"
+                                link="https://tanstack.com/query/v3"
                                 className="cursor-pointer"
                                 smallRound
                             />
@@ -324,6 +337,7 @@ function Showcase() {
                                 bgColor="bg-[#f1672631]"
                                 bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
                                 name="Rust"
+                                link="https://www.rust-lang.org"
                                 className="cursor-pointer"
                                 smallRound
                             />
@@ -331,6 +345,7 @@ function Showcase() {
                                 bgColor="bg-[#00003d31]"
                                 bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
                                 name="Next.js"
+                                link="https://nextjs.org"
                                 className="cursor-pointer"
                                 smallRound
                             />
@@ -338,6 +353,7 @@ function Showcase() {
                                 bgColor="bg-[#0ca5e931]"
                                 bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
                                 name="Tailwind"
+                                link="https://tailwindcss.com"
                                 className="cursor-pointer"
                                 smallRound
                             />
@@ -356,6 +372,15 @@ function Showcase() {
                                 bgColor="bg-[#f1672631]"
                                 bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
                                 name="Rust"
+                                link="https://www.rust-lang.org"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#5048e631]"
+                                bgGlow="bg-[radial-gradient(#5048e6_0%,transparent_70%)]"
+                                name="Axum"
+                                link="https://github.com/tokio-rs/axum"
                                 className="cursor-pointer"
                                 smallRound
                             />
@@ -374,6 +399,15 @@ function Showcase() {
                                 bgColor="bg-[#f1672631]"
                                 bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
                                 name="Rust"
+                                link="https://www.rust-lang.org"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#5048e631]"
+                                bgGlow="bg-[radial-gradient(#5048e6_0%,transparent_70%)]"
+                                name="Axum"
+                                link="https://github.com/tokio-rs/axum"
                                 className="cursor-pointer"
                                 smallRound
                             />

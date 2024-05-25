@@ -97,7 +97,7 @@ const BorderGlowButton = (props: {
         >
             <span
                 className={clsx(
-                    `absolute z-0 h-28 w-28 -translate-x-1/2 -translate-y-1/2  `,
+                    `absolute z-0 h-28 w-28 -translate-x-1/2 -translate-y-1/2`,
                     props.bgGlow,
                 )}
                 style={
@@ -109,7 +109,7 @@ const BorderGlowButton = (props: {
             ></span>
             <div
                 className={clsx(
-                    "relative z-10 m-[1px] flex gap-2 bg-white/90 px-4 py-1  backdrop-blur-sm",
+                    "relative z-10 m-[1px] flex gap-2 text-nowrap bg-white/90 px-4 py-1 backdrop-blur-sm",
                     {
                         "rounded-2xl": !props.smallRound,
                         "rounded-md": props.smallRound,

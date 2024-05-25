@@ -17,6 +17,7 @@ function defineNextConfig(config) {
 
     return withAxiom(withBundleAnalyzer(config));
 }
+
 /** @type {import("next").NextConfig} */
 const config = defineNextConfig({
     reactStrictMode: true,
