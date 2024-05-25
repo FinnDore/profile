@@ -281,6 +281,14 @@ export function Projects() {
                             description="A IOT light written using embeded Rust along with a companion app made with Tauri and nextjs"
                         >
                             <Label
+                                bgColor="bg-[#67d6ed61]"
+                                bgGlow="bg-[radial-gradient(#67d6ed_0%,transparent_70%)]"
+                                name="Tauri"
+                                link="https://tauri.app"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
                                 bgColor="bg-[#f1672631]"
                                 bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
                                 name="Rust"
