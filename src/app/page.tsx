@@ -208,7 +208,7 @@ function Showcase() {
     return (
         <div
             ref={ref}
-            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-2 pb-24 lg:gap-16"
+            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-2 pb-6 md:pb-8 lg:gap-16"
         >
             <div className="mx-auto flex flex-col gap-6 xxs:gap-8 lg:flex-row">
                 <div className="relative mx-auto max-w-[80vw] sm:max-w-md">
@@ -272,7 +272,7 @@ function Showcase() {
                         </Arc>
                     </animated.div>
                 </div>
-                <div className="h-36 px-4 xxs:h-44 xxs:px-0">
+                <div className="h-36 px-6 xxs:h-44 xxs:px-0">
                     {tab === Tab.Vote && (
                         <Description
                             title={
