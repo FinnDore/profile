@@ -18,7 +18,7 @@ export default function Page() {
                     />
                     <img
                         className="relative mx-auto hidden aspect-auto max-w-[clamp(80vw,75rem,90vw)] select-none contrast-125 md:block"
-                        src="/finn.webp"
+                        src="/finn-crop.webp"
                         alt="Picture with the text 'finn'"
                     />
                     <div className="mx-auto flex h-32 w-full justify-center px-4 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 md:justify-between xl:-translate-y-24">
