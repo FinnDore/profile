@@ -38,7 +38,7 @@ export default function Page() {
                                     </a>
                                     {" - "}
                                     <a
-                                        href="https://arc.net/folder/3824DB56-5972-45E9-BE4C-D0460E501044"
+                                        href="https://arc.net/folder/F8D3C5D7-7E2A-4FFC-912D-D6C03A0CFD5E"
                                         className="underline transition-all hover:text-rose-500"
                                     >
                                         Projects
