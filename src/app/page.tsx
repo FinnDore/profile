@@ -81,7 +81,7 @@ function NextButton(props: {
     return (
         <button
             className="group relative transform rounded-md border border-black/20 bg-white p-3 shadow-md transition-all ease-in-out hover:border-black/50 hover:shadow-lg active:scale-90"
-            onClick={props.onClick}
+            onClick={() => props.onClick()}
         >
             <div className="absolute left-0 top-0 h-full w-full shadow-inner"></div>
             <div className="opacity-50 transition-opacity group-hover:opacity-100 ">
@@ -208,7 +208,7 @@ function Showcase() {
     return (
         <div
             ref={ref}
-            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-2 pb-6 md:pb-8 lg:gap-16"
+            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-6 pb-6 md:pb-8 lg:gap-16"
         >
             <div className="mx-auto flex flex-col gap-6 xxs:gap-8 lg:flex-row">
                 <div className="relative mx-auto max-w-[80vw] sm:max-w-md">

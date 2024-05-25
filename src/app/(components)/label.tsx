@@ -1,5 +1,24 @@
 import { clsx } from "clsx";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+
+function WrappingLink(props: { href: string; children: React.ReactNode }) {
+    return (
+        <Link
+            prefetch={false}
+            href={props.href}
+            target="_blank"
+            rel="noreferrer"
+            className="hover:underline"
+        >
+            {props.children}
+        </Link>
+    );
+}
+
+function WrappingFragment(props: { children: React.ReactNode; href?: string }) {
+    return <>{props.children}</>;
+}
 
 export function Label(props: {
     name: string;
@@ -8,24 +27,30 @@ export function Label(props: {
     bgGlow: `bg-[radial-gradient(#${string}_0%,transparent_70%)]`;
     smallRound?: boolean;
     className?: string;
+    link?: string;
 }) {
+    const LabelComponent = props.link ? WrappingLink : WrappingFragment;
     return (
-        <BorderGlowButton
-            className={props.className}
-            smallRound={props.smallRound}
-            bgColor={props.bgColor}
-            bgGlow={props.bgGlow}
-        >
-            {props.icon && <div className="my-auto h-4 w-4">{props.icon}</div>}
-            <span
-                className={clsx({
-                    "text-sm": props.icon,
-                    "text-xs": !props.icon,
-                })}
+        <LabelComponent href={props.link ?? ""}>
+            <BorderGlowButton
+                className={props.className}
+                smallRound={props.smallRound}
+                bgColor={props.bgColor}
+                bgGlow={props.bgGlow}
             >
-                {props.name}
-            </span>
-        </BorderGlowButton>
+                {props.icon && (
+                    <div className="my-auto h-4 w-4">{props.icon}</div>
+                )}
+                <span
+                    className={clsx({
+                        "text-sm": props.icon,
+                        "text-xs": !props.icon,
+                    })}
+                >
+                    {props.name}
+                </span>
+            </BorderGlowButton>
+        </LabelComponent>
     );
 }
 
