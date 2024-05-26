@@ -24,10 +24,12 @@ type Tab = (typeof Tab)[keyof typeof Tab];
 
 function NextButton(props: {
     onClick?: () => void;
+    ariaLabel: string;
     children: React.ReactNode;
 }) {
     return (
         <button
+            aria-label={props.ariaLabel}
             className="group relative transform rounded-md border border-black/20 bg-white p-3 shadow-md transition-all ease-in-out hover:border-black/50 hover:shadow-lg active:scale-90"
             onClick={() => props.onClick?.()}
         >
@@ -421,10 +423,13 @@ export function Projects() {
             </div>
             <div className="lg:gap16 mx-auto mt-4 flex flex-col gap-4">
                 <div className="flex gap-4">
-                    <NextButton onClick={() => prev()}>
+                    <NextButton onClick={() => prev()} ariaLabel="next project">
                         <DoubleArrowLeftIcon className="scale-125" />
                     </NextButton>
-                    <NextButton onClick={() => next()}>
+                    <NextButton
+                        onClick={() => next()}
+                        ariaLabel="previous project"
+                    >
                         <DoubleArrowRightIcon className="scale-125" />
                     </NextButton>
                 </div>

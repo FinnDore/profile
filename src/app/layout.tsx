@@ -5,7 +5,7 @@ import "./globals.css";
 
 export default function Layout(props: { children: React.ReactNode }) {
     return (
-        <html>
+        <html lang="en">
             <head>
                 <title>Finn</title>
                 {env.NEXT_PUBLIC_ENV && (
