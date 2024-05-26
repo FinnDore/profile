@@ -219,6 +219,7 @@ export function Projects() {
                     >
                         <Arc className="h-full">
                             <div className="grid h-full place-content-center rounded-md">
+                                <div className="map-gradient2 absolute z-10 h-full w-full"></div>
                                 <Location hideWeather />
                             </div>
                         </Arc>

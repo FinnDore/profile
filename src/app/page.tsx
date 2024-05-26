@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TailwindIndicator } from "../components/tw-indicator";
 import { Projects } from "./(components)/projects";
 import { Spotify } from "./(components)/spotify";
 
@@ -10,7 +9,6 @@ const queryClient = new QueryClient();
 export default function Page() {
     return (
         <main className="flex h-screen flex-col bg-white">
-            <TailwindIndicator />
             <QueryClientProvider client={queryClient}>
                 <div className="relative z-10 w-screen md:w-auto md:pt-16">
                     <div className="relative mx-auto mt-12 flex select-none contrast-125 md:mt-0">
