@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { AxiomWebVitals } from "next-axiom";
 import { env } from "../env/client.mjs";
 import "./globals.css";
@@ -17,6 +18,7 @@ export default function Layout(props: { children: React.ReactNode }) {
                 <link rel="icon" href="/favicon.ico" />
             </head>
             <AxiomWebVitals />
+            <Analytics />
             <body>{props.children}</body>
         </html>
     );
