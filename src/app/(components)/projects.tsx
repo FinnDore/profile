@@ -186,7 +186,7 @@ export function Projects() {
                     >
                         <Arc>
                             <picture className="w-full rounded-md invert">
-                                <img src="/projects/one.png" alt="Vote" />
+                                <img src="/projects/one/one.webp" alt="Vote" />
                             </picture>
                         </Arc>
                     </animated.div>
@@ -314,7 +314,7 @@ export function Projects() {
                                         className="relative inline-block h-5 w-10 px-2 align-middle  drop-shadow-xl transition-all hover:scale-110"
                                     >
                                         <img
-                                            src="/projects/one/pie.png"
+                                            src="/projects/one/pie.webp"
                                             className="center-absolute inline h-8 w-8"
                                             alt="Rasberry Pie logo"
                                         />
