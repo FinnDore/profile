@@ -5,12 +5,20 @@ import { env } from "../env/client.mjs";
 import "./globals.css";
 
 export const metadata = {
-    title: "Finn",
     twitter: {
         card: "summary_large_image",
         site: "@finndore",
         creator: "@finndore",
-        images: "finn-crop.webp",
+        images: "finn-og.webp",
+    },
+    openGraph: {
+        locale: "en",
+        images: [
+            {
+                url: "finn-og.webp",
+                alt: "Picture with the text 'finn'",
+            },
+        ],
     },
     creator: "Finn",
 } satisfies Metadata;

@@ -14,12 +14,12 @@ export default function Page() {
                     <div className="relative mx-auto mt-12 flex select-none contrast-125 md:mt-0">
                         <img
                             className="mx-auto aspect-[5556/3110] w-[clamp(80vw,75rem,90vw)]"
-                            src="/finn-crop-small.webp"
+                            src="/finn-small.webp"
                             alt="Picture with the text 'finn'"
                         />
                         <img
                             className="center-absolute aspect-[5556/3110] w-[clamp(80vw,75rem,90vw)]"
-                            src="/finn-crop.webp"
+                            src="/finn.webp"
                             alt="Picture with the text 'finn'"
                         />
                     </div>
