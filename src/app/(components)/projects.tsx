@@ -46,7 +46,7 @@ function Progress(props: { pause: boolean; next: (auto?: boolean) => void }) {
                 style={{
                     animationPlayState: props.pause ? "paused" : "running",
                 }}
-                // onAnimationIteration={() => props.next(true)}
+                onAnimationIteration={() => props.next(true)}
                 className="progress-bar h-full w-full rounded-md bg-black/50 transition-all"
             ></div>
         </div>
