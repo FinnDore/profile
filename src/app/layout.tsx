@@ -7,8 +7,8 @@ import "./globals.css";
 export const metadata = {
     twitter: {
         card: "summary_large_image",
-        site: "@finndore",
-        creator: "@finndore",
+        site: "@nnnniiifff",
+        creator: "@nnnniiifff",
         images: "finn-og.webp",
     },
     openGraph: {

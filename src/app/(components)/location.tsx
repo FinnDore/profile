@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { format } from "date-fns-tz";
-import { useMemo } from "react";
 
 export function Location(props: { hideWeather?: boolean }) {
     const locationQuery = useQuery({
@@ -17,14 +15,14 @@ export function Location(props: { hideWeather?: boolean }) {
     const currently = location?.currently;
     const url = `https://api.mapbox.com/styles/v1/mapbox/light-v11/static/${location?.longitude},${location?.latitude},10.06,0/300x300@2x?access_token=pk.eyJ1IjoiZmlubnh4eHgiLCJhIjoiY2xwMDVvcDE1MDh5czJrbzV2Z3M0cWFwdSJ9.aRpnp1nGeC5S1j0J37_Fng`;
 
-    const formattedTime = useMemo(() => {
-        if (typeof location?.currently === "undefined") return {};
+    // const formattedTime = useMemo(() => {
+    //     if (typeof location?.currently === "undefined") return {};
 
-        return {
-            time: format(new Date(), "HH:mm", { timeZone: location.timezone }),
-            abbr: format(new Date(), "zzz", { timeZone: location.timezone }),
-        };
-    }, [location?.currently, location?.timezone]);
+    //     return {
+    //         time: format(new Date(), "HH:mm", { timeZone: location.timezone }),
+    //         abbr: format(new Date(), "zzz", { timeZone: location.timezone }),
+    //     };
+    // }, [location?.currently, location?.timezone]);
 
     return (
         <div className="flex gap-4">
@@ -49,7 +47,7 @@ export function Location(props: { hideWeather?: boolean }) {
             {!props.hideWeather && (
                 <div className="flex w-min flex-col justify-center text-nowrap italic">
                     <span>
-                        <b>{formattedTime.time}</b> {formattedTime.abbr}
+                        {/* <b>{formattedTime.time}</b> {formattedTime.abbr} */}
                     </span>
                     <span>
                         <b>{currently?.temperature}°C</b>
