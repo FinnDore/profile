@@ -12,7 +12,7 @@ export default function Page() {
         <main className="flex h-screen flex-col bg-white">
             <TailwindIndicator />
             <QueryClientProvider client={queryClient}>
-                <div className="relative z-10 m-auto w-screen md:w-auto md:pt-16">
+                <div className="relative z-10 w-screen md:w-auto md:pt-16">
                     <div className="relative mx-auto mt-12 flex select-none contrast-125 md:mt-0">
                         <img
                             className="mx-auto aspect-[5556/3110] w-[clamp(80vw,75rem,90vw)]"

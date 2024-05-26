@@ -163,7 +163,7 @@ export function Projects() {
             className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-6 pb-6 md:pb-8 lg:gap-12"
         >
             <div className="mx-auto flex flex-col gap-6 xxs:gap-8 lg:flex-row">
-                <div className="relative mx-auto max-w-[80vw] sm:max-w-md">
+                <div className="relative mx-auto max-w-[80vw] sm:max-w-md md:max-w-md xl:max-w-xl 2xl:max-w-2xl">
                     <Arc className="mt-6 lg:mt-0">
                         <picture className="w-full">
                             <img
@@ -186,7 +186,7 @@ export function Projects() {
                     >
                         <Arc>
                             <picture className="w-full rounded-md invert">
-                                <img src="/projects/one/one.webp" alt="Vote" />
+                                <img src="/projects/one/one.png" alt="Vote" />
                             </picture>
                         </Arc>
                     </animated.div>
@@ -194,14 +194,14 @@ export function Projects() {
                     <animated.div
                         style={spotSpring}
                         className={clsx(
-                            "absolute top-0 w-full transition-opacity duration-200",
+                            "absolute top-0 h-full w-full transition-opacity duration-200",
                             {
                                 "pointer-events-none opacity-0": !spot,
                                 "opacity-100": spot,
                             },
                         )}
                     >
-                        <Arc className="h-60 w-full xxs:h-72 sm:h-80">
+                        <Arc className="h-full">
                             <div className="grid h-full place-content-center rounded-md">
                                 <Spotify />
                             </div>
@@ -210,14 +210,14 @@ export function Projects() {
                     <animated.div
                         style={locationSpring}
                         className={clsx(
-                            "absolute top-0 w-full transition-opacity duration-200",
+                            "absolute top-0 h-full w-full transition-opacity duration-200",
                             {
                                 "pointer-events-none opacity-0": !location,
                                 "opacity-100": location,
                             },
                         )}
                     >
-                        <Arc className="h-60 w-full xxs:h-72 sm:h-80">
+                        <Arc className="h-full">
                             <div className="grid h-full place-content-center rounded-md">
                                 <Location hideWeather />
                             </div>
