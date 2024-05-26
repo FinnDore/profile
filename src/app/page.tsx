@@ -14,7 +14,7 @@ export default function Page() {
             <QueryClientProvider client={queryClient}>
                 <div className="relative z-10 m-auto w-screen md:w-auto md:pt-16">
                     <img
-                        className="relative mx-auto mt-12 aspect-auto max-w-[clamp(80vw,75rem,90vw)] select-none contrast-125 md:mt-0"
+                        className="relative mx-auto mt-12 aspect-[5556/3110] w-[clamp(80vw,75rem,90vw)] select-none contrast-125 md:mt-0"
                         src="/finn-crop.webp"
                         alt="Picture with the text 'finn'"
                     />
