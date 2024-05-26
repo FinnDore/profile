@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
     DoubleArrowLeftIcon,
     DoubleArrowRightIcon,
@@ -45,7 +46,7 @@ function Progress(props: { pause: boolean; next: (auto?: boolean) => void }) {
                 style={{
                     animationPlayState: props.pause ? "paused" : "running",
                 }}
-                onAnimationIteration={() => props.next(true)}
+                // onAnimationIteration={() => props.next(true)}
                 className="progress-bar h-full w-full rounded-md bg-black/50 transition-all"
             ></div>
         </div>
@@ -56,7 +57,7 @@ function Description(props: {
     children: React.ReactNode;
     title: React.ReactNode;
     link: { url: string; name: string };
-    description: string;
+    description: React.ReactNode;
 }) {
     return (
         <div>
@@ -66,6 +67,8 @@ function Description(props: {
                 </h1>
                 <a
                     href={props.link.url}
+                    target="_blank"
+                    rel="noreferrer"
                     className="my-auto flex gap-1 text-sm text-gray-500 underline hover:text-black"
                 >
                     {props.link.name}
@@ -157,7 +160,7 @@ export function Projects() {
     return (
         <div
             ref={ref}
-            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-6 pb-6 md:pb-8 lg:gap-14"
+            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-6 pb-6 md:pb-8 lg:gap-12"
         >
             <div className="mx-auto flex flex-col gap-6 xxs:gap-8 lg:flex-row">
                 <div className="relative mx-auto max-w-[80vw] sm:max-w-md">
@@ -221,7 +224,7 @@ export function Projects() {
                         </Arc>
                     </animated.div>
                 </div>
-                <div className="h-36 px-6 xxs:h-44 xxs:px-0">
+                <div className="h-36 px-6 xxs:h-48 xxs:px-0">
                     {tab === Tab.Vote && (
                         <Description
                             title={
@@ -234,7 +237,26 @@ export function Projects() {
                                 url: "https://vote.finndore.dev",
                                 name: "vote.finndore.dev",
                             }}
-                            description="Pointing poker is a waste of time, but to make it as painless as possible ive made modern pointing website. I've utilised websockets to update the UI in real time (try the vote on the front page!)."
+                            description={
+                                <>
+                                    Vote is a pointing poker website that allows
+                                    people to vote on how many story points a
+                                    story/task should be given. Features include
+                                    anonymus accounts to allow for frictitonless
+                                    voting along with the use of websockets to
+                                    allow for real time updates.{" "}
+                                    <i>
+                                        <a
+                                            className="text-xs underline opacity-35 blur-sm transition-all hover:opacity-100 hover:blur-none"
+                                            href="https://v.finndore.dev"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            (Try the vote on the front page!)
+                                        </a>
+                                    </i>
+                                </>
+                            }
                         >
                             <Label
                                 bgColor="bg-[#00003d31]"
@@ -278,13 +300,47 @@ export function Projects() {
                                 url: "https://github.com/finndore/one",
                                 name: "finndore/one",
                             }}
-                            description="A IOT light written using embeded Rust along with a companion app made with Tauri and nextjs"
+                            description={
+                                <div>
+                                    <span>
+                                        One is an IOT light written in embeded
+                                        Rust using embassy that runs on a
+                                    </span>
+
+                                    <a
+                                        href="https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="relative inline-block h-5 w-10 px-2 align-middle  drop-shadow-xl transition-all hover:scale-110"
+                                    >
+                                        <img
+                                            src="/projects/one/pie.png"
+                                            className="center-absolute inline h-8 w-8"
+                                            alt="Rasberry Pie logo"
+                                        />
+                                    </a>
+                                    <span>
+                                        Pico W. It comes along with an
+                                        installable companion app made with
+                                        Tauri and nextjs that can control the
+                                        light via WIFI.
+                                    </span>
+                                </div>
+                            }
                         >
                             <Label
                                 bgColor="bg-[#67d6ed61]"
                                 bgGlow="bg-[radial-gradient(#67d6ed_0%,transparent_70%)]"
                                 name="Tauri"
                                 link="https://tauri.app"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#00a63331]"
+                                bgGlow="bg-[radial-gradient(#00a633_0%,transparent_70%)]"
+                                name="Embassy"
+                                link="https://embassy.dev/"
                                 className="cursor-pointer"
                                 smallRound
                             />
@@ -304,14 +360,6 @@ export function Projects() {
                                 className="cursor-pointer"
                                 smallRound
                             />
-                            <Label
-                                bgColor="bg-[#0ca5e931]"
-                                bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
-                                name="Tailwind"
-                                link="https://tailwindcss.com"
-                                className="cursor-pointer"
-                                smallRound
-                            />
                         </Description>
                     )}
                     {tab === Tab.Spotify && (
@@ -321,7 +369,7 @@ export function Projects() {
                                 url: "https://github.com/finndore/spot",
                                 name: "finndore/spot",
                             }}
-                            description="A spotify api wrapper built to serve top songs and current songs data. Spot also allows control of the currently playing song"
+                            description="Spot is a spotify api wrapper built to serve top songs and current songs data. Spot also allows control of the currently playing song and is currently powering the music section of this website."
                         >
                             <Label
                                 bgColor="bg-[#f1672631]"
