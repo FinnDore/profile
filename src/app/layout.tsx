@@ -1,7 +1,19 @@
 import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from "next";
 import { AxiomWebVitals } from "next-axiom";
 import { env } from "../env/client.mjs";
 import "./globals.css";
+
+export const metadata = {
+    title: "Finn",
+    twitter: {
+        card: "summary_large_image",
+        site: "@finndore",
+        creator: "@finndore",
+        images: "finn-crop.webp",
+    },
+    creator: "Finn",
+} satisfies Metadata;
 
 export default function Layout(props: { children: React.ReactNode }) {
     return (
