@@ -165,7 +165,7 @@ export function Projects() {
             <div className="mx-auto flex flex-col gap-6 xxs:gap-8 lg:flex-row">
                 <div className="relative mx-auto max-w-[80vw] sm:max-w-md md:max-w-md xl:max-w-xl 2xl:max-w-2xl">
                     <Arc className="mt-6 lg:mt-0">
-                        <picture className="absolute w-full">
+                        <picture className="absolute aspect-[2710/1800] w-full">
                             <img
                                 src="/projects/vote/landing.webp"
                                 alt="Vote"
@@ -178,7 +178,7 @@ export function Projects() {
                             autoPlay
                             loop
                             muted
-                            className="relative z-10 w-full rounded-md"
+                            className="relative aspect-[2710/1800] w-full rounded-md"
                         ></video>
                     </Arc>
 
