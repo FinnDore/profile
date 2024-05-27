@@ -260,7 +260,7 @@ export function Projects() {
                         }
                         link={{
                             url: "https://v.finndore.dev",
-                            name: "vote.finndore.dev",
+                            name: "v.finndore.dev",
                         }}
                         description={
                             <>
