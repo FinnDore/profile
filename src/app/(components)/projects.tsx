@@ -78,12 +78,10 @@ function Description(props: {
                 </a>
             </div>
 
-            <p className="max-w-96 pt-1 text-sm xxs:text-base">
+            <p className="lg:m-w-96 w-full max-w-[80vw] justify-evenly pt-1 text-justify text-sm xxs:text-base sm:max-w-md md:max-w-md lg:text-start">
                 {props.description}
             </p>
-            <div className="my-2.5 flex flex-nowrap gap-2">
-                {props.children}
-            </div>
+            <div className="my-3 flex flex-nowrap gap-2">{props.children}</div>
         </div>
     );
 }
@@ -420,7 +418,7 @@ export function Projects() {
                     )}
                 </div>
             </div>
-            <div className="lg:gap16 mx-auto mt-4 flex flex-col gap-4">
+            <div className="mx-auto flex flex-col gap-4 lg:mt-4">
                 <div className="flex gap-4">
                     <NextButton onClick={() => prev()} ariaLabel="next project">
                         <DoubleArrowLeftIcon className="scale-125" />
