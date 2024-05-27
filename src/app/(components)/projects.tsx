@@ -6,12 +6,19 @@ import {
 } from "@radix-ui/react-icons";
 import { animated, config, useInView, useSpring } from "@react-spring/web";
 import { clsx } from "clsx";
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Arc } from "./arc";
 import { Glitch } from "./glitch";
 import { Label } from "./label";
 import { Location } from "./location";
 import { Spotify } from "./spotify";
+
+const LocationDescription = dynamic(
+    () =>
+        import("./location-description").then((mod) => mod.LocationDescription),
+    { ssr: false },
+);
 
 const Tab = {
     Vote: "Vote",
@@ -405,7 +412,13 @@ export function Projects() {
                                 url: "https://github.com/finndore/location",
                                 name: "finndore/location",
                             }}
-                            description="A simple location api that returns my location and weather for that location."
+                            description={
+                                <>
+                                    A simple location api that returns my
+                                    location and weather for that location.{" "}
+                                    <LocationDescription />
+                                </>
+                            }
                         >
                             <Label
                                 bgColor="bg-[#f1672631]"
