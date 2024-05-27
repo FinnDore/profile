@@ -187,7 +187,7 @@ export function Projects() {
                         )}
                     >
                         <Arc>
-                            <picture className="w-full rounded-md invert">
+                            <picture className="aspect-[2984/2050] w-full rounded-md invert">
                                 <img src="/projects/one/one.png" alt="Vote" />
                             </picture>
                         </Arc>
@@ -323,10 +323,9 @@ export function Projects() {
                                         />
                                     </a>
                                     <span>
-                                        Pico W. It comes along with an
-                                        installable companion app made with
-                                        Tauri and nextjs that can control the
-                                        light via WIFI.
+                                        Pico W. It comes with an installable
+                                        companion app made with Tauri and nextjs
+                                        that can control the light via WIFI.
                                     </span>
                                 </div>
                             }

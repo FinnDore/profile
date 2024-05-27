@@ -39,7 +39,7 @@ export default function Page() {
                                 </a>
                                 {" - "}
                                 <a
-                                    href="https://arc.net/folder/F8D3C5D7-7E2A-4FFC-912D-D6C03A0CFD5E"
+                                    href="https://arc.net/folder/E3A9ACC9-406D-414D-B9FF-12C2F113DE67"
                                     className="underline transition-all hover:text-rose-500"
                                 >
                                     Projects

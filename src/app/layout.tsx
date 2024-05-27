@@ -28,17 +28,19 @@ export default function Layout(props: { children: React.ReactNode }) {
         <html lang="en">
             <head>
                 <title>Finn</title>
-                {env.NEXT_PUBLIC_ENV && (
-                    <script
-                        async
-                        src="https://umami.finndore.dev/script.js"
-                        data-website-id="0acffcd3-e206-4840-bfb2-68c89da2e36e"
-                    ></script>
+                {env.NEXT_PUBLIC_IS_PROD && (
+                    <>
+                        <script
+                            async
+                            src="https://umami.finndore.dev/script.js"
+                            data-website-id="0acffcd3-e206-4840-bfb2-68c89da2e36e"
+                        ></script>
+                        <Analytics />
+                        <AxiomWebVitals />
+                    </>
                 )}
                 <link rel="icon" href="/favicon.ico" />
             </head>
-            <AxiomWebVitals />
-            <Analytics />
             <body>{props.children}</body>
         </html>
     );
