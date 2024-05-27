@@ -14,8 +14,21 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
-        "noUncheckedIndexedAccess": true
+        "noUncheckedIndexedAccess": true,
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ]
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.cjs",
+        "**/*.mjs",
+        ".next/types/**/*.ts",
+        "prettier.config.mjs"
+    ],
     "exclude": ["node_modules"]
 }

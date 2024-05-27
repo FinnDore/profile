@@ -1,12 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./src/**/*.{js,ts,jsx,tsx}'],
+    content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
     theme: {
         extend: {
-            colors: {
-                primary: '#dd4e41'
-            }
-        }
+            animation: {
+                "fade-in": "fade-in .25s linear forwards",
+            },
+            screens: {
+                xxs: "500px",
+            },
+        },
     },
-    plugins: []
+    plugins: [],
 };
