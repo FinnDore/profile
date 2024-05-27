@@ -113,7 +113,6 @@ export function Projects() {
     const spot = tab === Tab.Spotify || location;
     const one = tab === Tab.One || spot;
 
-    console.log(tab);
     const oneSpring = useSpring({
         scale: one ? 1 : 0.9,
         rotate: one ? -4 : 0,
