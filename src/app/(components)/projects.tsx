@@ -233,7 +233,7 @@ export function Projects() {
                         </Arc>
                     </animated.div>
                 </div>
-                <div className="h-36 px-6 xxs:h-48 xxs:px-0">
+                <div className="h-52 px-6 xxs:h-48 xxs:px-0">
                     {tab === Tab.Vote && (
                         <Description
                             title={
