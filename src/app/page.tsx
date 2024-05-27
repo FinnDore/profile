@@ -23,7 +23,7 @@ export default function Page() {
                             alt="Picture with the text 'finn'"
                         />
                     </div>
-                    <div className="mx-auto mb-14 flex w-full justify-center px-4 md:mb-0 md:h-32 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 md:justify-between xl:h-24 xl:-translate-y-24">
+                    <div className="mx-auto mb-10 flex w-full justify-center px-4 md:mb-0 md:h-32 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 md:justify-between xl:h-24 xl:-translate-y-24">
                         <div className="relative hidden md:block">
                             <Spotify />
                         </div>
