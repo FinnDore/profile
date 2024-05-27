@@ -165,13 +165,21 @@ export function Projects() {
             <div className="mx-auto flex flex-col gap-6 xxs:gap-8 lg:flex-row">
                 <div className="relative mx-auto max-w-[80vw] sm:max-w-md md:max-w-md xl:max-w-xl 2xl:max-w-2xl">
                     <Arc className="mt-6 lg:mt-0">
-                        <picture className="w-full">
+                        <picture className="absolute w-full">
                             <img
-                                src="/projects/vote/landing-crop.jpeg"
+                                src="/projects/vote/landing.webp"
                                 alt="Vote"
                                 className="rounded-md"
                             />
                         </picture>
+                        <video
+                            src="/projects/vote/landing.mp4"
+                            controls={false}
+                            autoPlay
+                            loop
+                            muted
+                            className="relative z-10 w-full rounded-md"
+                        ></video>
                     </Arc>
 
                     <animated.div
