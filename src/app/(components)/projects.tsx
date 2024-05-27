@@ -330,8 +330,9 @@ export function Projects() {
                                     </a>
                                     <span>
                                         Pico W. It comes with an installable
-                                        companion app made with Tauri and nextjs
-                                        that can control the light via WIFI.
+                                        companion app made with Tauri and
+                                        Next.js that can control the light via
+                                        WIFI.
                                     </span>
                                 </div>
                             }
@@ -377,7 +378,7 @@ export function Projects() {
                                 url: "https://github.com/finndore/spot",
                                 name: "finndore/spot",
                             }}
-                            description="Spot is a spotify api wrapper built to serve top songs and current songs data. Spot also allows control of the currently playing song and is currently powering the music section of this website."
+                            description="Spot is a spotify api wrapper built to serve top songs and current song data for a given spotify account. Spot also allows control of the currently playing song and is currently powering the music section of this website."
                         >
                             <Label
                                 bgColor="bg-[#f1672631]"
