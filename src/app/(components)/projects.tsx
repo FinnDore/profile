@@ -11,7 +11,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Arc } from "./arc";
 import { Glitch } from "./glitch";
 import { Label } from "./label";
-import { Location } from "./location";
+import { LocationScene } from "./location";
 import { Spotify } from "./spotify";
 
 const LocationDescription = dynamic(
@@ -55,7 +55,7 @@ function Progress(props: { pause: boolean; next: (auto?: boolean) => void }) {
                 style={{
                     animationPlayState: props.pause ? "paused" : "running",
                 }}
-                onAnimationIteration={() => props.next(true)}
+                // onAnimationIteration={() => props.next(true)}
                 className="progress-bar h-full w-full rounded-md bg-black/50 transition-all"
             ></div>
         </div>
@@ -103,7 +103,7 @@ function Description(props: {
 }
 
 export function Projects() {
-    const [tab, setTab] = useState<Tab>(Tab.Vote);
+    const [tab, setTab] = useState<Tab>(Tab.Location);
     const [pause, setPause] = useState(true);
     const [reverse, setReverse] = useState(false);
 
@@ -174,289 +174,298 @@ export function Projects() {
     }, [inview]);
 
     return (
-        <div
-            ref={ref}
-            className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-6 pb-6 md:pb-8 lg:gap-12"
-        >
-            <div className="mx-auto flex flex-col gap-6 xxs:gap-8 lg:flex-row">
-                <div className="relative mx-auto max-w-[80vw] sm:max-w-md md:max-w-md xl:max-w-xl 2xl:max-w-2xl">
-                    <Arc className="mt-6 lg:mt-0">
-                        <picture className="absolute aspect-[2710/1800] w-full">
-                            <img
-                                src="/projects/vote/landing.webp"
-                                alt="Vote"
-                                className="rounded-md"
-                            />
-                        </picture>
-                        <video
-                            src="/projects/vote/landing.mp4"
-                            controls={false}
-                            autoPlay
-                            loop
-                            muted
-                            className="relative aspect-[2710/1800] w-full rounded-md"
-                        ></video>
-                    </Arc>
-
-                    <animated.div
-                        style={oneSpring}
-                        className={clsx(
-                            "absolute top-0 w-full transition-opacity duration-200",
-                            {
-                                "pointer-events-none opacity-0": !one,
-                                "opacity-100": one,
-                            },
-                        )}
-                    >
-                        <Arc>
-                            <picture className="aspect-[2984/2050] w-full rounded-md invert">
-                                <img src="/projects/one/one.png" alt="Vote" />
+        <>
+            <div
+                ref={ref}
+                className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-6 pb-6 md:pb-8 lg:gap-12"
+            >
+                <div className="mx-auto flex flex-col gap-6 xxs:gap-8 lg:flex-row">
+                    <div className="relative mx-auto max-w-[80vw] sm:max-w-md md:max-w-md xl:max-w-xl 2xl:max-w-2xl">
+                        <Arc className="mt-6 lg:mt-0">
+                            <picture className="absolute aspect-[2710/1800] w-full">
+                                <img
+                                    src="/projects/vote/landing.webp"
+                                    alt="Vote"
+                                    className="rounded-md"
+                                />
                             </picture>
+                            <video
+                                src="/projects/vote/landing.mp4"
+                                controls={false}
+                                autoPlay
+                                loop
+                                muted
+                                className="relative aspect-[2710/1800] w-full rounded-md"
+                            ></video>
                         </Arc>
-                    </animated.div>
 
-                    <animated.div
-                        style={spotSpring}
-                        className={clsx(
-                            "absolute top-0 h-full w-full transition-opacity duration-200",
-                            {
-                                "pointer-events-none opacity-0": !spot,
-                                "opacity-100": spot,
-                            },
-                        )}
-                    >
-                        <Arc className="h-full">
-                            <div className="grid h-full place-content-center rounded-md">
-                                <Spotify />
-                            </div>
-                        </Arc>
-                    </animated.div>
-                    <animated.div
-                        style={locationSpring}
-                        className={clsx(
-                            "absolute top-0 h-full w-full transition-opacity duration-200",
-                            {
-                                "pointer-events-none opacity-0": !location,
-                                "opacity-100": location,
-                            },
-                        )}
-                    >
-                        <Arc className="h-full">
-                            <div className="grid h-full place-content-center rounded-md">
-                                <div className="map-gradient2 absolute z-10 h-full w-full rounded-md"></div>
-                                <Location hideWeather />
-                            </div>
-                        </Arc>
-                    </animated.div>
-                </div>
-                <div className="h-52 px-6 xxs:h-48 xxs:px-0">
-                    <Description
-                        hidden={tab !== Tab.Vote}
-                        title={
-                            <div className="flex">
-                                <b>V</b>
-                                <Glitch text="ote" />
-                            </div>
-                        }
-                        link={{
-                            url: "https://v.finndore.dev",
-                            name: "v.finndore.dev",
-                        }}
-                        description={
-                            <>
-                                Vote is a pointing poker website that allows
-                                people to vote on how many story points a
-                                story/task should be given. Features include
-                                anonymus accounts to allow for frictitonless
-                                voting along with the use of websockets to allow
-                                for real time updates.{" "}
-                                <i>
+                        <animated.div
+                            style={oneSpring}
+                            className={clsx(
+                                "absolute top-0 w-full transition-opacity duration-200",
+                                {
+                                    "pointer-events-none opacity-0": !one,
+                                    "opacity-100": one,
+                                },
+                            )}
+                        >
+                            <Arc>
+                                <picture className="aspect-[2984/2050] w-full rounded-md invert">
+                                    <img
+                                        src="/projects/one/one.png"
+                                        alt="Vote"
+                                    />
+                                </picture>
+                            </Arc>
+                        </animated.div>
+
+                        <animated.div
+                            style={spotSpring}
+                            className={clsx(
+                                "absolute top-0 h-full w-full transition-opacity duration-200",
+                                {
+                                    "pointer-events-none opacity-0": !spot,
+                                    "opacity-100": spot,
+                                },
+                            )}
+                        >
+                            <Arc className="h-full">
+                                <div className="grid h-full place-content-center rounded-md">
+                                    <Spotify />
+                                </div>
+                            </Arc>
+                        </animated.div>
+                        <animated.div
+                            style={locationSpring}
+                            className={clsx(
+                                "absolute top-0 h-full w-full transition-opacity duration-200",
+                                {
+                                    "pointer-events-none opacity-0": !location,
+                                    "opacity-100": location,
+                                },
+                            )}
+                        >
+                            <Arc className="h-full">
+                                <div className="relative h-full place-content-center overflow-hidden rounded-md">
+                                    {/* <div className="map-gradient2 absolute z-10 h-full w-full rounded-md"></div> */}
+                                    <LocationScene />
+                                </div>
+                            </Arc>
+                        </animated.div>
+                    </div>
+                    <div className="h-52 px-6 xxs:h-48 xxs:px-0">
+                        <Description
+                            hidden={tab !== Tab.Vote}
+                            title={
+                                <div className="flex">
+                                    <b>V</b>
+                                    <Glitch text="ote" />
+                                </div>
+                            }
+                            link={{
+                                url: "https://v.finndore.dev",
+                                name: "v.finndore.dev",
+                            }}
+                            description={
+                                <>
+                                    Vote is a pointing poker website that allows
+                                    people to vote on how many story points a
+                                    story/task should be given. Features include
+                                    anonymus accounts to allow for frictitonless
+                                    voting along with the use of websockets to
+                                    allow for real time updates.{" "}
+                                    <i>
+                                        <a
+                                            className="text-xs underline opacity-35 blur-sm transition-all hover:opacity-100 hover:blur-none"
+                                            href="https://v.finndore.dev"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            (Try the vote on the front page!)
+                                        </a>
+                                    </i>
+                                </>
+                            }
+                        >
+                            <Label
+                                bgColor="bg-[#00003d31]"
+                                bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
+                                name="Next.js"
+                                link="https://nextjs.org"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#0ca5e931]"
+                                bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
+                                name="Tailwind"
+                                link="https://tailwindcss.com"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#f1672631]"
+                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                name="Vitess"
+                                link="https://vitess.io"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#ef444431]"
+                                bgGlow="bg-[radial-gradient(#ef4444_0%,transparent_70%)]"
+                                name="Tanstack Query"
+                                link="https://tanstack.com/query/v3"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                        </Description>
+                        <Description
+                            hidden={tab !== Tab.One}
+                            title="One"
+                            link={{
+                                url: "https://github.com/finndore/one",
+                                name: "finndore/one",
+                            }}
+                            description={
+                                <>
+                                    <span>
+                                        One is an IOT light written in embeded
+                                        Rust using embassy that runs on a
+                                    </span>
+
                                     <a
-                                        className="text-xs underline opacity-35 blur-sm transition-all hover:opacity-100 hover:blur-none"
-                                        href="https://v.finndore.dev"
+                                        href="https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html"
                                         target="_blank"
                                         rel="noreferrer"
+                                        className="relative inline-block h-5 w-10 px-2 align-middle  drop-shadow-xl transition-all hover:scale-110"
                                     >
-                                        (Try the vote on the front page!)
+                                        <img
+                                            src="/projects/one/pie.webp"
+                                            className="center-absolute inline h-8 w-8"
+                                            alt="Rasberry Pie logo"
+                                        />
                                     </a>
-                                </i>
-                            </>
-                        }
-                    >
-                        <Label
-                            bgColor="bg-[#00003d31]"
-                            bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
-                            name="Next.js"
-                            link="https://nextjs.org"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#0ca5e931]"
-                            bgGlow="bg-[radial-gradient(#0ca55e_0%,transparent_70%)]"
-                            name="Tailwind"
-                            link="https://tailwindcss.com"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Vitess"
-                            link="https://vitess.io"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#ef444431]"
-                            bgGlow="bg-[radial-gradient(#ef4444_0%,transparent_70%)]"
-                            name="Tanstack Query"
-                            link="https://tanstack.com/query/v3"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                    </Description>
-                    <Description
-                        hidden={tab !== Tab.One}
-                        title="One"
-                        link={{
-                            url: "https://github.com/finndore/one",
-                            name: "finndore/one",
-                        }}
-                        description={
-                            <>
-                                <span>
-                                    One is an IOT light written in embeded Rust
-                                    using embassy that runs on a
-                                </span>
-
-                                <a
-                                    href="https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="relative inline-block h-5 w-10 px-2 align-middle  drop-shadow-xl transition-all hover:scale-110"
-                                >
-                                    <img
-                                        src="/projects/one/pie.webp"
-                                        className="center-absolute inline h-8 w-8"
-                                        alt="Rasberry Pie logo"
-                                    />
-                                </a>
-                                <span>
-                                    Pico W. It comes with an installable
-                                    companion app made with Tauri and Next.js
-                                    that can control the light via WIFI.
-                                </span>
-                            </>
-                        }
-                    >
-                        <Label
-                            bgColor="bg-[#67d6ed61]"
-                            bgGlow="bg-[radial-gradient(#67d6ed_0%,transparent_70%)]"
-                            name="Tauri"
-                            link="https://tauri.app"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#00a63331]"
-                            bgGlow="bg-[radial-gradient(#00a633_0%,transparent_70%)]"
-                            name="Embassy"
-                            link="https://embassy.dev/"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Rust"
-                            link="https://www.rust-lang.org"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#00003d31]"
-                            bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
-                            name="Next.js"
-                            link="https://nextjs.org"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                    </Description>
-                    <Description
-                        title="Spot"
-                        hidden={tab !== Tab.Spotify}
-                        link={{
-                            url: "https://github.com/finndore/spot",
-                            name: "finndore/spot",
-                        }}
-                        description="Spot is a spotify api wrapper built to serve top songs and current song data for a given spotify account. Spot also allows control of the currently playing song and is currently powering the music section of this website."
-                    >
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Rust"
-                            link="https://www.rust-lang.org"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#5048e631]"
-                            bgGlow="bg-[radial-gradient(#5048e6_0%,transparent_70%)]"
-                            name="Axum"
-                            link="https://github.com/tokio-rs/axum"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                    </Description>
-                    <Description
-                        title="Location"
-                        hidden={tab !== Tab.Location}
-                        link={{
-                            url: "https://github.com/finndore/location",
-                            name: "finndore/location",
-                        }}
-                        description={
-                            <>
-                                A simple location api that returns my location
-                                and weather for that location.{" "}
-                                <LocationDescription />
-                            </>
-                        }
-                    >
-                        <Label
-                            bgColor="bg-[#f1672631]"
-                            bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
-                            name="Rust"
-                            link="https://www.rust-lang.org"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                        <Label
-                            bgColor="bg-[#5048e631]"
-                            bgGlow="bg-[radial-gradient(#5048e6_0%,transparent_70%)]"
-                            name="Axum"
-                            link="https://github.com/tokio-rs/axum"
-                            className="cursor-pointer"
-                            smallRound
-                        />
-                    </Description>
+                                    <span>
+                                        Pico W. It comes with an installable
+                                        companion app made with Tauri and
+                                        Next.js that can control the light via
+                                        WIFI.
+                                    </span>
+                                </>
+                            }
+                        >
+                            <Label
+                                bgColor="bg-[#67d6ed61]"
+                                bgGlow="bg-[radial-gradient(#67d6ed_0%,transparent_70%)]"
+                                name="Tauri"
+                                link="https://tauri.app"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#00a63331]"
+                                bgGlow="bg-[radial-gradient(#00a633_0%,transparent_70%)]"
+                                name="Embassy"
+                                link="https://embassy.dev/"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#f1672631]"
+                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                name="Rust"
+                                link="https://www.rust-lang.org"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#00003d31]"
+                                bgGlow="bg-[radial-gradient(#00003d_0%,transparent_70%)]"
+                                name="Next.js"
+                                link="https://nextjs.org"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                        </Description>
+                        <Description
+                            title="Spot"
+                            hidden={tab !== Tab.Spotify}
+                            link={{
+                                url: "https://github.com/finndore/spot",
+                                name: "finndore/spot",
+                            }}
+                            description="Spot is a spotify api wrapper built to serve top songs and current song data for a given spotify account. Spot also allows control of the currently playing song and is currently powering the music section of this website."
+                        >
+                            <Label
+                                bgColor="bg-[#f1672631]"
+                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                name="Rust"
+                                link="https://www.rust-lang.org"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#5048e631]"
+                                bgGlow="bg-[radial-gradient(#5048e6_0%,transparent_70%)]"
+                                name="Axum"
+                                link="https://github.com/tokio-rs/axum"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                        </Description>
+                        <Description
+                            title="Location"
+                            hidden={tab !== Tab.Location}
+                            link={{
+                                url: "https://github.com/finndore/location",
+                                name: "finndore/location",
+                            }}
+                            description={
+                                <>
+                                    A simple location api that returns my
+                                    location and weather for that location.{" "}
+                                    <LocationDescription />
+                                </>
+                            }
+                        >
+                            <Label
+                                bgColor="bg-[#f1672631]"
+                                bgGlow="bg-[radial-gradient(#f16726_0%,transparent_70%)]"
+                                name="Rust"
+                                link="https://www.rust-lang.org"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                            <Label
+                                bgColor="bg-[#5048e631]"
+                                bgGlow="bg-[radial-gradient(#5048e6_0%,transparent_70%)]"
+                                name="Axum"
+                                link="https://github.com/tokio-rs/axum"
+                                className="cursor-pointer"
+                                smallRound
+                            />
+                        </Description>
+                    </div>
+                </div>
+                <div className="mx-auto flex flex-col gap-4 lg:mt-4">
+                    <div className="flex gap-4">
+                        <NextButton
+                            onClick={() => prev()}
+                            ariaLabel="next project"
+                        >
+                            <DoubleArrowLeftIcon className="scale-125" />
+                        </NextButton>
+                        <NextButton
+                            onClick={() => next()}
+                            ariaLabel="previous project"
+                        >
+                            <DoubleArrowRightIcon className="scale-125" />
+                        </NextButton>
+                    </div>
+                    <Progress pause={pause} next={reverse ? prev : next} />
                 </div>
             </div>
-            <div className="mx-auto flex flex-col gap-4 lg:mt-4">
-                <div className="flex gap-4">
-                    <NextButton onClick={() => prev()} ariaLabel="next project">
-                        <DoubleArrowLeftIcon className="scale-125" />
-                    </NextButton>
-                    <NextButton
-                        onClick={() => next()}
-                        ariaLabel="previous project"
-                    >
-                        <DoubleArrowRightIcon className="scale-125" />
-                    </NextButton>
-                </div>
-                <Progress pause={pause} next={reverse ? prev : next} />
-            </div>
-        </div>
+        </>
     );
 }
