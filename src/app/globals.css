@@ -127,3 +127,6 @@
 .progress-bar {
     animation: progress-bar 10s linear infinite;
 }
+.shadow-text {
+    text-shadow: 0px 0px 3px #ffffff;
+}

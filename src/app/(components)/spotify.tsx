@@ -140,7 +140,7 @@ function TopSong(props: { song: Item; index: number; isHovering: boolean }) {
             <SongName
                 song={props.song}
                 small={true}
-                className={clsx("transition-all", {
+                className={clsx("shadow-text transition-all", {
                     "opacity-0": !props.isHovering,
                     "opacity-100": props.isHovering,
                 })}
