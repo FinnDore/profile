@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Image from "next/image";
 import { Projects } from "./(components)/projects";
 import { Spotify } from "./(components)/spotify";
 
@@ -12,15 +13,12 @@ export default function Page() {
             <QueryClientProvider client={queryClient}>
                 <div className="relative z-10 w-screen md:w-auto md:pt-16">
                     <div className="relative mx-auto mt-12 flex select-none contrast-125 md:mt-0">
-                        <img
-                            className="mx-auto aspect-[5556/3110] w-[clamp(80vw,75rem,90vw)]"
-                            src="finn-small.webp"
+                        <Image
+                            className="mx-auto w-[clamp(80vw,75rem,90vw)]"
+                            src="/finn.webp"
                             alt="Picture with the text 'finn'"
-                        />
-                        <img
-                            className="center-absolute aspect-[5556/3110] w-[clamp(80vw,75rem,90vw)]"
-                            src="finn.webp"
-                            alt="Picture with the text 'finn'"
+                            width={5556}
+                            height={3110}
                         />
                     </div>
                     <div className="mx-auto mb-10 flex w-full justify-center px-4 md:mb-0 md:h-32 md:max-w-[clamp(80vw,75rem,90vw)] md:-translate-y-16 md:justify-between xl:h-24 xl:-translate-y-24">
