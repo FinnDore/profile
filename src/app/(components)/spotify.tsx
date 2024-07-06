@@ -24,7 +24,7 @@ export function Spotify() {
         queryKey: ["spot"],
         queryFn: async () => ({
             currentSong: await fetch("https://spot.finndore.dev").then(
-                (res) => res.json() as unknown as CurrentSong,
+                (res) => res.json() as unknown as CurrentSong | null,
             ),
             timestamp: new Date().getTime(),
         }),
@@ -43,7 +43,7 @@ export function Spotify() {
             };
         }
         return {
-            currentSong: currentSongQuery.data.currentSong.item,
+            currentSong: currentSongQuery.data.currentSong?.item,
             topSongs: topSongQuery.data,
         };
     }, [currentSongQuery.data, topSongQuery.data]);
