@@ -5,6 +5,7 @@ import { env } from "../env/client.mjs";
 import "./globals.css";
 
 export const metadata = {
+    metadataBase: new URL("https://finndore.dev"),
     twitter: {
         card: "summary_large_image",
         site: "@nnnniiifff",
